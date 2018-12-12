@@ -10,7 +10,7 @@ module GalleryDownloader
         @text = data[:text]
       end
     end
-    
+
     class AllPicturesPictureMeta
       def initialize(data)
         @ord = data[:ord]
@@ -56,11 +56,11 @@ module GalleryDownloader
         thumbinfos = page / 'div.thumbinfo'
         thumbinfos.each do |thumbinfo|
           name_link = (thumbinfo / 'div.name a').first
-          picture_uri = PictureUri.new(name_link['href'])
-          picture = Picture.new(@agent, picture_uri.picture_id)
+          picture_id = FanartPikachuCz.picture_id_from_uri(name_link['href'])
+          picture = Picture.new(@agent, picture_id)
 
           num_node = (thumbinfo / 'div.num').first
-          ord = AllPicturesOrd.new(num_node.text)
+          ord = FanartPikachuCz.ord_from_num(num_node.text)
 
           fullview_count_node =
             (thumbinfo / 'div.stats span.fullviewcount span.number').first
@@ -75,20 +75,22 @@ module GalleryDownloader
           description = description_node.nil? ? nil : description_node.text
 
           artist_link = (thumbinfo / 'div.artist a').first
-          artist_uri = ArtistUri.new(artist_link['href'])
-          artist_name = AllPicturesArtistName.new(artist_link.text)
+          artist_id = FanartPikachuCz.artist_id_from_uri(artist_link['href'])
+
+          artist_name =
+            FanartPikachuCz.artist_name_from_artist(artist_link.text)
 
           datetime_node = (thumbinfo / 'div.datetime').first
-          upload_date = AllPicturesDate.new(datetime_node.text)
+          upload_date = FanartPikachuCz.date_from_datetime(datetime_node.text)
 
           meta = AllPicturesPictureMeta.new(
             ord: ord.ord,
             name: name_link.text,
             fullview_count: fullview_count,
             description: description,
-            artist_name: artist_name.name,
-            artist_id: artist_uri.artist_id,
-            upload_date: upload_date.date
+            artist_name: artist_name,
+            artist_id: artist_id,
+            upload_date: upload_date
           )
 
           yield Result.new(scraper: picture, meta: meta)
