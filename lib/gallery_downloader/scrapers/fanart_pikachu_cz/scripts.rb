@@ -5,7 +5,7 @@ module GalleryDownloader
     def all_pictures(agent)
       all_pictures = AllPictures.new(agent)
       all_pictures.pictures do |picture|
-        pp(picture)
+        yield picture.scraper.uri
       end
     end
 

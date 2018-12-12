@@ -24,7 +24,7 @@ module GalleryDownloader
     end
 
     class AllPictures
-      BASE_URI = GalleryDownloader::FanartPikachuCz::BASE_URI.clone
+      BASE_URI = FanartPikachuCz::BASE_URI.clone
       BASE_URI.path = '/content/pictures.php'
       BASE_URI.query = URI.encode_www_form('odtp' => '1')
 
@@ -93,15 +93,24 @@ module GalleryDownloader
             upload_date: upload_date
           )
 
-          yield Result.new(scraper: picture, meta: meta)
+          yield Result.new(picture, meta)
         end
       end
     end
 
     class Picture
+      BASE_URI = FanartPikachuCz::BASE_URI.clone
+      BASE_URI.path = '/content/picture.php'
+
       def initialize(agent, picture_id)
         @agent = agent
         @picture_id = picture_id
+      end
+
+      def uri
+        u = BASE_URI.clone
+        u.query = URI.encode_www_form('picture' => @picture_id)
+        u
       end
     end
   end
