@@ -1,4 +1,4 @@
-module GalleryDownloader
+module Onigumo
   module FanartPikachuCz
     def picture_id_from_uri(uri)
       u = URI(uri)

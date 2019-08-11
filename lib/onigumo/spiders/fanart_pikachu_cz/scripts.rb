@@ -1,11 +1,11 @@
-require_relative('pages')
+require_relative('flies')
 
-module GalleryDownloader
+module Onigumo
   module FanartPikachuCz
     def all_pictures(agent)
       all_pictures = AllPictures.new(agent)
       all_pictures.pictures do |picture|
-        yield picture.scraper.uri
+        yield picture.fly.uri
       end
     end
 

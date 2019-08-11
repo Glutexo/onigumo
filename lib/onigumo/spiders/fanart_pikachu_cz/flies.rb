@@ -1,7 +1,7 @@
 require_relative('helpers')
 require_relative(File.join('..', '..', 'result'))
 
-module GalleryDownloader
+module Onigumo
   module FanartPikachuCz
     BASE_URI = URI('http://fanart.pikachu.cz/')
 
@@ -46,7 +46,7 @@ module GalleryDownloader
       def pages
         body = @agent.get('odtp=1&ppp=1&od=0')
         body.match.each do |page_link|
-          yield Result.new(scraper: AllPictures(@agent, page_link.number),
+          yield Result.new(fly: AllPictures(@agent, page_link.number),
                            meta: AllPicturesPageMeta(page_link.text))
         end
       end

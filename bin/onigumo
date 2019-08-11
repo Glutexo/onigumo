@@ -1,0 +1,7 @@
+require_relative('../lib/onigumo/spiders/fanart_pikachu_cz/scripts')
+require('mechanize')
+
+agent = Mechanize.new
+Onigumo::FanartPikachuCz.all_pictures(agent) do |picture|
+  puts(picture)
+end
