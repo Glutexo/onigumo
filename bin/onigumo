@@ -3,4 +3,4 @@ require('onigumo')
 path = "fanart.pikachu.cz"
 Dir.mkdir(path) unless Dir.exists?(path)
 db = Onigumo::Database.new(path)
-Onigumo::Spiders::FanartPikachuCZ.download_all_pictures(db)
+db.add_action('FanartPikachuCZ', 'download_all_pictures')

@@ -14,12 +14,23 @@ module Onigumo
       @conn[:downloads] << {url: url.to_s, downloaded: 0}
     end
     
+    def add_action(spider, meth)
+      @conn[:actions] << {spider: spider, method: meth, performed: 0}
+    end
+    
     private
     def init_schema
       @conn.create_table(:downloads) do
-        primary_key :id
-        String :url
-        Integer :downloaded
+        primary_key(:id)
+        String(:url)
+        Integer(:downloaded)  # boolean
+      end
+      
+      @conn.create_table(:actions) do
+        primary_key(:id)
+        String(:spider)
+        String(:method)
+        Integer(:performed)  # boolean
       end
     end
   end

@@ -1,6 +1,6 @@
 module Onigumo
   module Spiders
-    class FanartPikachuCZ
+    class FanartPikachuCz
       BASE_URI = 'https://fanart.pikachu.cz'
       ALL_PICS_PATH = '/content/pictures.php'
       
