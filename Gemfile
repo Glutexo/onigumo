@@ -2,4 +2,7 @@
 
 source('https://rubygems.org')
 
-gem('mechanize', '~>2.7.6')
+gem('nokogiri', '~>1.8.5')
+gem('sequel', '~>5.23.0')
+
+gem "sqlite3", "~> 1.4"

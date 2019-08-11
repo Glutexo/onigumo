@@ -1,7 +1,7 @@
-require_relative('../lib/onigumo/spiders/fanart_pikachu_cz/scripts')
-require('mechanize')
+require('onigumo')
 
-agent = Mechanize.new
-Onigumo::FanartPikachuCz.all_pictures(agent) do |picture|
-  puts(picture)
+path = "fanart.pikachu.cz"
+Dir.mkdir(path) unless Dir.exists?(path)
+Onigumo::Database.connect(path) do |db|
+  print(db)
 end

@@ -8,17 +8,11 @@ This is an attempt to build just another web-crawler, also called _Spider_. Its 
 
 ### Building blocks ###
 
-The application uses Spiders (Ruby modules) representing a website. A Spider’s public interface consists of hunting strategies (Ruby public methods) containing logic how to get all the wanted data from the server. Typically get a page, parse it and possibly get more pages using the parsed data. A Spider can have more hunting strategies.
-
-Inside the module, a Spider has Flies (Ruby classes) representing an entity a can catch and suck data out of it. This is typically a webpage residing on some URI. A Fly describes how to buld the URI and suck the data from the loaded page. A Fly can have more Bowels (Ruby methods) providing different data.
+The application uses Spiders (Ruby modules) containing workflow and data-mining methods to get data from a website. A Spider’s public interface consists of workflows how to get all the wanted data from the server. Typically get a page, parse it and possibly get more pages using the parsed data.
 
 ### Mechanism ###
 
-Initiating a hunting strategy puts events on the queue describing what Fly to catch and what Bowels to suck and what to to with the result. This event has no addintional information.
-
-A spider is wating on the queue. If there is an event containing a Fly, it catches it, sucks outs its Bowels and launches a defined action upon the data.
-
-When a Spider catches a Fly and feed itself on it, it yields the parsed data that can be associated with a following fly. 
+Scraping starts by inserting the first workflow action on a queue. This action doesn’t take any input an thus doesn’t have to wait for any data to be parsed. Any action can queue another action that uses the data parsed from a download page. Downloading and parsing ends when there is no more actions to be launched.
 
 ## Usage ##
 

@@ -1,1 +1,4 @@
-require_relative(File.join('onigumo', 'version'))
+%w(database version).each do |file|
+  path = File.join('onigumo', file)
+  require_relative(path)
+end
