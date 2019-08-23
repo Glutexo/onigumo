@@ -15,7 +15,7 @@ module Onigumo
     end
     
     def add_action(spider, meth)
-      @conn[:actions] << {spider: spider, method: meth, complete: 0}
+      @conn[:actions] << {spider: spider.to_s, method: meth.to_s, complete: 0}
     end
     
     private
