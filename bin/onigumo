@@ -1,6 +1,7 @@
 require('onigumo')
 
-path = "py.cz"
-Dir.mkdir(path) unless Dir.exists?(path)
-db = Onigumo::Database.new(path)
+PATH = "py.cz"
+Dir.mkdir(PATH) unless Dir.exists?(PATH)
+
+db = Onigumo::Database.new(PATH)
 db.add_action(:PyCz, :download_all_pictures)
