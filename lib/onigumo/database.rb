@@ -25,6 +25,7 @@ module Onigumo
     def init_schema
       @conn.create_table(:actions) do
         primary_key(:id)
+        foreign_key(:parse, :parses)
         String(:spider, null: false)
         String(:method, null: false)
         Integer(:complete, null: false)  # boolean
@@ -38,7 +39,7 @@ module Onigumo
 
       @conn.create_table(:parses) do
         primary_key(:id)
-        foreign_key(:download, :downloads)
+        foreign_key(:download, :downloads, null: false)
         String(:spider, null: false)
         String(:method, null: false)
         Integer(:complete, null: false)  # boolean
