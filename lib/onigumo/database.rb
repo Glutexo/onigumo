@@ -15,6 +15,9 @@ module Onigumo
     end
     
     def add_action(spider, meth)
+      unless spider_method_exist?(spider, meth)
+        raise ArgumentError.new("Invalid method #{spider}##{meth}")
+      end
       @conn[:actions] << {spider: spider.to_s, method: meth.to_s, complete: 0}
     end
     
@@ -40,6 +43,15 @@ module Onigumo
         String(:method, null: false)
         Integer(:complete, null: false)  # boolean
       end
+    end
+    
+    def spider_method_exist?(spider, meth)
+      begin
+        cls = Object.const_get("Onigumo::Spiders::#{spider}")
+      rescue NameError
+        return false
+      end
+      cls.methods.include?(meth.to_sym)
     end
   end
 end
