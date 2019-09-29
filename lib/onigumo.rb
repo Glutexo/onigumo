@@ -1,8 +1,5 @@
-onigumo_files = %w(database version)
-spider_files = %w(py_cz).map do |name|
-  File.join('spiders', name)
-end
-(onigumo_files + spider_files).map do |file|
-  path = File.join('onigumo', file)
+all_files = [%w(database), %w(methods), %w(version), %w(spiders py_cz)]
+all_files.map do |path|
+  path = File.join('onigumo', *path)
   require_relative(path)
 end

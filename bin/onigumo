@@ -1,6 +1,6 @@
 require('onigumo')
 
-PATH = "py.cz"
+PATH = 'py.cz'
 Dir.mkdir(PATH) unless Dir.exists?(PATH)
 
 db = Onigumo::Database.new(PATH)
