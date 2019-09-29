@@ -38,8 +38,18 @@ module Onigumo
       end
     end
     
+    def downloadable_urls
+      @conn[:downloads].where(complete: 0).select(:id, :url).each do |row|
+        yield row[:id], row[:url]
+      end
+    end
+    
     def complete_action(id)
-      @conn[:actions].where(id: id).update(complete: 1)
+      complete(:actions, id)
+    end
+    
+    def complete_download(id)
+      complete(:downloads, id)
     end
     
     private
@@ -65,6 +75,10 @@ module Onigumo
         String(:method, null: false)
         Integer(:complete, null: false)  # boolean
       end
+    end
+    
+    def complete(table, id)
+      @conn[table].where(id: id).update(complete: 1)
     end
   end
 end
