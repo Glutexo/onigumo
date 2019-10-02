@@ -41,11 +41,28 @@ module Onigumo
         yield row[:id], row[:spider], row[:method]
       end
     end
+
+    def runnable_parses
+      @conn[:parses].left_join(:downloads, id: :download).where(
+        Sequel[{Sequel[:parses][:complete] => 0}]
+      ).select(
+        Sequel[:parses][:id],
+        Sequel[:parses][:spider],
+        Sequel[:parses][:method],
+        Sequel[:parses][:download]
+      ).each do |row|
+        yield row[:id], row[:spider], row[:method], row[:download]
+      end
+    end
     
     def downloadable_urls
       @conn[:downloads].where(complete: 0).select(:id, :url).each do |row|
         yield row[:id], row[:url]
       end
+    end
+    
+    def get_download_url(download)
+      @conn[:downloads].where(id: download).select(:url).first[:url]
     end
     
     def complete_action(id)

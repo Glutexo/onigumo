@@ -1,3 +1,5 @@
+require('nokogiri')
+
 module Onigumo
   module Spiders
     class PyCz
@@ -11,8 +13,21 @@ module Onigumo
           db.add_parse(:PyCz, :parse_all_pages_index, download_id)
         end
         
-        def parse_all_pages_index
-
+        def parse_all_pages_index(db, file)
+          output = {links: []}
+          find_all_pages_index_links(file) do |link|
+            output[:links] << link 
+          end
+          output
+        end
+        
+        private
+        
+        def find_all_pages_index_links(file)
+          doc = Nokogiri::HTML(file)
+          doc.xpath('/html/body/div/div[@class=\'formcontent\']/p//a[@href and not(starts-with(@href, \'#\'))]').each do |link|
+            yield link['href']
+          end
         end
       end
     end
