@@ -1,9 +1,9 @@
 GEM
   remote: https://rubygems.org/
   specs:
-    mini_portile2 (2.3.0)
-    nokogiri (1.8.5)
-      mini_portile2 (~> 2.3.0)
+    mini_portile2 (2.4.0)
+    nokogiri (1.10.10)
+      mini_portile2 (~> 2.4.0)
     sequel (5.23.0)
     sqlite3 (1.4.1)
 
@@ -13,7 +13,7 @@ PLATFORMS
   x86_64-darwin-18
 
 DEPENDENCIES
-  nokogiri (~> 1.8.5)
+  nokogiri (~> 1.10.10)
   sequel (~> 5.23.0)
   sqlite3 (~> 1.4)
 
