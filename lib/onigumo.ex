@@ -11,7 +11,11 @@ defmodule Onigumo do
     %HTTPoison.Response{
       status_code: 200,
       body: body,
-    } = HTTPoison.get!(@url)
+    } = http_client().get!(@url)
     File.write!(@filename, body)
+  end
+
+  defp http_client() do
+    Application.get_env(:onigumo, :http_client, HTTPoison)
   end
 end
