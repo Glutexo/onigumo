@@ -2,7 +2,9 @@ defmodule OnigumoTest do
   use ExUnit.Case
   doctest Onigumo
 
-  test "greets the world" do
-    assert Onigumo.hello() == :world
+  test "download process" do
+
+    assert :ok = Onigumo.download()
+    assert File.exists?("body.html")
   end
 end
