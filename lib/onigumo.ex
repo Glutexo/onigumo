@@ -7,11 +7,16 @@ defmodule Onigumo do
 
   def download() do
     HTTPoison.start()
+    http = http_client()
 
     %HTTPoison.Response{
       status_code: 200,
       body: body,
-    } = HTTPoison.get!(@url)
+    } = http.get!(@url)
     File.write!(@filename, body)
+  end
+
+  defp http_client() do
+    Application.get_env(:onigumo, :http_client, HTTPoison)
   end
 end
