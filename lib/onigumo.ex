@@ -17,6 +17,6 @@ defmodule Onigumo do
   end
 
   defp http_client() do
-    Application.get_env(:onigumo, :http_client, HTTPoison)
+    Application.get_env(:onigumo, :http_client)
   end
 end
