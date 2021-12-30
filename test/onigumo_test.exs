@@ -8,12 +8,7 @@ defmodule OnigumoTest do
 
   setup :verify_on_exit!
 
-  test "download process" do
-  #   assert :ok = Onigumo.download()
-  #   assert File.exists?(@filename)
-  end
-
-  test "make request" do
+  test "download" do
     expect(
       HTTPoisonMock,
       :get!,
@@ -26,10 +21,5 @@ defmodule OnigumoTest do
     )
     assert :ok = Onigumo.download()
     assert "hello\n" = File.read!(@filename)
-  end
-
-  test "downloads stuff" do
-#    assert :ok = Onigumo.download()
-#    assert "hello" = File.read!(@filename)
   end
 end
