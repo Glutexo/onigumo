@@ -7,11 +7,12 @@ defmodule Onigumo do
 
   def download() do
     HTTPoison.start()
+    http = http_client()
 
     %HTTPoison.Response{
       status_code: 200,
       body: body,
-    } = http_client().get!(@url)
+    } = http.get!(@url)
     File.write!(@filename, body)
   end
 
