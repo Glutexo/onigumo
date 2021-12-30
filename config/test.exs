@@ -1,3 +1,3 @@
-import Config
+import(Config)
 
-config :onigumo, :http_client, HTTPoisonMock
+config(:onigumo, :http_client, HTTPoisonMock)
