@@ -6,9 +6,9 @@ defmodule OnigumoTest do
 
   @filename "body.html"
 
-  setup :verify_on_exit!
+  setup(:verify_on_exit!)
 
-  test "download" do
+  test("download") do
     expect(
       HTTPoisonMock,
       :get!,
@@ -19,7 +19,7 @@ defmodule OnigumoTest do
         }
       end
     )
-    assert :ok = Onigumo.download()
-    assert "hello\n" = File.read!(@filename)
+    assert(:ok = Onigumo.download())
+    assert("hello\n" = File.read!(@filename))
   end
 end
