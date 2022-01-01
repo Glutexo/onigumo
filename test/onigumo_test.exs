@@ -2,8 +2,6 @@ defmodule OnigumoTest do
   use ExUnit.Case
   import Mox
   
-  doctest Onigumo
-
   @filename "body.html"
 
   setup :verify_on_exit!
@@ -21,5 +19,6 @@ defmodule OnigumoTest do
     )
     assert :ok = Onigumo.download()
     assert "hello\n" = File.read!(@filename)
+    
   end
 end
