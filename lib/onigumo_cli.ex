@@ -1,5 +1,5 @@
 defmodule Onigumo.CLI do
   def main(_args) do
-    Onigumo.download()    
+    Onigumo.download()
   end
 end
