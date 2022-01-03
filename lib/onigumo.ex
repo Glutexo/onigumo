@@ -11,8 +11,9 @@ defmodule Onigumo do
 
     %HTTPoison.Response{
       status_code: 200,
-      body: body,
+      body: body
     } = http.get!(@url)
+
     File.write!(@filename, body)
   end
 
