@@ -10,7 +10,6 @@ defmodule Onigumo do
   def main() do
     HTTPoison.start()
     save_URLs_contents(@input_filename, @output_filename)
-
   end
 
   def save_URLs_contents(input_file, output_file) do

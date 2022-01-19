@@ -12,6 +12,7 @@ defmodule OnigumoTest do
   @tag :tmp_dir
   test("download one URL", %{tmp_dir: tmp_dir}) do
     output_file = Path.join(tmp_dir, "outputfile")
+
     expect(
       HTTPoisonMock,
       :get!,
@@ -31,6 +32,7 @@ defmodule OnigumoTest do
   test("download multiply URLs", %{tmp_dir: tmp_dir}) do
     output_file = Path.join(tmp_dir, "outputfile")
     input_file = Path.join(tmp_dir, "inputfile")
+
     expect(
       HTTPoisonMock,
       :get!,
@@ -53,7 +55,6 @@ defmodule OnigumoTest do
     assert(expected == File.read!(output_file))
   end
 
-
   @tag :tmp_dir
   test("load one URL from file", %{tmp_dir: tmp_dir}) do
     filepath = Path.join(tmp_dir, @testfile_with_urls)
@@ -64,7 +65,6 @@ defmodule OnigumoTest do
     assert(expected == Onigumo.load_urls(filepath))
   end
 
-
   @tag :tmp_dir
   test("load two URLs from file", %{tmp_dir: tmp_dir}) do
     filepath = Path.join(tmp_dir, @testfile_with_urls)
@@ -74,5 +74,4 @@ defmodule OnigumoTest do
     expected = [@url_1, @url_2]
     assert(expected == Onigumo.load_urls(filepath))
   end
-
 end
