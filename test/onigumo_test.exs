@@ -4,8 +4,6 @@ defmodule OnigumoTest do
 
   @url_1 "http://onigumo.org/hello.html"
   @url_2 "http://onigumo.org/bye.html"
-  @filename "body.html"
-  @testfile_with_urls "urls.txt"
 
   setup(:verify_on_exit!)
 
@@ -57,7 +55,7 @@ defmodule OnigumoTest do
 
   @tag :tmp_dir
   test("load one URL from file", %{tmp_dir: tmp_dir}) do
-    filepath = Path.join(tmp_dir, @testfile_with_urls)
+    filepath = Path.join(tmp_dir, "input_file")
     content = "#{@url_1}\n"
     File.write!(filepath, content)
 
@@ -67,7 +65,7 @@ defmodule OnigumoTest do
 
   @tag :tmp_dir
   test("load two URLs from file", %{tmp_dir: tmp_dir}) do
-    filepath = Path.join(tmp_dir, @testfile_with_urls)
+    filepath = Path.join(tmp_dir, "input_file")
     content = "#{@url_1}\n#{@url_2}\n"
     File.write!(filepath, content)
 
