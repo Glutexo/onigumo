@@ -3,7 +3,9 @@ defmodule Onigumo do
   Web scraper
   """
   @input_filename "urls.txt"
+  def input_filename, do: @input_filename
   @output_filename "body.html"
+  def output_filename, do: @output_filename
 
   def main() do
     HTTPoison.start()

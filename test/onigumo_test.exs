@@ -37,13 +37,15 @@ defmodule OnigumoTest do
         }
       end
     )
-    filepath = Path.join(tmp_dir, @testfile_with_urls)
+    urls_file = Path.join(tmp_dir, @testfile_with_urls)
     content = "#{@url_1}\n#{@url_2}\n"
-    File.write!(filepath, content)
+    File.write!(Onigumo.input_filename, content)
     expected = "Body from: #{@url_1}\nBody from: #{@url_2}\n"
-    Onigumo.main(filepath)
+    # load urls from urls_file
+    # read result from some test file
+    Onigumo.main()
 
-    assert(expected == File.read!(Onigumo.@output_filename))
+    assert(expected == File.read!(Onigumo.output_filename))
   end
 
 
