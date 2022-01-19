@@ -9,7 +9,9 @@ defmodule OnigumoTest do
 
   setup(:verify_on_exit!)
 
-  test("download one URL") do
+  @tag :tmp_dir
+  test("download one URL", %{tmp_dir: tmp_dir}) do
+    output_file = Path.join(tmp_dir, "outputfile")
     expect(
       HTTPoisonMock,
       :get!,
@@ -21,12 +23,14 @@ defmodule OnigumoTest do
       end
     )
 
-    assert(:ok == Onigumo.download(HTTPoisonMock, @url_1))
-    assert("Body from: #{@url_1}" == File.read!(@filename))
+    assert(:ok == Onigumo.download(HTTPoisonMock, @url_1, output_file))
+    assert("Body from: #{@url_1}" == File.read!(output_file))
   end
 
   @tag :tmp_dir
   test("download multiply URLs", %{tmp_dir: tmp_dir}) do
+    output_file = Path.join(tmp_dir, "outputfile")
+    input_file = Path.join(tmp_dir, "inputfile")
     expect(
       HTTPoisonMock,
       :get!,
@@ -34,19 +38,19 @@ defmodule OnigumoTest do
       fn url ->
         %HTTPoison.Response{
           status_code: 200,
-          body: "Body from: #{url}"
+          body: "Body from: #{url}\n"
         }
       end
     )
-    urls_file = Path.join(tmp_dir, @testfile_with_urls)
+
     content = "#{@url_1}\n#{@url_2}\n"
-    File.write!(Onigumo.input_filename, content)
+    File.write!(input_file, content)
     expected = "Body from: #{@url_1}\nBody from: #{@url_2}\n"
     # load urls from urls_file
     # read result from some test file
-    Onigumo.main()
+    Onigumo.save_URLs_contents(input_file, output_file)
 
-    assert(expected == File.read!(Onigumo.output_filename))
+    assert(expected == File.read!(output_file))
   end
 
 
