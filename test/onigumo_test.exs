@@ -30,6 +30,7 @@ defmodule OnigumoTest do
     expect(
       HTTPoisonMock,
       :get!,
+      2,
       fn url ->
         %HTTPoison.Response{
           status_code: 200,
