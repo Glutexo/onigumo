@@ -48,7 +48,7 @@ defmodule OnigumoTest do
     expected = "Body from: #{@url_1}\nBody from: #{@url_2}\n"
     # load urls from urls_file
     # read result from some test file
-    Onigumo.save_URLs_contents(input_file, output_file)
+    Onigumo.save_urls_contents(input_file, output_file)
 
     assert(expected == File.read!(output_file))
   end
