@@ -13,15 +13,15 @@ defmodule Onigumo do
   end
 
   def download(http_client) do
-    load_urls(@input_filename)
-    |> download(http_client)
+    urls = load_urls(@input_filename)
+    download(http_client, urls)
   end
 
-  def download(urls, http_client) when is_list(urls) do
-    Enum.map(urls, &download(&1, http_client))
+  def download(http_client, urls) when is_list(urls) do
+    Enum.map(urls, &download(http_client, &1))
   end
 
-  def download(url, http_client) when is_bitstring(url) do
+  def download(http_client, url) when is_bitstring(url) do
     %HTTPoison.Response{
       status_code: 200,
       body: body

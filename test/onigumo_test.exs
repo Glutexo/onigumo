@@ -22,7 +22,7 @@ defmodule OnigumoTest do
       end
     )
 
-    assert(:ok == Onigumo.download(@url_1, HTTPoisonMock))
+    assert(:ok == Onigumo.download(HTTPoisonMock, @url_1))
     assert("Body from: #{@url_1}\n" == File.read!(@output_filename))
   end
 
@@ -41,7 +41,7 @@ defmodule OnigumoTest do
     )
 
     urls = [@url_1, @url_2]
-    assert([:ok, :ok] == Onigumo.download(urls, HTTPoisonMock))
+    assert([:ok, :ok] == Onigumo.download(HTTPoisonMock, urls))
     assert("Body from: #{@url_2}\n" == File.read!(@output_filename))
   end
 
