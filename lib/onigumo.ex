@@ -9,19 +9,19 @@ defmodule Onigumo do
     HTTPoison.start()
     http = http_client()
 
-    save_urls_contents(http)
+    download(http)
   end
 
-  def save_urls_contents(http) do
+  def download(http_client) do
     load_urls(@input_filename)
-    |> download(http)
+    |> download(http_client)
   end
 
   def download(urls, http_client) when is_list(urls) do
     Enum.map(urls, &download(&1, http_client))
   end
 
-  def download(url, http_client) do
+  def download(url, http_client) when is_bitstring(url) do
     %HTTPoison.Response{
       status_code: 200,
       body: body

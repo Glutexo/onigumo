@@ -63,7 +63,7 @@ defmodule OnigumoTest do
     expected = "Body from: #{@url_2}\n"
     # load urls from urls_file
     # read result from some test file
-    Onigumo.save_urls_contents(HTTPoisonMock)
+    Onigumo.download(HTTPoisonMock)
 
     assert(expected == File.read!(@output_filename))
   end
