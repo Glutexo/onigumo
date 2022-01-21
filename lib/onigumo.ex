@@ -28,7 +28,7 @@ defmodule Onigumo do
     } = http_client.get!(url)
     IO.puts(body)
 
-    File.write!(output_file, body, [:append])
+    File.write!(output_file, body)
   end
 
   def load_urls(filepath) do
