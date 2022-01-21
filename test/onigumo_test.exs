@@ -10,7 +10,7 @@ defmodule OnigumoTest do
 
   setup(:verify_on_exit!)
 
-  test("download one URL") do
+  test("download a single URL") do
     expect(
       HTTPoisonMock,
       :get!,
@@ -45,7 +45,7 @@ defmodule OnigumoTest do
     assert("Body from: #{@url_2}\n" == File.read!(@output_filename))
   end
 
-  test("integration test") do
+  test("download URLs from the input file") do
     expect(
       HTTPoisonMock,
       :get!,
@@ -69,7 +69,7 @@ defmodule OnigumoTest do
   end
 
   @tag :tmp_dir
-  test("load one URL from file", %{tmp_dir: tmp_dir}) do
+  test("load a single URL from a file", %{tmp_dir: tmp_dir}) do
     filepath = Path.join(tmp_dir, @input_filename)
     content = "#{@url_1}\n"
     File.write!(filepath, content)
@@ -79,7 +79,7 @@ defmodule OnigumoTest do
   end
 
   @tag :tmp_dir
-  test("load two URLs from file", %{tmp_dir: tmp_dir}) do
+  test("load multiple URLs from a file", %{tmp_dir: tmp_dir}) do
     filepath = Path.join(tmp_dir, @input_filename)
     content = "#{@url_1}\n#{@url_2}\n"
     File.write!(filepath, content)
