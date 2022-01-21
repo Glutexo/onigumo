@@ -13,7 +13,7 @@ defmodule Onigumo do
   end
 
   def save_urls_contents(http) do
-    load_urls()
+    load_urls(@input_filename)
     |> download(http)
   end
 
@@ -30,8 +30,8 @@ defmodule Onigumo do
     File.write!(@output_filename, body)
   end
 
-  def load_urls() do
-    File.stream!(@input_filename, [:read], :line)
+  def load_urls(filepath) do
+    File.stream!(filepath, [:read], :line)
     |> Enum.map(&String.trim_trailing/1)
   end
 

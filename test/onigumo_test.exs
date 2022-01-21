@@ -68,19 +68,23 @@ defmodule OnigumoTest do
     assert(expected == File.read!(@output_filename))
   end
 
-  test("load one URL from file") do
+  @tag :tmp_dir
+  test("load one URL from file", %{tmp_dir: tmp_dir}) do
+    filepath = Path.join(tmp_dir, @input_filename)
     content = "#{@url_1}\n"
-    File.write!(@input_filename, content)
+    File.write!(filepath, content)
 
     expected = [@url_1]
-    assert(expected == Onigumo.load_urls())
+    assert(expected == Onigumo.load_urls(filepath))
   end
 
-  test("load two URLs from file") do
+  @tag :tmp_dir
+  test("load two URLs from file", %{tmp_dir: tmp_dir}) do
+    filepath = Path.join(tmp_dir, @input_filename)
     content = "#{@url_1}\n#{@url_2}\n"
-    File.write!(@input_filename, content)
+    File.write!(filepath, content)
 
     expected = [@url_1, @url_2]
-    assert(expected == Onigumo.load_urls())
+    assert(expected == Onigumo.load_urls(filepath))
   end
 end
