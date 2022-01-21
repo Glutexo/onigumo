@@ -2,8 +2,10 @@ defmodule OnigumoTest do
   use ExUnit.Case
   import Mox
 
-  @url_1 "https://onigumo.local/hello.html"
-  @url_2 "https://onigumo.local/bye.html"
+  @urls [
+    "https://onigumo.local/hello.html",
+    "https://onigumo.local/bye.html"
+  ]
 
   @filename "body.html"
   @testfile_with_urls "urls.txt"
@@ -22,8 +24,9 @@ defmodule OnigumoTest do
       end
     )
 
-    assert(:ok == Onigumo.download(HTTPoisonMock, @url_1))
-    assert("Body from: #{@url_1}" == File.read!(@filename))
+    url = Enum.at(@urls, 0)
+    assert(:ok == Onigumo.download(HTTPoisonMock, url))
+    assert("Body from: #{url}" == File.read!(@filename))
   end
 
 
@@ -40,9 +43,9 @@ defmodule OnigumoTest do
       end
     )
 
-    urls = [@url_1, @url_2]
-    assert([:ok, :ok] == Onigumo.download(HTTPoisonMock, urls))
-    assert("Body from: #{@url_2}" == File.read!(@filename))
+    assert([:ok, :ok] == Onigumo.download(HTTPoisonMock, @urls))
+    last_url = Enum.at(@urls, -1)
+    assert("Body from: #{last_url}" == File.read!(@filename))
   end
 
   test("download URLs from the input file") do
@@ -58,9 +61,11 @@ defmodule OnigumoTest do
       end
     )
 
-    content = "#{@url_1}\n#{@url_2}\n"
+    content = Enum.map(@urls, &(&1 <> "\n")) |> Enum.join()
     File.write!(@testfile_with_urls, content)
-    expected = "Body from: #{@url_2}\n"
+
+    last_url = Enum.at(@urls, -1)
+    expected = "Body from: #{last_url}"
     # load urls from urls_file
     # read result from some test file
     Onigumo.download(HTTPoisonMock)
@@ -70,21 +75,22 @@ defmodule OnigumoTest do
 
   @tag :tmp_dir
   test("load a single URL from a file", %{tmp_dir: tmp_dir}) do
+    url = Enum.at(@urls, 0)
+
     filepath = Path.join(tmp_dir, @testfile_with_urls)
-    content = "#{@url_1}\n"
+    content = "#{url}\n"
     File.write!(filepath, content)
 
-    expected = [@url_1]
+    expected = [url]
     assert(expected == Onigumo.load_urls(filepath))
   end
 
   @tag :tmp_dir
   test("load multiple URLs from a file", %{tmp_dir: tmp_dir}) do
     filepath = Path.join(tmp_dir, @testfile_with_urls)
-    content = "#{@url_1}\n#{@url_2}\n"
+    content = Enum.map(@urls, &(&1 <> "\n")) |> Enum.join()
     File.write!(filepath, content)
 
-    expected = [@url_1, @url_2]
-    assert(expected == Onigumo.load_urls(filepath))
+    assert(@urls == Onigumo.load_urls(filepath))
   end
 end
