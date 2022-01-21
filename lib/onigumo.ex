@@ -9,29 +9,29 @@ defmodule Onigumo do
     HTTPoison.start()
     http = http_client()
 
-    save_urls_contents(http, @input_filename, @output_filename)
+    save_urls_contents(http)
   end
 
-  def save_urls_contents(http, input_file, output_file) do
-    load_urls(input_file)
-    |> download(http, output_file)
+  def save_urls_contents(http) do
+    load_urls()
+    |> download(http)
   end
 
-  def download(urls, http_client, output_file) when is_list(urls) do
-    Enum.map(urls, &download(&1, http_client, output_file))
+  def download(urls, http_client) when is_list(urls) do
+    Enum.map(urls, &download(&1, http_client))
   end
 
-  def download(url, http_client, output_file) do
+  def download(url, http_client) do
     %HTTPoison.Response{
       status_code: 200,
       body: body
     } = http_client.get!(url)
 
-    File.write!(output_file, body)
+    File.write!(@output_filename, body)
   end
 
-  def load_urls(filepath) do
-    File.stream!(filepath, [:read], :line)
+  def load_urls() do
+    File.stream!(@input_filename, [:read], :line)
     |> Enum.map(&String.trim_trailing/1)
   end
 

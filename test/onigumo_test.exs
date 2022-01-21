@@ -5,12 +5,12 @@ defmodule OnigumoTest do
   @url_1 "http://onigumo.org/hello.html"
   @url_2 "http://onigumo.org/bye.html"
 
+  @input_filename "urls.txt"
+  @output_filename "body.html"
+
   setup(:verify_on_exit!)
 
-  @tag :tmp_dir
-  test("download one URL", %{tmp_dir: tmp_dir}) do
-    output_file = Path.join(tmp_dir, "outputfile")
-
+  test("download one URL") do
     expect(
       HTTPoisonMock,
       :get!,
@@ -22,15 +22,12 @@ defmodule OnigumoTest do
       end
     )
 
-    assert(:ok == Onigumo.download(@url_1, HTTPoisonMock, output_file))
-    assert("Body from: #{@url_1}\n" == File.read!(output_file))
+    assert(:ok == Onigumo.download(@url_1, HTTPoisonMock))
+    assert("Body from: #{@url_1}\n" == File.read!(@output_filename))
   end
 
 
-  @tag :tmp_dir
-  test("download multiple URLs", %{tmp_dir: tmp_dir}) do
-    output_file = Path.join(tmp_dir, "outputfile")
-
+  test("download multiple URLs") do
     expect(
       HTTPoisonMock,
       :get!,
@@ -44,15 +41,11 @@ defmodule OnigumoTest do
     )
 
     urls = [@url_1, @url_2]
-    assert([:ok, :ok] == Onigumo.download(urls, HTTPoisonMock, output_file))
-    assert("Body from: #{@url_2}\n" == File.read!(output_file))
+    assert([:ok, :ok] == Onigumo.download(urls, HTTPoisonMock))
+    assert("Body from: #{@url_2}\n" == File.read!(@output_filename))
   end
 
-  @tag :tmp_dir
-  test("integration test", %{tmp_dir: tmp_dir}) do
-    output_file = Path.join(tmp_dir, "outputfile")
-    input_file = Path.join(tmp_dir, "inputfile")
-
+  test("integration test") do
     expect(
       HTTPoisonMock,
       :get!,
@@ -66,32 +59,28 @@ defmodule OnigumoTest do
     )
 
     content = "#{@url_1}\n#{@url_2}\n"
-    File.write!(input_file, content)
+    File.write!(@input_filename, content)
     expected = "Body from: #{@url_2}\n"
     # load urls from urls_file
     # read result from some test file
-    Onigumo.save_urls_contents(HTTPoisonMock, input_file, output_file)
+    Onigumo.save_urls_contents(HTTPoisonMock)
 
-    assert(expected == File.read!(output_file))
+    assert(expected == File.read!(@output_filename))
   end
 
-  @tag :tmp_dir
-  test("load one URL from file", %{tmp_dir: tmp_dir}) do
-    filepath = Path.join(tmp_dir, "input_file")
+  test("load one URL from file") do
     content = "#{@url_1}\n"
-    File.write!(filepath, content)
+    File.write!(@input_filename, content)
 
     expected = [@url_1]
-    assert(expected == Onigumo.load_urls(filepath))
+    assert(expected == Onigumo.load_urls())
   end
 
-  @tag :tmp_dir
-  test("load two URLs from file", %{tmp_dir: tmp_dir}) do
-    filepath = Path.join(tmp_dir, "input_file")
+  test("load two URLs from file") do
     content = "#{@url_1}\n#{@url_2}\n"
-    File.write!(filepath, content)
+    File.write!(@input_filename, content)
 
     expected = [@url_1, @url_2]
-    assert(expected == Onigumo.load_urls(filepath))
+    assert(expected == Onigumo.load_urls())
   end
 end
