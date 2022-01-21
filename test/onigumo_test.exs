@@ -5,8 +5,8 @@ defmodule OnigumoTest do
   @url_1 "https://onigumo.local/hello.html"
   @url_2 "https://onigumo.local/bye.html"
 
-  @input_filename "urls.txt"
-  @output_filename "body.html"
+  @filename "body.html"
+  @testfile_with_urls "urls.txt"
 
   setup(:verify_on_exit!)
 
@@ -23,7 +23,7 @@ defmodule OnigumoTest do
     )
 
     assert(:ok == Onigumo.download(HTTPoisonMock, @url_1))
-    assert("Body from: #{@url_1}\n" == File.read!(@output_filename))
+    assert("Body from: #{@url_1}\n" == File.read!(@filename))
   end
 
 
@@ -42,7 +42,7 @@ defmodule OnigumoTest do
 
     urls = [@url_1, @url_2]
     assert([:ok, :ok] == Onigumo.download(HTTPoisonMock, urls))
-    assert("Body from: #{@url_2}\n" == File.read!(@output_filename))
+    assert("Body from: #{@url_2}\n" == File.read!(@filename))
   end
 
   test("download URLs from the input file") do
@@ -59,18 +59,18 @@ defmodule OnigumoTest do
     )
 
     content = "#{@url_1}\n#{@url_2}\n"
-    File.write!(@input_filename, content)
+    File.write!(@testfile_with_urls, content)
     expected = "Body from: #{@url_2}\n"
     # load urls from urls_file
     # read result from some test file
     Onigumo.download(HTTPoisonMock)
 
-    assert(expected == File.read!(@output_filename))
+    assert(expected == File.read!(@filename))
   end
 
   @tag :tmp_dir
   test("load a single URL from a file", %{tmp_dir: tmp_dir}) do
-    filepath = Path.join(tmp_dir, @input_filename)
+    filepath = Path.join(tmp_dir, @testfile_with_urls)
     content = "#{@url_1}\n"
     File.write!(filepath, content)
 
@@ -80,7 +80,7 @@ defmodule OnigumoTest do
 
   @tag :tmp_dir
   test("load multiple URLs from a file", %{tmp_dir: tmp_dir}) do
-    filepath = Path.join(tmp_dir, @input_filename)
+    filepath = Path.join(tmp_dir, @testfile_with_urls)
     content = "#{@url_1}\n#{@url_2}\n"
     File.write!(filepath, content)
 
