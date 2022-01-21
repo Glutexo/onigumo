@@ -17,13 +17,13 @@ defmodule OnigumoTest do
       fn url ->
         %HTTPoison.Response{
           status_code: 200,
-          body: "Body from: #{url}\n"
+          body: "Body from: #{url}"
         }
       end
     )
 
     assert(:ok == Onigumo.download(HTTPoisonMock, @url_1))
-    assert("Body from: #{@url_1}\n" == File.read!(@filename))
+    assert("Body from: #{@url_1}" == File.read!(@filename))
   end
 
 
@@ -35,14 +35,14 @@ defmodule OnigumoTest do
       fn url ->
         %HTTPoison.Response{
           status_code: 200,
-          body: "Body from: #{url}\n"
+          body: "Body from: #{url}"
         }
       end
     )
 
     urls = [@url_1, @url_2]
     assert([:ok, :ok] == Onigumo.download(HTTPoisonMock, urls))
-    assert("Body from: #{@url_2}\n" == File.read!(@filename))
+    assert("Body from: #{@url_2}" == File.read!(@filename))
   end
 
   test("download URLs from the input file") do
@@ -53,7 +53,7 @@ defmodule OnigumoTest do
       fn url ->
         %HTTPoison.Response{
           status_code: 200,
-          body: "Body from: #{url}\n"
+          body: "Body from: #{url}"
         }
       end
     )
