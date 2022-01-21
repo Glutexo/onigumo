@@ -3,27 +3,30 @@ defmodule Onigumo do
   Web scraper
   """
   @input_filename "urls.txt"
-  def input_filename, do: @input_filename
   @output_filename "body.html"
-  def output_filename, do: @output_filename
 
   def main() do
     HTTPoison.start()
-    save_urls_contents(@input_filename, @output_filename)
-  end
-
-  def save_urls_contents(input_file, output_file) do
     http = http_client()
 
-    load_urls(input_file)
-    |> Enum.map(&download(http, &1, output_file))
+    save_urls_contents(http, @input_filename, @output_filename)
   end
 
-  def download(http_client, url, output_file) do
+  def save_urls_contents(http, input_file, output_file) do
+    load_urls(input_file)
+    |> download(http, output_file)
+  end
+
+  def download(urls, http_client, output_file) when is_list(urls) do
+    Enum.map(urls, &download(&1, http, output_file))
+  end
+
+  def download(url, http_client, output_file) do
     %HTTPoison.Response{
       status_code: 200,
       body: body
     } = http_client.get!(url)
+    IO.puts(body)
 
     File.write!(output_file, body, [:append])
   end
