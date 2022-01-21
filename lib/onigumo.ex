@@ -18,7 +18,7 @@ defmodule Onigumo do
   end
 
   def download(urls, http_client, output_file) when is_list(urls) do
-    Enum.map(urls, &download(&1, http, output_file))
+    Enum.map(urls, &download(&1, http_client, output_file))
   end
 
   def download(url, http_client, output_file) do
