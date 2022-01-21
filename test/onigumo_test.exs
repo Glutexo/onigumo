@@ -2,8 +2,8 @@ defmodule OnigumoTest do
   use ExUnit.Case
   import Mox
 
-  @url_1 "http://onigumo.org/hello.html"
-  @url_2 "http://onigumo.org/bye.html"
+  @url_1 "https://onigumo.local/hello.html"
+  @url_2 "https://onigumo.local/bye.html"
 
   @input_filename "urls.txt"
   @output_filename "body.html"
