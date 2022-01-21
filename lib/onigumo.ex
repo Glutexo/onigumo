@@ -26,7 +26,6 @@ defmodule Onigumo do
       status_code: 200,
       body: body
     } = http_client.get!(url)
-    IO.puts(body)
 
     File.write!(output_file, body)
   end
