@@ -10,16 +10,16 @@ defmodule Onigumo do
     http = http_client()
 
     load_urls(@input_filename)
-    |> Enum.map(&download(http, &1))
+    |> Enum.map(&download(http, &1, @output_filename))
   end
 
-  def download(http_client, url) do
+  def download(http_client, url, filename) do
     %HTTPoison.Response{
       status_code: 200,
       body: body
     } = http_client.get!(url)
 
-    File.write!(@output_filename, body)
+    File.write!(filename, body)
   end
 
   def load_urls(filepath) do
