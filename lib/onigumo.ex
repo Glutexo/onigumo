@@ -2,14 +2,14 @@ defmodule Onigumo do
   @moduledoc """
   Web scraper
   """
-  @input_filename "urls.txt"
   @output_filename "body.html"
 
   def main() do
     HTTPoison.start()
     http = http_client()
 
-    load_urls(@input_filename)
+    Application.get_env(:onigumo, :input_filename)
+    |> load_urls()
     |> Enum.map(&download(http, &1))
   end
 

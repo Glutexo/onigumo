@@ -4,7 +4,6 @@ defmodule OnigumoTest do
 
   @url "http://onigumo.org/hello.html"
   @filename "body.html"
-  @testfile_with_urls "urls.txt"
 
   setup(:verify_on_exit!)
 
@@ -27,7 +26,7 @@ defmodule OnigumoTest do
 
   @tag :tmp_dir
   test("load URL from file", %{tmp_dir: tmp_dir}) do
-    filepath = Path.join(tmp_dir, @testfile_with_urls)
+    filepath = Path.join(tmp_dir, "urls.txt")
     content = @url <> " \n"
     File.write!(filepath, content)
 
