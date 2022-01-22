@@ -82,4 +82,5 @@ defmodule OnigumoTest do
     expected = [url]
     assert(expected == Onigumo.load_urls(filepath))
   end
+
 end
