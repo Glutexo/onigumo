@@ -78,7 +78,7 @@ defmodule OnigumoTest do
     url = Enum.at(@urls, 0)
 
     filepath = Path.join(tmp_dir, @testfile_with_urls)
-    content = url <> "\n"
+    content = url <> " \n"
     File.write!(filepath, content)
 
     expected = [url]
