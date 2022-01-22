@@ -7,10 +7,10 @@ defmodule Onigumo do
 
   def main() do
     HTTPoison.start()
-    http = http_client()
+    http_client = Application.get_env(:onigumo, :http_client)
 
     load_urls(@input_filename)
-    |> Enum.map(&download(http, &1))
+    |> Enum.map(&download(http_client, &1))
   end
 
   def download(http_client, url) do
@@ -25,9 +25,5 @@ defmodule Onigumo do
   def load_urls(filepath) do
     File.stream!(filepath, [:read], :line)
     |> Enum.map(&String.trim_trailing/1)
-  end
-
-  defp http_client() do
-    Application.get_env(:onigumo, :http_client)
   end
 end
