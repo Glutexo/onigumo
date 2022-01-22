@@ -15,13 +15,13 @@ defmodule OnigumoTest do
       fn url ->
         %HTTPoison.Response{
           status_code: 200,
-          body: "Body from: #{url}"
+          body: "Body from: #{url}\n"
         }
       end
     )
 
     assert(:ok == Onigumo.download(HTTPoisonMock, @url))
-    assert("Body from: #{@url}" == File.read!(@filename))
+    assert("Body from: #{@url}\n" == File.read!(@filename))
   end
 
 
