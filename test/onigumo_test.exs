@@ -27,12 +27,17 @@ defmodule OnigumoTest do
 
   @tag :tmp_dir
   test("load URL from file", %{tmp_dir: tmp_dir}) do
+    urls = [@url]
+
     filepath = Path.join(tmp_dir, @testfile_with_urls)
-    content = @url <> " \n"
+    content = urls_input(urls)
     File.write!(filepath, content)
 
-    expected = [@url]
-    assert(expected == Onigumo.load_urls(filepath))
+    assert(urls == Onigumo.load_urls(filepath))
   end
 
+  defp urls_input(urls) do
+    Enum.map(urls, &(&1 <> " \n"))
+    |> Enum.join()
+  end
 end
