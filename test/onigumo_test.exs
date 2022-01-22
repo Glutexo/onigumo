@@ -2,7 +2,7 @@ defmodule OnigumoTest do
   use ExUnit.Case
   import Mox
 
-  @url "http://onigumo.org/hello.html"
+  @url "http://onigumo.local/hello.html"
   @filename "body.html"
   @testfile_with_urls "urls.txt"
 
