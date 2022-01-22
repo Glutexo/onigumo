@@ -28,7 +28,7 @@ defmodule OnigumoTest do
   @tag :tmp_dir
   test("load URL from file", %{tmp_dir: tmp_dir}) do
     filepath = Path.join(tmp_dir, @testfile_with_urls)
-    content = @url <> " \n"
+    content = @url <> "\n"
     File.write!(filepath, content)
 
     expected = [@url]
