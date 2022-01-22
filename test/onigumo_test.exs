@@ -72,7 +72,7 @@ defmodule OnigumoTest do
   end
 
   @tag :tmp_dir
-  test("load a single URL from a file", %{tmp_dir: tmp_dir}) do
+  test("load URL from file", %{tmp_dir: tmp_dir}) do
     url = Enum.at(@urls, 0)
 
     filepath = Path.join(tmp_dir, @testfile_with_urls)
@@ -81,14 +81,5 @@ defmodule OnigumoTest do
 
     expected = [url]
     assert(expected == Onigumo.load_urls(filepath))
-  end
-
-  @tag :tmp_dir
-  test("load multiple URLs from a file", %{tmp_dir: tmp_dir}) do
-    filepath = Path.join(tmp_dir, @testfile_with_urls)
-    content = Enum.map(@urls, &(&1 <> " \n")) |> Enum.join()
-    File.write!(filepath, content)
-
-    assert(@urls == Onigumo.load_urls(filepath))
   end
 end
