@@ -3,7 +3,6 @@ defmodule OnigumoTest do
   import Mox
 
   @url "http://onigumo.org/hello.html"
-  @filename "body.html"
   @testfile_with_urls "urls.txt"
 
   setup(:verify_on_exit!)
@@ -21,7 +20,9 @@ defmodule OnigumoTest do
     )
 
     assert(:ok == Onigumo.download(HTTPoisonMock, @url))
-    assert("Body from: #{@url}" == File.read!(@filename))
+
+    filename = Hash.md5(@url, :hex)
+    assert("Body from: #{@url}" == File.read!(filename))
   end
 
 

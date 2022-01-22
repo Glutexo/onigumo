@@ -3,7 +3,6 @@ defmodule Onigumo do
   Web scraper
   """
   @input_filename "urls.txt"
-  @output_filename "body.html"
 
   def main() do
     HTTPoison.start()
@@ -19,12 +18,17 @@ defmodule Onigumo do
       body: body
     } = http_client.get!(url)
 
-    File.write!(@output_filename, body)
+    filename(url)
+    |> File.write!(body)
   end
 
   def load_urls(filepath) do
     File.stream!(filepath, [:read], :line)
     |> Enum.map(&String.trim_trailing/1)
+  end
+
+  def filename(url) do
+    Hash.md5(url, :hex)
   end
 
   defp http_client() do
