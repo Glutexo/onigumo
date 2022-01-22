@@ -66,8 +66,6 @@ defmodule OnigumoTest do
 
     last_url = Enum.at(@urls, -1)
     expected = "Body from: #{last_url}"
-    # load urls from urls_file
-    # read result from some test file
     Onigumo.download(HTTPoisonMock)
 
     assert(expected == File.read!(@filename))
