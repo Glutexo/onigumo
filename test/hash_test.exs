@@ -21,9 +21,19 @@ defmodule HashTest do
     }
   ]
 
-  @binary_hash <<61, 132, 37, 182, 234, 46, 254, 15, 167, 128, 117, 73,
-    44, 113, 159, 254>>
-  @hexadecimal_hash "3d8425b6ea2efe0fa78075492c719ffe"
+  @binary_hash <<61, 132, 37, 182, 234, 46, 254, 15, 167, 128, 117,
+    73, 44, 113, 159, 254>>
+  @formatted_hashes [
+    {
+      :bin,
+      <<61, 132, 37, 182, 234, 46, 254, 15, 167, 128, 117, 73, 44, 113,
+      159, 254>>
+    },
+    {
+      :hex,
+      "3d8425b6ea2efe0fa78075492c719ffe"
+    }
+  ]
 
   @data "onigumo"
   @known_hashes [
@@ -60,16 +70,13 @@ defmodule HashTest do
     end
   end
 
-  test("format as binary") do
-    formatted = Hash.format(@binary_hash, :bin)
-    assert(formatted == @binary_hash)
+  for {format, hash} <- @formatted_hashes do
+    test("format as #{format}") do
+      formatted = Hash.format(@binary_hash, unquote(format))
+      assert(formatted == unquote(hash))
+    end
   end
-
-  test("format as hexadecimal") do
-    formatted = Hash.format(@binary_hash, :hex)
-    assert(formatted == @hexadecimal_hash)
-  end
-
+    
   for {func, hash} <- @known_hashes do
     test("hash known value with #{func}") do
       hash = Hash.hash(unquote(func), @data)
