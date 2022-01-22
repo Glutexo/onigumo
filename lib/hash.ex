@@ -4,7 +4,7 @@ defmodule Hash do
     |> format(fmt)
   end
 
-  def format(data, :binary) do
+  def format(data, :bin) do
     data
   end
 

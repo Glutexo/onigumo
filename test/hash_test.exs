@@ -55,13 +55,13 @@ defmodule HashTest do
     end
 
     test("MD5 known value #{inspect(data)} in binary") do
-      actual_hash = Hash.md5(unquote(data), :binary)
+      actual_hash = Hash.md5(unquote(data), :bin)
       assert(actual_hash == unquote(hash_bin))
     end
   end
 
   test("format as binary") do
-    formatted = Hash.format(@binary_hash, :binary)
+    formatted = Hash.format(@binary_hash, :bin)
     assert(formatted == @binary_hash)
   end
 
