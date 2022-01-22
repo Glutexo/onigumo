@@ -22,8 +22,8 @@ defmodule Onigumo do
     File.write!(@output_filename, body)
   end
 
-  def load_urls(filepath) do
-    File.stream!(filepath, [:read], :line)
+  def load_urls(filename) do
+    File.stream!(filename, [:read], :line)
     |> Enum.map(&String.trim_trailing/1)
   end
 
