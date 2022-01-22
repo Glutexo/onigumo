@@ -43,7 +43,8 @@ defmodule OnigumoTest do
       end
     )
 
-    assert([:ok, :ok] == Onigumo.download(HTTPoisonMock, @urls))
+    responses = Enum.map(@urls, fn _ -> :ok end)
+    assert(responses == Onigumo.download(HTTPoisonMock, @urls))
     last_url = Enum.at(@urls, -1)
     assert("Body from: #{last_url}" == File.read!(@filename))
   end
@@ -64,10 +65,11 @@ defmodule OnigumoTest do
     content = Enum.map(@urls, &(&1 <> " \n")) |> Enum.join()
     File.write!(@testfile_with_urls, content)
 
+    responses = Enum.map(@urls, fn _ -> :ok end)
+    assert(responses == Onigumo.download(HTTPoisonMock))
+
     last_url = Enum.at(@urls, -1)
     expected = "Body from: #{last_url}"
-    Onigumo.download(HTTPoisonMock)
-
     assert(expected == File.read!(@filename))
   end
 
