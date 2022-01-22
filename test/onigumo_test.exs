@@ -20,8 +20,11 @@ defmodule OnigumoTest do
       end
     )
 
-    assert(:ok == Onigumo.download(HTTPoisonMock, @url))
-    assert("Body from: #{@url}" == File.read!(@filename))
+    result = Onigumo.download(HTTPoisonMock, @url)
+    assert(result == :ok)
+
+    content = File.read!(@filename)
+    assert(content == "Body from: #{@url}")
   end
 
 
@@ -31,8 +34,8 @@ defmodule OnigumoTest do
     content = @url <> " \n"
     File.write!(filepath, content)
 
-    expected = [@url]
-    assert(expected == Onigumo.load_urls(filepath))
+    urls = Onigumo.load_urls(filepath)
+    assert(urls == [@url])
   end
 
 end
