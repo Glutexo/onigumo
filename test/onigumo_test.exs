@@ -20,7 +20,7 @@ defmodule OnigumoTest do
       end
     )
 
-    assert(:ok == Onigumo.download(HTTPoisonMock, @url))
+    assert(:ok == Onigumo.download(@url, HTTPoisonMock))
     assert("Body from: #{@url}" == File.read!(@filename))
   end
 
