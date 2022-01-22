@@ -9,16 +9,7 @@ defmodule OnigumoTest do
   setup(:verify_on_exit!)
 
   test("download") do
-    expect(
-      HTTPoisonMock,
-      :get!,
-      fn url ->
-        %HTTPoison.Response{
-          status_code: 200,
-          body: "Body from: #{url}"
-        }
-      end
-    )
+    expect(HTTPoisonMock, :get!, &get!/1)
 
     assert(:ok == Onigumo.download(HTTPoisonMock, @url))
     assert("Body from: #{@url}" == File.read!(@filename))
@@ -35,4 +26,10 @@ defmodule OnigumoTest do
     assert(expected == Onigumo.load_urls(filepath))
   end
 
+  defp get!(url) do
+    %HTTPoison.Response{
+      status_code: 200,
+      body: "Body from: #{url}"
+    }
+  end
 end
