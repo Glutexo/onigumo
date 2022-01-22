@@ -45,6 +45,7 @@ defmodule OnigumoTest do
 
     responses = Enum.map(@urls, fn _ -> :ok end)
     assert(responses == Onigumo.download(HTTPoisonMock, @urls))
+
     last_url = Enum.at(@urls, -1)
     assert("Body from: #{last_url}" == File.read!(@filename))
   end
