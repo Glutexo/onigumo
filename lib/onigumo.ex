@@ -21,7 +21,7 @@ defmodule Onigumo do
     Enum.map(urls, &download(http_client, &1))
   end
 
-  def download(http_client, url) when is_bitstring(url) do
+  def download(http_client, url) when is_binary(url) do
     %HTTPoison.Response{
       status_code: 200,
       body: body
