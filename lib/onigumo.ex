@@ -14,14 +14,14 @@ defmodule Onigumo do
 
   def download(http_client) do
     urls = load_urls(@input_filename)
-    download(http_client, urls)
+    download(urls, http_client)
   end
 
-  def download(http_client, urls) when is_list(urls) do
-    Enum.map(urls, &download(http_client, &1))
+  def download(urls, http_client) when is_list(urls) do
+    Enum.map(urls, &download(&1, http_client))
   end
 
-  def download(http_client, url) when is_binary(url) do
+  def download(url, http_client) when is_binary(url) do
     %HTTPoison.Response{
       status_code: 200,
       body: body
