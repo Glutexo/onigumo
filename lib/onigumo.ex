@@ -2,8 +2,8 @@ defmodule Onigumo do
   @moduledoc """
   Web scraper
   """
-  @input_filename "urls.txt"
-  @output_filename "body.html"
+  @input_path "urls.txt"
+  @output_path "body.html"
 
   def main() do
     HTTPoison.start()
@@ -13,7 +13,7 @@ defmodule Onigumo do
   end
 
   def download(http) do
-    urls = load_urls(@input_filename)
+    urls = load_urls(@input_path)
     download(urls, http)
   end
 
@@ -27,11 +27,11 @@ defmodule Onigumo do
       body: body
     } = http.get!(url)
 
-    File.write!(@output_filename, body)
+    File.write!(@output_path, body)
   end
 
-  def load_urls(filepath) do
-    File.stream!(filepath, [:read], :line)
+  def load_urls(path) do
+    File.stream!(path, [:read], :line)
     |> Enum.map(&String.trim_trailing/1)
   end
 
