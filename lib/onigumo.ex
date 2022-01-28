@@ -10,10 +10,10 @@ defmodule Onigumo do
     http = http_client()
 
     load_urls(@input_filename)
-    |> Enum.map(&download(http, &1))
+    |> Enum.map(&download(&1, http))
   end
 
-  def download(http_client, url) do
+  def download(url, http_client) do
     %HTTPoison.Response{
       status_code: 200,
       body: body
