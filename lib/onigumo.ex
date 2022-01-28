@@ -13,11 +13,11 @@ defmodule Onigumo do
     |> Enum.map(&download(&1, http))
   end
 
-  def download(url, http_client) do
+  def download(url, http) do
     %HTTPoison.Response{
       status_code: 200,
       body: body
-    } = http_client.get!(url)
+    } = http.get!(url)
 
     File.write!(@output_filename, body)
   end
