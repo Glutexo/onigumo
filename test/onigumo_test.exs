@@ -63,7 +63,7 @@ defmodule OnigumoTest do
       end
     )
 
-    content = Enum.map(@urls, &(&1 <> " \n")) |> Enum.join()
+    content = Enum.map(@urls, &(&1 <> "\n")) |> Enum.join()
     File.write!(@input_filename, content)
 
     responses = Enum.map(@urls, fn _ -> :ok end)
@@ -79,7 +79,7 @@ defmodule OnigumoTest do
     url = Enum.at(@urls, 0)
 
     filepath = Path.join(tmp_dir, @input_filename)
-    content = url <> " \n"
+    content = url <> "\n"
     File.write!(filepath, content)
 
     expected = [url]
