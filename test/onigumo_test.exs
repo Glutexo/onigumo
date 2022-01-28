@@ -3,8 +3,8 @@ defmodule OnigumoTest do
   import Mox
 
   @url "http://onigumo.org/hello.html"
-  @input_filename "urls.txt"
-  @output_filename "body.html"
+  @input_path "urls.txt"
+  @output_path "body.html"
 
   setup(:verify_on_exit!)
 
@@ -21,18 +21,18 @@ defmodule OnigumoTest do
     )
 
     assert(:ok == Onigumo.download(@url, HTTPoisonMock))
-    assert("Body from: #{@url}\n" == File.read!(@output_filename))
+    assert("Body from: #{@url}\n" == File.read!(@output_path))
   end
 
 
   @tag :tmp_dir
   test("load URL from file", %{tmp_dir: tmp_dir}) do
-    filepath = Path.join(tmp_dir, @input_filename)
+    path = Path.join(tmp_dir, @input_path)
     content = @url <> "\n"
-    File.write!(filepath, content)
+    File.write!(path, content)
 
     expected = [@url]
-    assert(expected == Onigumo.load_urls(filepath))
+    assert(expected == Onigumo.load_urls(path))
   end
 
 end
