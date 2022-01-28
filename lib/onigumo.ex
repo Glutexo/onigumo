@@ -9,25 +9,25 @@ defmodule Onigumo do
     HTTPoison.start()
     http = http_client()
 
-    download(http)
+    download(http, @output_path)
   end
 
-  def download(http) do
+  def download(http, path) do
     urls = load_urls(@input_path)
-    download(urls, http)
+    download(urls, http, path)
   end
 
-  def download(urls, http) when is_list(urls) do
-    Enum.map(urls, &download(&1, http))
+  def download(urls, http, path) when is_list(urls) do
+    Enum.map(urls, &download(&1, http, path))
   end
 
-  def download(url, http) when is_binary(url) do
+  def download(url, http, path) when is_binary(url) do
     %HTTPoison.Response{
       status_code: 200,
       body: body
     } = http.get!(url)
 
-    File.write!(@output_path, body)
+    File.write!(path, body)
   end
 
   def load_urls(path) do
