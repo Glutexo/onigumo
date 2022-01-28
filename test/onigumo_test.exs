@@ -19,14 +19,14 @@ defmodule OnigumoTest do
       fn url ->
         %HTTPoison.Response{
           status_code: 200,
-          body: "Body from: #{url}"
+          body: "Body from: #{url}\n"
         }
       end
     )
 
     url = Enum.at(@urls, 0)
     assert(:ok == Onigumo.download(url, HTTPoisonMock))
-    assert("Body from: #{url}" == File.read!(@output_filename))
+    assert("Body from: #{url}\n" == File.read!(@output_filename))
   end
 
 
@@ -38,7 +38,7 @@ defmodule OnigumoTest do
       fn url ->
         %HTTPoison.Response{
           status_code: 200,
-          body: "Body from: #{url}"
+          body: "Body from: #{url}\n"
         }
       end
     )
@@ -47,7 +47,7 @@ defmodule OnigumoTest do
     assert(responses == Onigumo.download(@urls, HTTPoisonMock))
 
     last_url = Enum.at(@urls, -1)
-    assert("Body from: #{last_url}" == File.read!(@output_filename))
+    assert("Body from: #{last_url}\n" == File.read!(@output_filename))
   end
 
   test("download URLs from the input file") do
@@ -58,7 +58,7 @@ defmodule OnigumoTest do
       fn url ->
         %HTTPoison.Response{
           status_code: 200,
-          body: "Body from: #{url}"
+          body: "Body from: #{url}\n"
         }
       end
     )
@@ -70,7 +70,7 @@ defmodule OnigumoTest do
     assert(responses == Onigumo.download(HTTPoisonMock))
 
     last_url = Enum.at(@urls, -1)
-    expected = "Body from: #{last_url}"
+    expected = "Body from: #{last_url}\n"
     assert(expected == File.read!(@output_filename))
   end
 
