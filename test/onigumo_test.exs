@@ -8,7 +8,8 @@ defmodule OnigumoTest do
 
   setup(:verify_on_exit!)
 
-  test("download") do
+  @tag :tmp_dir
+  test("download", %{tmp_dir: tmp_dir}) do
     expect(
       HTTPoisonMock,
       :get!,
@@ -20,7 +21,7 @@ defmodule OnigumoTest do
       end
     )
 
-    assert(:ok == Onigumo.download(@url, HTTPoisonMock))
+    assert(:ok == Onigumo.download(@url, HTTPoisonMock, @output_path))
     assert("Body from: #{@url}\n" == File.read!(@output_path))
   end
 
