@@ -21,8 +21,9 @@ defmodule OnigumoTest do
       end
     )
 
-    assert(:ok == Onigumo.download(@url, HTTPoisonMock, @output_path))
-    assert("Body from: #{@url}\n" == File.read!(@output_path))
+    path = Path.join(tmp_dir, @output_path)
+    assert(:ok == Onigumo.download(@url, HTTPoisonMock, path))
+    assert("Body from: #{@url}\n" == File.read!(path))
   end
 
 
