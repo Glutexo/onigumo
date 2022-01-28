@@ -12,20 +12,20 @@ defmodule Onigumo do
     download(http)
   end
 
-  def download(http_client) do
+  def download(http) do
     urls = load_urls(@input_filename)
-    download(urls, http_client)
+    download(urls, http)
   end
 
-  def download(urls, http_client) when is_list(urls) do
-    Enum.map(urls, &download(&1, http_client))
+  def download(urls, http) when is_list(urls) do
+    Enum.map(urls, &download(&1, http))
   end
 
-  def download(url, http_client) when is_binary(url) do
+  def download(url, http) when is_binary(url) do
     %HTTPoison.Response{
       status_code: 200,
       body: body
-    } = http_client.get!(url)
+    } = http.get!(url)
 
     File.write!(@output_filename, body)
   end
