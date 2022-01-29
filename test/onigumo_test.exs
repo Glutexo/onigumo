@@ -21,8 +21,9 @@ defmodule OnigumoTest do
     result = Onigumo.download(url, HTTPoisonMock, path)
     assert(result == :ok)
 
-    content = File.read!(path)
-    assert(content == "Body from: #{url}\n")
+    read_content = File.read!(path)
+    expected_content = body(url)
+    assert(read_content == expected_content)
   end
 
   @tag :tmp_dir
@@ -35,8 +36,9 @@ defmodule OnigumoTest do
     assert(result == responses)
 
     last_url = Enum.at(@urls, -1)
-    content = File.read!(path)
-    assert(content == "Body from: #{last_url}\n")
+    read_content = File.read!(path)
+    expected_content = body(last_url)
+    assert(read_content == expected_content)
   end
 
   @tag :tmp_dir
@@ -52,8 +54,9 @@ defmodule OnigumoTest do
     assert(result == responses)
 
     last_url = Enum.at(@urls, -1)
-    content = File.read!(path)
-    assert(content == "Body from: #{last_url}\n")
+    read_content = File.read!(path)
+    expected_content = body(last_url)
+    assert(read_content == expected_content)
   end
 
   @tag :tmp_dir
@@ -71,7 +74,11 @@ defmodule OnigumoTest do
   defp get!(url) do
     %HTTPoison.Response{
       status_code: 200,
-      body: "Body from: #{url}\n"
+      body: body(url)
     }
+  end
+
+  defp body(url) do
+    "Body from: #{url}\n"
   end
 end
