@@ -2,28 +2,28 @@ defmodule Onigumo do
   @moduledoc """
   Web scraper
   """
-  @output_filename "body.html"
+  @output_path "body.html"
 
   def main() do
     HTTPoison.start()
     http = http_client()
 
-    Application.get_env(:onigumo, :input_filename)
+    Application.get_env(:onigumo, :input_path)
     |> load_urls()
-    |> Enum.map(&download(http, &1))
+    |> Enum.map(&download(&1, http, @output_path))
   end
 
-  def download(http_client, url) do
+  def download(url, http, path) do
     %HTTPoison.Response{
       status_code: 200,
       body: body
-    } = http_client.get!(url)
+    } = http.get!(url)
 
-    File.write!(@output_filename, body)
+    File.write!(path, body)
   end
 
-  def load_urls(filepath) do
-    File.stream!(filepath, [:read], :line)
+  def load_urls(path) do
+    File.stream!(path, [:read], :line)
     |> Enum.map(&String.trim_trailing/1)
   end
 
