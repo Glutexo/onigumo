@@ -2,32 +2,31 @@ defmodule Onigumo do
   @moduledoc """
   Web scraper
   """
-  @input_filename "urls.txt"
+  @input_path "urls.txt"
 
   def main() do
     HTTPoison.start()
     http = http_client()
 
-    load_urls(@input_filename)
-    |> Enum.map(&download(http, &1))
+    load_urls(@input_path)
+    |> Enum.map(&download(&1, http, hash(&1)))
   end
 
-  def download(http_client, url) do
+  def download(url, http, path) do
     %HTTPoison.Response{
       status_code: 200,
       body: body
-    } = http_client.get!(url)
+    } = http.get!(url)
 
-    filename(url)
-    |> File.write!(body)
+    File.write!(path, body)
   end
 
-  def load_urls(filepath) do
-    File.stream!(filepath, [:read], :line)
+  def load_urls(path) do
+    File.stream!(path, [:read], :line)
     |> Enum.map(&String.trim_trailing/1)
   end
 
-  def filename(url) do
+  def hash(url) do
     Hash.md5(url, :hex)
   end
 
