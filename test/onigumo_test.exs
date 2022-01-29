@@ -40,6 +40,6 @@ defmodule OnigumoTest do
   end
 
   defp body(url) do
-    "Body from: #{url}"
+    "Body from: #{url}\n"
   end
 end
