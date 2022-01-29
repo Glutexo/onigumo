@@ -13,8 +13,11 @@ defmodule OnigumoTest do
     expect(HTTPoisonMock, :get!, &get!/1)
 
     path = Path.join(tmp_dir, @output_path)
-    assert(:ok == Onigumo.download(@url, HTTPoisonMock, path))
-    assert("Body from: #{@url}\n" == File.read!(path))
+    result = Onigumo.download(@url, HTTPoisonMock, path)
+    assert(result == :ok)
+
+    content = File.read!(path)
+    assert(content == "Body from: #{@url}\n")
   end
 
 
@@ -24,8 +27,8 @@ defmodule OnigumoTest do
     content = @url <> "\n"
     File.write!(path, content)
 
-    expected = [@url]
-    assert(expected == Onigumo.load_urls(path))
+    urls = Onigumo.load_urls(path)
+    assert(urls == [@url])
   end
 
   defp get!(url) do
