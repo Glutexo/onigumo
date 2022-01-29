@@ -5,8 +5,8 @@ defmodule Onigumo do
   @input_path "urls.txt"
 
   def main() do
-    HTTPoison.start()
     http = http_client()
+    http.start()
 
     load_urls(@input_path)
     |> Enum.map(&download(&1, http, hash(&1)))
