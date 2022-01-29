@@ -10,16 +10,7 @@ defmodule OnigumoTest do
 
   @tag :tmp_dir
   test("download", %{tmp_dir: tmp_dir}) do
-    expect(
-      HTTPoisonMock,
-      :get!,
-      fn url ->
-        %HTTPoison.Response{
-          status_code: 200,
-          body: "Body from: #{url}\n"
-        }
-      end
-    )
+    expect(HTTPoisonMock, :get!, &get!/1)
 
     path = Path.join(tmp_dir, @output_path)
     assert(:ok == Onigumo.download(@url, HTTPoisonMock, path))
@@ -37,4 +28,10 @@ defmodule OnigumoTest do
     assert(expected == Onigumo.load_urls(path))
   end
 
+  defp get!(url) do
+    %HTTPoison.Response{
+      status_code: 200,
+      body: "Body from: #{url}\n"
+    }
+  end
 end
