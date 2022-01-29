@@ -27,7 +27,7 @@ defmodule OnigumoTest do
 
   @tag :tmp_dir
   test("download multiple URLs", %{tmp_dir: tmp_dir}) do
-    expect(HTTPoisonMock,:get!,length(@urls), &get!/1)
+    expect(HTTPoisonMock, :get!, length(@urls), &get!/1)
 
     path = Path.join(tmp_dir, @output_path)
     responses = Enum.map(@urls, fn _ -> :ok end)
@@ -41,8 +41,7 @@ defmodule OnigumoTest do
 
   @tag :tmp_dir
   test("download URLs from the input file", %{tmp_dir: tmp_dir}) do
-    expect(
-      HTTPoisonMock,:get!,length(@urls), &get!/1)
+    expect(HTTPoisonMock, :get!, length(@urls), &get!/1)
 
     content = Enum.map(@urls, &(&1 <> "\n")) |> Enum.join()
     File.write!(@input_path, content)
