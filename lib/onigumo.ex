@@ -6,8 +6,8 @@ defmodule Onigumo do
   @output_path "body.html"
 
   def main() do
-    HTTPoison.start()
     http_client = Application.get_env(:onigumo, :http_client)
+    http_client.start()
 
     load_urls(@input_path)
     |> Enum.map(&download(&1, http_client, @output_path))
