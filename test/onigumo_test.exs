@@ -3,36 +3,36 @@ defmodule OnigumoTest do
   import Mox
 
   @url "http://onigumo.org/hello.html"
-  @filename "body.html"
-  @testfile_with_urls "urls.txt"
+  @input_path "urls.txt"
+  @output_path "body.html"
 
   setup(:verify_on_exit!)
 
-  test("download") do
-    expect(
-      HTTPoisonMock,
-      :get!,
-      fn url ->
-        %HTTPoison.Response{
-          status_code: 200,
-          body: body(url)
-        }
-      end
-    )
+  @tag :tmp_dir
+  test("download", %{tmp_dir: tmp_dir}) do
+    expect(HTTPoisonMock, :get!, &get!/1)
 
-    assert(:ok == Onigumo.download(HTTPoisonMock, @url))
-    assert(body(@url) == File.read!(@filename))
+    path = Path.join(tmp_dir, @output_path)
+    assert(:ok == Onigumo.download(@url, HTTPoisonMock, path))
+    assert(body(@url) == File.read!(path))
   end
 
 
   @tag :tmp_dir
   test("load URL from file", %{tmp_dir: tmp_dir}) do
-    filepath = Path.join(tmp_dir, @testfile_with_urls)
-    content = @url <> " \n"
-    File.write!(filepath, content)
+    path = Path.join(tmp_dir, @input_path)
+    content = @url <> "\n"
+    File.write!(path, content)
 
     expected = [@url]
-    assert(expected == Onigumo.load_urls(filepath))
+    assert(expected == Onigumo.load_urls(path))
+  end
+
+  defp get!(url) do
+    %HTTPoison.Response{
+      status_code: 200,
+      body: body(url)
+    }
   end
 
   defp body(url) do
