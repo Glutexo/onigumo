@@ -3,10 +3,9 @@ defmodule OnigumoTest do
   import Mox
 
   @urls [
-    "https://onigumo.org/hello.html",
-    "https://onigumo.org/bye.html"
+    "http://onigumo.org/hello.html",
+    "http://onigumo.org/bye.html"
   ]
-
   @input_path "urls.txt"
   @output_path "body.html"
 
@@ -60,7 +59,7 @@ defmodule OnigumoTest do
   end
 
   @tag :tmp_dir
-  test("load URL from file", %{tmp_dir: tmp_dir}) do
+  test("load a single URL form a file", %{tmp_dir: tmp_dir}) do
     url = Enum.at(@urls, 0)
 
     path = Path.join(tmp_dir, @input_path)
@@ -69,6 +68,16 @@ defmodule OnigumoTest do
 
     urls = Onigumo.load_urls(path)
     assert(urls == [url])
+  end
+
+  @tag :tmp_dir
+  test("load multiple URLs from a file", %{tmp_dir: tmp_dir}) do
+    path = Path.join(tmp_dir, @input_path)
+    content = Enum.map(@urls, &(&1 <> "\n")) |> Enum.join()
+    File.write!(path, content)
+
+    urls = Onigumo.load_urls(path)
+    assert(urls == @urls)
   end
 
   defp get!(url) do
