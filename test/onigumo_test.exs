@@ -25,9 +25,8 @@ defmodule OnigumoTest do
     assert(read_content == expected_content)
   end
 
-
   @tag :tmp_dir
-  test("load a single URL form a file", %{tmp_dir: tmp_dir}) do
+  test("load a single URL from a file", %{tmp_dir: tmp_dir}) do
     input_urls = Enum.slice(@urls, 0, 1)
 
     path = Path.join(tmp_dir, @input_path)
@@ -47,7 +46,7 @@ defmodule OnigumoTest do
     urls = Onigumo.load_urls(path)
     assert(urls == @urls)
   end
-  
+
   defp get!(url) do
     %HTTPoison.Response{
       status_code: 200,
