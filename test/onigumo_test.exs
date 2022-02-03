@@ -2,7 +2,10 @@ defmodule OnigumoTest do
   use ExUnit.Case
   import Mox
 
-  @url "http://onigumo.org/hello.html"
+  @urls [
+    "http://onigumo.org/hello.html",
+    "http://onigumo.org/bye.html"
+  ]
   @input_path "urls.txt"
   @output_path "body.html"
 
@@ -12,19 +15,20 @@ defmodule OnigumoTest do
   test("download", %{tmp_dir: tmp_dir}) do
     expect(HTTPoisonMock, :get!, &get!/1)
 
+    url = Enum.at(@urls, 0)
     path = Path.join(tmp_dir, @output_path)
-    result = Onigumo.download(@url, HTTPoisonMock, path)
+    result = Onigumo.download(url, HTTPoisonMock, path)
     assert(result == :ok)
 
     read_content = File.read!(path)
-    expected_content = body(@url)
+    expected_content = body(url)
     assert(read_content == expected_content)
   end
 
 
   @tag :tmp_dir
-  test("load URL from file", %{tmp_dir: tmp_dir}) do
-    input_urls = [@url]
+  test("load a single URL form a file", %{tmp_dir: tmp_dir}) do
+    input_urls = Enum.slice(@urls, 0, 1)
 
     path = Path.join(tmp_dir, @input_path)
     content = urls_input(input_urls)
@@ -34,6 +38,16 @@ defmodule OnigumoTest do
     assert(loaded_urls == input_urls)
   end
 
+  @tag :tmp_dir
+  test("load multiple URLs from a file", %{tmp_dir: tmp_dir}) do
+    path = Path.join(tmp_dir, @input_path)
+    content = Enum.map(@urls, &(&1 <> "\n")) |> Enum.join()
+    File.write!(path, content)
+
+    urls = Onigumo.load_urls(path)
+    assert(urls == @urls)
+  end
+  
   defp get!(url) do
     %HTTPoison.Response{
       status_code: 200,
