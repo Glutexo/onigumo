@@ -59,7 +59,7 @@ defmodule OnigumoTest do
   end
 
   @tag :tmp_dir
-  test("load a single URL form a file", %{tmp_dir: tmp_dir}) do
+  test("load a single URL from a file", %{tmp_dir: tmp_dir}) do
     url = Enum.at(@urls, 0)
 
     path = Path.join(tmp_dir, @input_path)
