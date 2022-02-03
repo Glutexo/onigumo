@@ -3,8 +3,8 @@ defmodule OnigumoTest do
   import Mox
 
   @urls [
-    "http://onigumo.org/hello.html",
-    "http://onigumo.org/bye.html"
+    "http://onigumo.local/hello.html",
+    "http://onigumo.local/bye.html"
   ]
   @input_path "urls.txt"
   @output_path "body.html"
