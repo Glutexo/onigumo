@@ -13,8 +13,8 @@ defmodule Onigumo do
   end
 
   def download(http, path) do
-    urls = load_urls(@input_path)
-    download(urls, http, path)
+    load_urls(@input_path)
+    |> download(http, path)
   end
 
   def download(urls, http, path) when is_list(urls) do
