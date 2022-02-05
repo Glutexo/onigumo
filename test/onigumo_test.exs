@@ -12,7 +12,7 @@ defmodule OnigumoTest do
   setup(:verify_on_exit!)
 
   @tag :tmp_dir
-  test("download", %{tmp_dir: tmp_dir}) do
+  test("download a single URL", %{tmp_dir: tmp_dir}) do
     expect(HTTPoisonMock, :get!, &get!/1)
 
     url = Enum.at(@urls, 0)
@@ -22,6 +22,39 @@ defmodule OnigumoTest do
 
     read_content = File.read!(path)
     expected_content = body(url)
+    assert(read_content == expected_content)
+  end
+
+  @tag :tmp_dir
+  test("download multiple URLs", %{tmp_dir: tmp_dir}) do
+    expect(HTTPoisonMock, :get!, length(@urls), &get!/1)
+
+    path = Path.join(tmp_dir, @output_path)
+    responses = Enum.map(@urls, fn _ -> :ok end)
+    result = Onigumo.download(@urls, HTTPoisonMock, path)
+    assert(result == responses)
+
+    last_url = Enum.at(@urls, -1)
+    read_content = File.read!(path)
+    expected_content = body(last_url)
+    assert(read_content == expected_content)
+  end
+
+  @tag :tmp_dir
+  test("download URLs from the input file", %{tmp_dir: tmp_dir}) do
+    expect(HTTPoisonMock, :get!, length(@urls), &get!/1)
+
+    content = Enum.map(@urls, &(&1 <> "\n")) |> Enum.join()
+    File.write!(@input_path, content)
+
+    path = Path.join(tmp_dir, @output_path)
+    responses = Enum.map(@urls, fn _ -> :ok end)
+    result = Onigumo.download(@urls, HTTPoisonMock, path)
+    assert(result == responses)
+
+    last_url = Enum.at(@urls, -1)
+    read_content = File.read!(path)
+    expected_content = body(last_url)
     assert(read_content == expected_content)
   end
 
