@@ -30,12 +30,12 @@ defmodule OnigumoTest do
     expect(HTTPoisonMock, :get!, length(@urls), &get!/1)
 
     path = Path.join(tmp_dir, @output_path)
-    responses = Enum.map(@urls, fn _ -> :ok end)
     result = Onigumo.download(@urls, HTTPoisonMock, path)
+    responses = Enum.map(@urls, fn _ -> :ok end)
     assert(result == responses)
 
-    last_url = Enum.at(@urls, -1)
     read_content = File.read!(path)
+    last_url = Enum.at(@urls, -1)
     expected_content = body(last_url)
     assert(read_content == expected_content)
   end
@@ -48,12 +48,12 @@ defmodule OnigumoTest do
     File.write!(@input_path, content)
 
     path = Path.join(tmp_dir, @output_path)
-    responses = Enum.map(@urls, fn _ -> :ok end)
     result = Onigumo.download(@urls, HTTPoisonMock, path)
+    responses = Enum.map(@urls, fn _ -> :ok end)
     assert(result == responses)
 
-    last_url = Enum.at(@urls, -1)
     read_content = File.read!(path)
+    last_url = Enum.at(@urls, -1)
     expected_content = body(last_url)
     assert(read_content == expected_content)
   end
