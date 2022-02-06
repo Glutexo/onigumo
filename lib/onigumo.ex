@@ -6,26 +6,26 @@ defmodule Onigumo do
   @output_path "body.html"
 
   def main() do
-    http = http_client()
-    http.start()
+    http_client = Application.get_env(:onigumo, :http_client)
+    http_client.start()
 
-    download(http, @output_path)
+    download(http_client, @output_path)
   end
 
-  def download(http, path) do
+  def download(http_client, path) do
     urls = load_urls(@input_path)
-    download(urls, http, path)
+    download(urls, http_client, path)
   end
 
-  def download(urls, http, path) when is_list(urls) do
-    Enum.map(urls, &download(&1, http, path))
+  def download(urls, http_client, path) when is_list(urls) do
+    Enum.map(urls, &download(&1, http_client, path))
   end
 
-  def download(url, http, path) when is_binary(url) do
+  def download(url, http_client, path) when is_binary(url) do
     %HTTPoison.Response{
       status_code: 200,
       body: body
-    } = http.get!(url)
+    } = http_client.get!(url)
 
     File.write!(path, body)
   end
@@ -33,9 +33,5 @@ defmodule Onigumo do
   def load_urls(path) do
     File.stream!(path, [:read], :line)
     |> Enum.map(&String.trim_trailing/1)
-  end
-
-  defp http_client() do
-    Application.get_env(:onigumo, :http_client)
   end
 end
