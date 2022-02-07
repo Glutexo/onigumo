@@ -2,7 +2,6 @@ defmodule Onigumo do
   @moduledoc """
   Web scraper
   """
-  @input_path "urls.txt"
   @output_path "body.html"
 
   def main() do
@@ -13,7 +12,8 @@ defmodule Onigumo do
   end
 
   def download(http_client, path) do
-    load_urls(@input_path)
+    Application.get_env(:onigumo, :input_path)
+    |> load_urls()
     |> download(http_client, path)
   end
 
