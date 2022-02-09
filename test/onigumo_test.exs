@@ -61,15 +61,15 @@ defmodule OnigumoTest do
 
   @tag :tmp_dir
   test("load a single URL from a file", %{tmp_dir: tmp_dir}) do
-    url = Enum.at(@urls, 0)
+    input_urls = Enum.slice(@urls, 0, 1)
 
     env_path = Application.get_env(:onigumo, :input_path)
     tmp_path = Path.join(tmp_dir, env_path)
-    content = url <> "\n"
+    content = prepare_input(input_urls)
     File.write!(tmp_path, content)
 
-    urls = Onigumo.load_urls(tmp_path)
-    assert(urls == [url])
+    loaded_urls = Onigumo.load_urls(tmp_path)
+    assert(loaded_urls == input_urls)
   end
 
   @tag :tmp_dir
@@ -88,6 +88,11 @@ defmodule OnigumoTest do
       status_code: 200,
       body: body(url)
     }
+  end
+
+  defp prepare_input(urls) do
+    Enum.map(urls, &(&1 <> "\n"))
+    |> Enum.join()
   end
 
   defp body(url) do
