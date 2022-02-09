@@ -63,7 +63,7 @@ defmodule OnigumoTest do
     input_urls = Enum.slice(@urls, 0, 1)
 
     path = Path.join(tmp_dir, @input_path)
-    content = urls_input(input_urls)
+    content = prepare_input(input_urls)
     File.write!(path, content)
 
     loaded_urls = Onigumo.load_urls(path)
@@ -87,7 +87,7 @@ defmodule OnigumoTest do
     }
   end
 
-  defp urls_input(urls) do
+  defp prepare_input(urls) do
     Enum.map(urls, &(&1 <> "\n"))
     |> Enum.join()
   end
