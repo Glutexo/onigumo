@@ -80,7 +80,7 @@ defmodule OnigumoTest do
   test("load multiple URLs from a file", %{tmp_dir: tmp_dir}) do
     input_path_env = Application.get_env(:onigumo, :input_path)
     input_path_tmp = Path.join(tmp_dir, input_path_env)
-    input_file_content = Enum.map(@urls, &(&1 <> "\n")) |> Enum.join()
+    input_file_content = prepare_input(@urls)
     File.write!(input_path_tmp, input_file_content)
 
     loaded_urls = Onigumo.load_urls(input_path_tmp)
