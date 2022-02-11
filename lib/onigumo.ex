@@ -12,8 +12,7 @@ defmodule Onigumo do
   end
 
   def download(http_client, path) do
-    Application.get_env(:onigumo, :input_path)
-    |> load_urls()
+    load_urls()
     |> download(http_client, path)
   end
 
@@ -28,6 +27,13 @@ defmodule Onigumo do
     } = http_client.get!(url)
 
     File.write!(path, body)
+  end
+
+  def load_urls(path \\ nil)
+
+  def load_urls(nil) do
+    Application.get_env(:onigumo, :input_path)
+    |> load_urls()
   end
 
   def load_urls(path) do
