@@ -2,13 +2,12 @@ defmodule Onigumo do
   @moduledoc """
   Web scraper
   """
-  @output_path "body.html"
-
   def main() do
     http_client = Application.get_env(:onigumo, :http_client)
     http_client.start()
 
-    download(http_client, @output_path)
+    path = File.cwd!()
+    download(http_client, path)
   end
 
   def download(http_client, path) do
@@ -21,8 +20,9 @@ defmodule Onigumo do
     urls
     |> Enum.with_index()
     |> Enum.map(fn {url, index} ->
-      indexed_path = "#{index}_#{path}"
-      download(url, http_client, indexed_path)
+      file_name = Integer.to_string(index)
+      file_path = Path.join(path, file_name)
+      download(url, http_client, file_path)
     end)
   end
 
