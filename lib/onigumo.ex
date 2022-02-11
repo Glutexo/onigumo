@@ -17,13 +17,11 @@ defmodule Onigumo do
   end
 
   def download(urls, http_client, path) when is_list(urls) do
-    urls
-    |> Enum.with_index()
-    |> Enum.map(fn {url, index} ->
+    for {url, index} <- Enum.with_index(urls) do
       file_name = Integer.to_string(index)
       file_path = Path.join(path, file_name)
       download(url, http_client, file_path)
-    end)
+    end
   end
 
   def download(url, http_client, path) when is_binary(url) do
