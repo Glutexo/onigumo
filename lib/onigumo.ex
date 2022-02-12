@@ -8,20 +8,21 @@ defmodule Onigumo do
     http_client = Application.get_env(:onigumo, :http_client)
     http_client.start()
 
-    download(http_client, @output_path)
-  end
-
-  def download(http_client, path) do
     Application.get_env(:onigumo, :input_path)
+    |> download_urls(http_client, @output_path)
+  end
+
+  def download_urls(input_path, http_client, output_path) when is_bitstring(input_path) do
+    input_path
     |> load_urls()
-    |> download(http_client, path)
+    |> download_urls(http_client, output_path)
   end
 
-  def download(urls, http_client, path) when is_list(urls) do
-    Enum.map(urls, &download(&1, http_client, path))
+  def download_urls(urls, http_client, path) when is_list(urls) do
+    Enum.map(urls, &download_url(&1, http_client, path))
   end
 
-  def download(url, http_client, path) when is_binary(url) do
+  def download_url(url, http_client, path) when is_binary(url) do
     %HTTPoison.Response{
       status_code: 200,
       body: body
