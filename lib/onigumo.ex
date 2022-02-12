@@ -15,6 +15,11 @@ defmodule Onigumo do
     Application.get_env(:onigumo, :input_path)
     |> load_urls()
     |> download(http_client, path)
+    |> Stream.run()
+  end
+
+  def download(urls = %Stream{}, http_client, path) do
+    Stream.map(urls, &download(&1, http_client, path))
   end
 
   def download(urls, http_client, path) when is_list(urls) do
@@ -32,6 +37,6 @@ defmodule Onigumo do
 
   def load_urls(path) do
     File.stream!(path, [:read], :line)
-    |> Enum.map(&String.trim_trailing/1)
+    |> Stream.map(&String.trim_trailing/1)
   end
 end
