@@ -40,26 +40,6 @@ defmodule OnigumoTest do
   end
 
   @tag :tmp_dir
-  test("download URLs from the input file", %{tmp_dir: tmp_dir}) do
-    expect(HTTPoisonMock, :get!, length(@urls), &get!/1)
-
-    env_path = Application.get_env(:onigumo, :input_path)
-    input_path = Path.join(tmp_dir, env_path)
-    content = Enum.map(@urls, &(&1 <> "\n")) |> Enum.join()
-    File.write!(input_path, content)
-
-    output_path = Path.join(tmp_dir, @output_path)
-    result = Onigumo.download(@urls, HTTPoisonMock, output_path)
-    responses = Enum.map(@urls, fn _ -> :ok end)
-    assert(result == responses)
-
-    last_url = Enum.at(@urls, -1)
-    read_content = File.read!(output_path)
-    expected_content = body(last_url)
-    assert(read_content == expected_content)
-  end
-
-  @tag :tmp_dir
   test("load a single URL from a file", %{tmp_dir: tmp_dir}) do
     input_urls = Enum.slice(@urls, 0, 1)
 
