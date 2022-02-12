@@ -11,9 +11,7 @@ defmodule Onigumo do
     download(http_client)
   end
 
-  def download(http_client, dir_path \\ nil)
-
-  def download(http_client, nil) do
+  def download(http_client) do
     dir_path = File.cwd!()
     download(http_client, dir_path)
   end
