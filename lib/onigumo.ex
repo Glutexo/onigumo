@@ -21,9 +21,13 @@ defmodule Onigumo do
 
   def download_urls(urls, http_client, dir_path) do
     file_path = Path.join(dir_path, @output_file_name)
-    urls
-    |> Enum.map(&get_url(&1, http_client))
-    |> Enum.map(&save_response(&1, file_path))
+    Enum.map(urls, &download_url(&1, http_client, file_path))
+  end
+
+  def download_url(url, http_client, file_path) do
+    url
+    |> get_url(http_client)
+    |> save_response(file_path)
   end
 
   def get_url(url, http_client) do
