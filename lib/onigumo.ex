@@ -8,10 +8,6 @@ defmodule Onigumo do
     http_client = Application.get_env(:onigumo, :http_client)
     http_client.start()
 
-    download(http_client)
-  end
-
-  def download(http_client) do
     dir_path = File.cwd!()
     download(http_client, dir_path)
   end
