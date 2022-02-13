@@ -2,32 +2,34 @@ defmodule Onigumo do
   @moduledoc """
   Web scraper
   """
-  @output_path "body.html"
+  @output_file_name "body.html"
 
   def main() do
     http_client = Application.get_env(:onigumo, :http_client)
     http_client.start()
 
-    download(http_client, @output_path)
+    dir_path = File.cwd!()
+    download(http_client, dir_path)
   end
 
-  def download(http_client, path) do
+  def download(http_client, dir_path) do
     Application.get_env(:onigumo, :input_path)
     |> load_urls()
-    |> download(http_client, path)
+    |> download(http_client, dir_path)
   end
 
-  def download(urls, http_client, path) when is_list(urls) do
-    Enum.map(urls, &download(&1, http_client, path))
+  def download(urls, http_client, dir_path) when is_list(urls) do
+    file_path = Path.join(dir_path, @output_file_name)
+    Enum.map(urls, &download(&1, http_client, file_path))
   end
 
-  def download(url, http_client, path) when is_binary(url) do
+  def download(url, http_client, file_path) when is_binary(url) do
     %HTTPoison.Response{
       status_code: 200,
       body: body
     } = http_client.get!(url)
 
-    File.write!(path, body)
+    File.write!(file_path, body)
   end
 
   def load_urls(path) do
