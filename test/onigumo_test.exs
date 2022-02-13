@@ -14,14 +14,16 @@ defmodule OnigumoTest do
   test("download a single URL", %{tmp_dir: tmp_dir}) do
     expect(HTTPoisonMock, :get!, &get!/1)
 
-    input_url = Enum.at(@urls, 0)
-    output_path = Path.join(tmp_dir, @output_path)
-    download_result = Onigumo.download_url(
-      input_url, HTTPoisonMock, output_path
+    input_urls = Enum.slice(@urls, 0, 1)
+    download_result = Onigumo.download_urls(
+      input_urls, HTTPoisonMock, tmp_dir
     )
-    assert(download_result == :ok)
+    expected_responses = Enum.map(input_urls, fn _ -> :ok end)
+    assert(download_result == expected_responses)
 
+    output_path = Path.join(tmp_dir, @output_path)
     read_output = File.read!(output_path)
+    input_url = Enum.at(input_urls, 0)
     expected_output = body(input_url)
     assert(read_output == expected_output)
   end
