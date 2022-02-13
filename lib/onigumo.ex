@@ -11,6 +11,7 @@ defmodule Onigumo do
     dir_path = File.cwd!()
     Application.get_env(:onigumo, :input_path)
     |> download_urls_from_file(http_client, dir_path)
+    |> Stream.run()
   end
 
   def download_urls_from_file(input_path, http_client, dir_path) do
@@ -21,7 +22,7 @@ defmodule Onigumo do
 
   def download_urls(urls, http_client, dir_path) do
     file_path = Path.join(dir_path, @output_file_name)
-    Enum.map(urls, &download_url(&1, http_client, file_path))
+    Stream.map(urls, &download_url(&1, http_client, file_path))
   end
 
   def download_url(url, http_client, file_path) do
