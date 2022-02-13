@@ -50,7 +50,7 @@ defmodule OnigumoTest do
     input_file_content = Enum.map(@urls, &(&1 <> "\n")) |> Enum.join()
     File.write!(input_path_tmp, input_file_content)
 
-    download_result = Onigumo.download_urls(
+    download_result = Onigumo.download_urls_from_file(
       input_path_tmp, HTTPoisonMock, tmp_dir
     )
     expected_responses = Enum.map(@urls, fn _ -> :ok end)
