@@ -6,31 +6,31 @@ defmodule Onigumo do
     http_client = Application.get_env(:onigumo, :http_client)
     http_client.start()
 
-    path = File.cwd!()
-    download(http_client, path)
+    dir_path = File.cwd!()
+    download(http_client, dir_path)
   end
 
-  def download(http_client, path) do
+  def download(http_client, dir_path) do
     Application.get_env(:onigumo, :input_path)
     |> load_urls()
-    |> download(http_client, path)
+    |> download(http_client, dir_path)
   end
 
-  def download(urls, http_client, path) when is_list(urls) do
+  def download(urls, http_client, dir_path) when is_list(urls) do
     for {url, index} <- Enum.with_index(urls) do
       file_name = Integer.to_string(index)
-      file_path = Path.join(path, file_name)
+      file_path = Path.join(dir_path, file_name)
       download(url, http_client, file_path)
     end
   end
 
-  def download(url, http_client, path) when is_binary(url) do
+  def download(url, http_client, file_path) when is_binary(url) do
     %HTTPoison.Response{
       status_code: 200,
       body: body
     } = http_client.get!(url)
 
-    File.write!(path, body)
+    File.write!(file_path, body)
   end
 
   def load_urls(path) do
