@@ -2,7 +2,6 @@ defmodule Onigumo do
   @moduledoc """
   Web scraper
   """
-  @output_file_name "body.html"
 
   def main() do
     http_client = Application.get_env(:onigumo, :http_client)
@@ -20,8 +19,11 @@ defmodule Onigumo do
   end
 
   def download_urls(urls, http_client, dir_path) do
-    file_path = Path.join(dir_path, @output_file_name)
-    Enum.map(urls, &download_url(&1, http_client, file_path))
+    for url <- urls do
+      file_name = filename(url)
+      file_path = Path.join(dir_path, file_name)
+      download_url(url, http_client, file_path)
+    end
   end
 
   def download_url(url, http_client, file_path) do
@@ -36,5 +38,9 @@ defmodule Onigumo do
   def load_urls(path) do
     File.stream!(path, [:read], :line)
     |> Enum.map(&String.trim_trailing/1)
+  end
+
+  def filename(url) do
+    Base.url_encode64(url, padding: false)
   end
 end
