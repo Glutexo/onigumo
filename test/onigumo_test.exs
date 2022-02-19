@@ -12,7 +12,7 @@ defmodule OnigumoTest do
 
   @tag :tmp_dir
   test("download a URL", %{tmp_dir: tmp_dir}) do
-    expect(HTTPoisonMock, :get!, &get!/1)
+    expect(HTTPoisonMock, :get!, &prepare_response/1)
 
     input_url = Enum.at(@urls, 0)
     output_path = Path.join(tmp_dir, @output_path)
@@ -28,7 +28,7 @@ defmodule OnigumoTest do
 
   @tag :tmp_dir
   test("download URLs from the input file", %{tmp_dir: tmp_dir}) do
-    expect(HTTPoisonMock, :get!, length(@urls), &get!/1)
+    expect(HTTPoisonMock, :get!, length(@urls), &prepare_response/1)
 
     input_path_env = Application.get_env(:onigumo, :input_path)
     input_path_tmp = Path.join(tmp_dir, input_path_env)
@@ -71,17 +71,17 @@ defmodule OnigumoTest do
   end
 
   test("get response by HTTP request") do
-    expect(HTTPoisonMock, :get!, &get!/1)
+    expect(HTTPoisonMock, :get!, &prepare_response/1)
 
     url = Enum.at(@urls, 0)
     get_response = Onigumo.get_url(url, HTTPoisonMock)
-    expected_response = get!(url)
+    expected_response = prepare_response(url)
     assert(get_response == expected_response)
   end
 
   test("extract body from URL response") do
     url = Enum.at(@urls, 0)
-    response = get!(url)
+    response = prepare_response(url)
     get_body = Onigumo.get_body(response)
     expected_body = body(url)
     assert(get_body == expected_body)
@@ -97,7 +97,7 @@ defmodule OnigumoTest do
     assert(read_output == response)
   end
 
-  defp get!(url) do
+  defp prepare_response(url) do
     %HTTPoison.Response{
       status_code: 200,
       body: body(url)
