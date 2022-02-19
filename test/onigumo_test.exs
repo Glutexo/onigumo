@@ -70,6 +70,33 @@ defmodule OnigumoTest do
     assert(loaded_urls == @urls)
   end
 
+  test("get response by HTTP request") do
+    expect(HTTPoisonMock, :get!, &get!/1)
+
+    url = Enum.at(@urls, 0)
+    get_response = Onigumo.get_url(url, HTTPoisonMock)
+    expected_response = get!(url)
+    assert(get_response == expected_response)
+  end
+
+  test("extract body from URL response") do
+    url = Enum.at(@urls, 0)
+    response = get!(url)
+    get_body = Onigumo.get_body(response)
+    expected_body = body(url)
+    assert(get_body == expected_body)
+  end
+
+  @tag :tmp_dir
+  test("write response to file", %{tmp_dir: tmp_dir}) do
+    response = "Response!"
+    output_path = Path.join(tmp_dir, @output_path)
+    Onigumo.write_response(response, output_path)
+
+    read_output = File.read!(output_path)
+    assert(read_output == response)
+  end
+
   defp get!(url) do
     %HTTPoison.Response{
       status_code: 200,

@@ -22,12 +22,27 @@ defmodule Onigumo do
   end
 
   def download_url(url, http_client, file_path) do
+    url
+    |> get_url(http_client)
+    |> get_body()
+    |> write_response(file_path)    
+  end
+
+  def get_url(url, http_client) do
+    http_client.get!(url)
+  end
+
+  def get_body(
     %HTTPoison.Response{
       status_code: 200,
       body: body
-    } = http_client.get!(url)
+    }
+  ) do
+    body
+  end
 
-    File.write!(file_path, body)
+  def write_response(response, file_path) do
+    File.write!(file_path, response)
   end
 
   def load_urls(path) do
