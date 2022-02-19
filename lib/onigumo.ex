@@ -15,14 +15,10 @@ defmodule Onigumo do
   end
 
   def download_urls_from_file(input_path, http_client, dir_path) do
+    file_path = Path.join(dir_path, @output_file_name)
     input_path
     |> load_urls()
-    |> download_urls(http_client, dir_path)
-  end
-
-  def download_urls(urls, http_client, dir_path) do
-    file_path = Path.join(dir_path, @output_file_name)
-    Stream.map(urls, &download_url(&1, http_client, file_path))
+    |> Stream.map(&download_url(&1, http_client, file_path))
   end
 
   def download_url(url, http_client, file_path) do
@@ -36,6 +32,6 @@ defmodule Onigumo do
 
   def load_urls(path) do
     File.stream!(path, [:read], :line)
-    |> Enum.map(&String.trim_trailing/1)
+    |> Stream.map(&String.trim_trailing/1)
   end
 end
