@@ -16,9 +16,14 @@ defmodule OnigumoTest do
 
     input_url = Enum.at(@urls, 0)
     output_path = Path.join(tmp_dir, @output_path)
-    download_result = Onigumo.download_url(
-      input_url, HTTPoisonMock, output_path
-    )
+
+    download_result =
+      Onigumo.download_url(
+        input_url,
+        HTTPoisonMock,
+        output_path
+      )
+
     assert(download_result == :ok)
 
     read_output = File.read!(output_path)
@@ -36,8 +41,11 @@ defmodule OnigumoTest do
     File.write!(input_path_tmp, input_file_content)
 
     Onigumo.download_urls_from_file(
-      input_path_tmp, HTTPoisonMock, tmp_dir
-    ) |> Stream.run()
+      input_path_tmp,
+      HTTPoisonMock,
+      tmp_dir
+    )
+    |> Stream.run()
 
     output_path = Path.join(tmp_dir, @output_path)
     read_output = File.read!(output_path)
