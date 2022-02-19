@@ -57,7 +57,7 @@ defmodule OnigumoTest do
     input_file_content = prepare_input(input_urls)
     File.write!(input_path_tmp, input_file_content)
 
-    loaded_urls = Onigumo.load_urls(input_path_tmp)
+    loaded_urls = Onigumo.load_urls(input_path_tmp) |> Enum.to_list()
     assert(loaded_urls == input_urls)
   end
 
@@ -68,7 +68,7 @@ defmodule OnigumoTest do
     input_file_content = prepare_input(@urls)
     File.write!(input_path_tmp, input_file_content)
 
-    loaded_urls = Onigumo.load_urls(input_path_tmp)
+    loaded_urls = Onigumo.load_urls(input_path_tmp) |> Enum.to_list()
     assert(loaded_urls == @urls)
   end
 
