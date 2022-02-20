@@ -8,6 +8,7 @@ defmodule Onigumo do
     http_client().start()
 
     dir_path = File.cwd!()
+
     Application.get_env(:onigumo, :input_path)
     |> download_urls_from_file(dir_path)
     |> Stream.run()
@@ -15,6 +16,7 @@ defmodule Onigumo do
 
   def download_urls_from_file(input_path, dir_path) do
     file_path = Path.join(dir_path, @output_file_name)
+
     input_path
     |> load_urls()
     |> Stream.map(&download_url(&1, file_path))
@@ -24,19 +26,17 @@ defmodule Onigumo do
     url
     |> get_url()
     |> get_body()
-    |> write_response(file_path)    
+    |> write_response(file_path)
   end
 
   def get_url(url) do
     http_client().get!(url)
   end
 
-  def get_body(
-    %HTTPoison.Response{
-      status_code: 200,
-      body: body
-    }
-  ) do
+  def get_body(%HTTPoison.Response{
+        status_code: 200,
+        body: body
+      }) do
     body
   end
 
