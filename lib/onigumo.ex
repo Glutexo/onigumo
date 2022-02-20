@@ -5,37 +5,36 @@ defmodule Onigumo do
   @output_file_name "body.html"
 
   def main() do
-    http_client = Application.get_env(:onigumo, :http_client)
-    http_client.start()
+    http_client().start()
 
     dir_path = File.cwd!()
-    download_urls_from_file(http_client, dir_path)
+    download_urls_from_file(dir_path)
     |> Stream.run()
   end
 
-  def download_urls_from_file(http_client, dir_path) do
+  def download_urls_from_file(dir_path) do
     file_path = Path.join(dir_path, @output_file_name)
-    load_urls(dir_path)
-    |> Stream.map(&download_url(&1, http_client, file_path))
+
+    dir_path
+    |> load_urls()
+    |> Stream.map(&download_url(&1, file_path))
   end
 
-  def download_url(url, http_client, file_path) do
+  def download_url(url, file_path) do
     url
-    |> get_url(http_client)
+    |> get_url()
     |> get_body()
-    |> write_response(file_path)    
+    |> write_response(file_path)
   end
 
-  def get_url(url, http_client) do
-    http_client.get!(url)
+  def get_url(url) do
+    http_client().get!(url)
   end
 
-  def get_body(
-    %HTTPoison.Response{
-      status_code: 200,
-      body: body
-    }
-  ) do
+  def get_body(%HTTPoison.Response{
+        status_code: 200,
+        body: body
+      }) do
     body
   end
 
@@ -48,5 +47,9 @@ defmodule Onigumo do
     Path.join(dir_path, input_path)
     |> File.stream!([:read], :line)
     |> Stream.map(&String.trim_trailing/1)
+  end
+
+  defp http_client() do
+    Application.get_env(:onigumo, :http_client)
   end
 end
