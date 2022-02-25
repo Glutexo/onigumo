@@ -35,12 +35,7 @@ defmodule OnigumoTest do
     expected_responses = Enum.map(@urls, fn _ -> :ok end)
     assert(download_result == expected_responses)
 
-    for {url, filename} <- @urls do
-      output_path = Path.join(tmp_dir, filename)
-      read_output = File.read!(output_path)
-      expected_output = body(url)
-      assert(read_output == expected_output)
-    end
+    Enum.map(@urls, &assert_downloaded(&1, tmp_dir))
   end
 
   @tag :tmp_dir
@@ -60,12 +55,7 @@ defmodule OnigumoTest do
     expected_responses = Enum.map(@urls, fn _ -> :ok end)
     assert(download_result == expected_responses)
 
-    for {url, filename} <- @urls do
-      output_path = Path.join(tmp_dir, filename)
-      read_output = File.read!(output_path)
-      expected_output = body(url)
-      assert(read_output == expected_output)
-    end
+    Enum.map(@urls, &assert_downloaded(&1, tmp_dir))
   end
 
   @tag :tmp_dir
@@ -106,5 +96,13 @@ defmodule OnigumoTest do
 
   defp body(url) do
     "Body from: #{url}\n"
+  end
+
+  defp assert_downloaded(url, tmp_dir) do
+    filename = Base.url_encode64(url, padding: false)
+    output_path = Path.join(tmp_dir, filename)
+    read_output = File.read!(output_path)
+    expected_output = body(url)
+    assert(read_output == expected_output)
   end
 end
