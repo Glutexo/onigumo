@@ -3,8 +3,8 @@ defmodule OnigumoTest do
   import Mox
 
   @urls [
-    {"http://onigumo.local/hello.html", "aHR0cDovL29uaWd1bW8ubG9jYWwvaGVsbG8uaHRtbA"},
-    {"http://onigumo.local/bye.html", "aHR0cDovL29uaWd1bW8ubG9jYWwvYnllLmh0bWw"}
+    "http://onigumo.local/hello.html",
+    "http://onigumo.local/bye.html"
   ]
 
   setup(:verify_on_exit!)
@@ -13,7 +13,7 @@ defmodule OnigumoTest do
   test("download a single URL", %{tmp_dir: tmp_dir}) do
     expect(HTTPoisonMock, :get!, &get!/1)
 
-    input_url = urls() |> Enum.at(0)
+    input_url = Enum.at(@urls, 0)
     output_path = Path.join(tmp_dir, "body.html")
     download_result = Onigumo.download_url(
       input_url, HTTPoisonMock, output_path
@@ -29,8 +29,9 @@ defmodule OnigumoTest do
   test("download multiple URLs", %{tmp_dir: tmp_dir}) do
     expect(HTTPoisonMock, :get!, length(@urls), &get!/1)
 
-    download_result = urls()
-    |> Onigumo.download_urls(HTTPoisonMock, tmp_dir)
+    download_result = Onigumo.download_urls(
+      @urls, HTTPoisonMock, tmp_dir
+    )
     expected_responses = Enum.map(@urls, fn _ -> :ok end)
     assert(download_result == expected_responses)
 
@@ -48,7 +49,7 @@ defmodule OnigumoTest do
 
     input_path_env = Application.get_env(:onigumo, :input_path)
     input_path_tmp = Path.join(tmp_dir, input_path_env)
-    input_file_content = urls()
+    input_file_content = @urls
     |> Enum.map(&(&1 <> "\n"))
     |> Enum.join()
     File.write!(input_path_tmp, input_file_content)
@@ -69,7 +70,7 @@ defmodule OnigumoTest do
 
   @tag :tmp_dir
   test("load a single URL from a file", %{tmp_dir: tmp_dir}) do
-    input_urls = urls() |> Enum.slice(0, 1)
+    input_urls = Enum.slice(@urls, 0, 1)
 
     input_path_env = Application.get_env(:onigumo, :input_path)
     input_path_tmp = Path.join(tmp_dir, input_path_env)
@@ -84,16 +85,11 @@ defmodule OnigumoTest do
   test("load multiple URLs from a file", %{tmp_dir: tmp_dir}) do
     input_path_env = Application.get_env(:onigumo, :input_path)
     input_path_tmp = Path.join(tmp_dir, input_path_env)
-    input_urls = urls()
-    input_file_content = prepare_input(input_urls)
+    input_file_content = prepare_input(@urls)
     File.write!(input_path_tmp, input_file_content)
 
     loaded_urls = Onigumo.load_urls(input_path_tmp)
-    assert(loaded_urls == input_urls)
-  end
-
-  defp urls() do
-    Enum.map(@urls, &(elem(&1, 0)))
+    assert(loaded_urls == @urls)
   end
 
   defp get!(url) do
