@@ -33,8 +33,7 @@ defmodule OnigumoTest do
     input_file_content = prepare_input(@urls)
     File.write!(input_path_tmp, input_file_content)
 
-    Onigumo.download_urls_from_file(input_path_tmp, tmp_dir)
-    |> Stream.run()
+    Onigumo.download_urls_from_file(tmp_dir) |> Stream.run()
 
     output_path = Path.join(tmp_dir, @output_path)
     read_output = File.read!(output_path)
@@ -52,7 +51,7 @@ defmodule OnigumoTest do
     input_file_content = prepare_input(input_urls)
     File.write!(input_path_tmp, input_file_content)
 
-    loaded_urls = Onigumo.load_urls(input_path_tmp) |> Enum.to_list()
+    loaded_urls = Onigumo.load_urls(tmp_dir) |> Enum.to_list()
     assert(loaded_urls == input_urls)
   end
 
@@ -63,7 +62,7 @@ defmodule OnigumoTest do
     input_file_content = prepare_input(@urls)
     File.write!(input_path_tmp, input_file_content)
 
-    loaded_urls = Onigumo.load_urls(input_path_tmp) |> Enum.to_list()
+    loaded_urls = Onigumo.load_urls(tmp_dir) |> Enum.to_list()
     assert(loaded_urls == @urls)
   end
 
