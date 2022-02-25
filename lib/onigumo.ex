@@ -19,11 +19,11 @@ defmodule Onigumo do
   end
 
   def download_urls(urls, http_client, dir_path) do
-    for url <- urls do
+    Enum.map(urls, fn url ->
       file_name = filename(url)
       file_path = Path.join(dir_path, file_name)
       download_url(url, http_client, file_path)
-    end
+    end)
   end
 
   def download_url(url, http_client, file_path) do
