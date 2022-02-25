@@ -7,15 +7,15 @@ defmodule Onigumo do
   def main() do
     http_client().start()
 
-    dir_path = File.cwd!()
+    root_path = File.cwd!()
 
     Application.get_env(:onigumo, :input_path)
-    |> download_urls_from_file(dir_path)
+    |> download_urls_from_file(root_path)
     |> Stream.run()
   end
 
-  def download_urls_from_file(input_path, dir_path) do
-    file_path = Path.join(dir_path, @output_file_name)
+  def download_urls_from_file(input_path, root_path) do
+    file_path = Path.join(root_path, @output_file_name)
 
     input_path
     |> load_urls()
