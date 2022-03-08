@@ -17,7 +17,8 @@ defmodule OnigumoTest do
     download_result = Onigumo.download_url(input_url, tmp_dir)
     assert(download_result == :ok)
 
-    output_path = Path.join(tmp_dir, Onigumo.filename(input_url))
+    output_filename = Onigumo.filename(input_url)
+    output_path = Path.join(tmp_dir, output_filename)
     read_output = File.read!(output_path)
     expected_output = body(input_url)
     assert(read_output == expected_output)
@@ -81,8 +82,8 @@ defmodule OnigumoTest do
   @tag :tmp_dir
   test("write response to file", %{tmp_dir: tmp_dir}) do
     response = "Response!"
-    file_name = "testfile"
-    output_path = Path.join(tmp_dir, file_name)
+    output_filename = "body.html"
+    output_path = Path.join(tmp_dir, output_filename)
     Onigumo.write_response(response, output_path)
 
     read_output = File.read!(output_path)
