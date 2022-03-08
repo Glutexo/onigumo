@@ -7,6 +7,7 @@ defmodule Onigumo do
     http_client().start()
 
     root_path = File.cwd!()
+
     download_urls_from_file(root_path)
     |> Stream.run()
   end
@@ -20,6 +21,7 @@ defmodule Onigumo do
   def download_url(url, root_path) do
     file_name = create_file_name(url)
     file_path = Path.join(root_path, file_name)
+
     url
     |> get_url()
     |> get_body()
@@ -43,6 +45,7 @@ defmodule Onigumo do
 
   def load_urls(dir_path) do
     input_path = Application.get_env(:onigumo, :input_path)
+
     Path.join(dir_path, input_path)
     |> File.stream!([:read], :line)
     |> Stream.map(&String.trim_trailing/1)
