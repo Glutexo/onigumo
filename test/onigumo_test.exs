@@ -35,7 +35,13 @@ defmodule OnigumoTest do
 
     Onigumo.download_urls_from_file(tmp_dir) |> Stream.run()
 
-    Enum.map(@urls, &assert_downloaded(&1, tmp_dir))
+    Enum.map(@urls, fn url ->
+      file_name = Base.url_encode64(url, padding: false)
+      output_path = Path.join(tmp_dir, file_name)
+      read_output = File.read!(output_path)
+      expected_output = body(url)
+      assert(read_output == expected_output)
+    end)
   end
 
   @tag :tmp_dir
@@ -104,13 +110,5 @@ defmodule OnigumoTest do
 
   defp body(url) do
     "Body from: #{url}\n"
-  end
-
-  defp assert_downloaded(url, tmp_dir) do
-    file_name = Base.url_encode64(url, padding: false)
-    output_path = Path.join(tmp_dir, file_name)
-    read_output = File.read!(output_path)
-    expected_output = body(url)
-    assert(read_output == expected_output)
   end
 end
