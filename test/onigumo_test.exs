@@ -96,6 +96,17 @@ defmodule OnigumoTest do
     assert(read_output == response)
   end
 
+  test("create file name from URL") do
+    input_url = "https://onigumo.local/hello.html"
+    created_file_name = Onigumo.create_file_name(input_url)
+
+    expected_file_name = Base.url_encode64(input_url, padding: false)
+    assert(created_file_name == expected_file_name)
+
+    unexpected_file_name = Base.url_encode64(input_url, padding: true)
+    assert(created_file_name != unexpected_file_name)
+  end
+
   defp prepare_response(url) do
     %HTTPoison.Response{
       status_code: 200,
