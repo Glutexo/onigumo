@@ -17,7 +17,7 @@ defmodule OnigumoTest do
     download_result = Onigumo.download_url(input_url, tmp_dir)
     assert(download_result == :ok)
 
-    output_filename = Onigumo.filename(input_url)
+    output_filename = Onigumo.create_filename(input_url)
     output_path = Path.join(tmp_dir, output_filename)
     read_output = File.read!(output_path)
     expected_output = body(input_url)

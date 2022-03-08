@@ -18,7 +18,8 @@ defmodule Onigumo do
   end
 
   def download_url(url, root_path) do
-    file_path = Path.join(root_path, filename(url))
+    filename = create_filename(url)
+    file_path = Path.join(root_path, filename)
     url
     |> get_url()
     |> get_body()
@@ -51,7 +52,7 @@ defmodule Onigumo do
     Application.get_env(:onigumo, :http_client)
   end
 
-  def filename(url) do
+  def create_filename(url) do
     Base.url_encode64(url, padding: false)
   end
 end
