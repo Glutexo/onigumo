@@ -6,7 +6,6 @@ defmodule OnigumoTest do
     "http://onigumo.local/hello.html",
     "http://onigumo.local/bye.html"
   ]
-  @output_path "body.html"
 
   setup(:verify_on_exit!)
 
@@ -15,10 +14,11 @@ defmodule OnigumoTest do
     expect(HTTPoisonMock, :get!, &prepare_response/1)
 
     input_url = Enum.at(@urls, 0)
-    output_path = Path.join(tmp_dir, @output_path)
-    download_result = Onigumo.download_url(input_url, output_path)
+    download_result = Onigumo.download_url(input_url, tmp_dir)
     assert(download_result == :ok)
 
+    output_file_name = Base.url_encode64(input_url, padding: false)
+    output_path = Path.join(tmp_dir, output_file_name)
     read_output = File.read!(output_path)
     expected_output = body(input_url)
     assert(read_output == expected_output)
@@ -35,11 +35,13 @@ defmodule OnigumoTest do
 
     Onigumo.download_urls_from_file(tmp_dir) |> Stream.run()
 
-    output_path = Path.join(tmp_dir, @output_path)
-    read_output = File.read!(output_path)
-    last_url = Enum.at(@urls, -1)
-    expected_output = body(last_url)
-    assert(read_output == expected_output)
+    Enum.map(@urls, fn url ->
+      file_name = Base.url_encode64(url, padding: false)
+      output_path = Path.join(tmp_dir, file_name)
+      read_output = File.read!(output_path)
+      expected_output = body(url)
+      assert(read_output == expected_output)
+    end)
   end
 
   @tag :tmp_dir
@@ -86,7 +88,8 @@ defmodule OnigumoTest do
   @tag :tmp_dir
   test("write response to file", %{tmp_dir: tmp_dir}) do
     response = "Response!"
-    output_path = Path.join(tmp_dir, @output_path)
+    output_file_name = "body.html"
+    output_path = Path.join(tmp_dir, output_file_name)
     Onigumo.write_response(response, output_path)
 
     read_output = File.read!(output_path)
