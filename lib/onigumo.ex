@@ -4,36 +4,54 @@ defmodule Onigumo do
   """
 
   def main() do
-    http_client = Application.get_env(:onigumo, :http_client)
-    http_client.start()
+    http_client().start()
 
-    download(http_client)
+    root_path = File.cwd!()
+
+    download_urls_from_file(root_path)
+    |> Stream.run()
   end
 
-  def download(http_client) do
-    Application.get_env(:onigumo, :input_path)
+  def download_urls_from_file(root_path) do
+    root_path
     |> load_urls()
-    |> download(http_client)
+    |> Stream.map(&download_url(&1, root_path))
   end
 
-  def download(urls, http_client) when is_list(urls) do
-    Enum.map(urls, &download(&1, http_client, hash(&1)))
+  def download_url(url, root_path) do
+    file_name = Hash.md5(url, :hex)
+    file_path = Path.join(root_path, file_name)
+
+    url
+    |> get_url()
+    |> get_body()
+    |> write_response(file_path)
   end
 
-  def download(url, http_client, path) when is_binary(url) do
-    %HTTPoison.Response{
-      status_code: 200,
-      body: body
-    } = http_client.get!(url)
-
-    File.write!(path, body)
+  def get_url(url) do
+    http_client().get!(url)
   end
 
-  def load_urls(path) do
-    File.stream!(path, [:read], :line)
-    |> Enum.map(&String.trim_trailing/1)
+  def get_body(%HTTPoison.Response{
+        status_code: 200,
+        body: body
+      }) do
+    body
   end
-  def hash(url) do
-    Hash.md5(url, :hex)
+
+  def write_response(response, file_path) do
+    File.write!(file_path, response)
+  end
+
+  def load_urls(dir_path) do
+    input_path = Application.get_env(:onigumo, :input_path)
+
+    Path.join(dir_path, input_path)
+    |> File.stream!([:read], :line)
+    |> Stream.map(&String.trim_trailing/1)
+  end
+
+  defp http_client() do
+    Application.get_env(:onigumo, :http_client)
   end
 end
