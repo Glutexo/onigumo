@@ -17,7 +17,7 @@ defmodule OnigumoTest do
     download_result = Onigumo.download_url(input_url, tmp_dir)
     assert(download_result == :ok)
 
-    output_file_name = Base.url_encode64(input_url, padding: false)
+    output_file_name = Onigumo.create_file_name(input_url)
     output_path = Path.join(tmp_dir, output_file_name)
     read_output = File.read!(output_path)
     expected_output = body(input_url)
@@ -88,6 +88,17 @@ defmodule OnigumoTest do
 
     read_output = File.read!(output_path)
     assert(read_output == response)
+  end
+
+  test("create file name from URL") do
+    input_url = "https://onigumo.local/hello.html"
+    created_file_name = Onigumo.create_file_name(input_url)
+
+    expected_file_name = Base.url_encode64(input_url, padding: false)
+    assert(created_file_name == expected_file_name)
+
+    unexpected_file_name = Base.url_encode64(input_url, padding: true)
+    assert(created_file_name != unexpected_file_name)
   end
 
   defp prepare_response(url) do
