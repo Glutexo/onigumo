@@ -9,10 +9,6 @@ defmodule Hash do
   end
 
   def format(data, :hex) do
-    hex(data)
-  end
-
-  def hex(data) do
     Base.encode16(data, case: :lower)
   end
 
