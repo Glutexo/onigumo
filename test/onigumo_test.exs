@@ -35,13 +35,7 @@ defmodule OnigumoTest do
 
     Onigumo.download_urls_from_file(tmp_dir) |> Stream.run()
 
-    Enum.map(@urls, fn url ->
-      file_name = Hash.md5(url, :hex)
-      output_path = Path.join(tmp_dir, file_name)
-      read_output = File.read!(output_path)
-      expected_output = body(url)
-      assert(read_output == expected_output)
-    end)
+    Enum.map(@urls, &assert_downloaded(&1, tmp_dir))
   end
 
   @tag :tmp_dir
@@ -96,6 +90,17 @@ defmodule OnigumoTest do
     assert(read_output == response)
   end
 
+  test("create file name from URL") do
+    input_url = "https://onigumo.local/hello.html"
+    created_file_name = Onigumo.create_file_name(input_url)
+
+    expected_file_name = Base.url_encode64(input_url, padding: false)
+    assert(created_file_name == expected_file_name)
+
+    unexpected_file_name = Base.url_encode64(input_url, padding: true)
+    assert(created_file_name != unexpected_file_name)
+  end
+
   defp prepare_response(url) do
     %HTTPoison.Response{
       status_code: 200,
@@ -110,5 +115,13 @@ defmodule OnigumoTest do
 
   defp body(url) do
     "Body from: #{url}\n"
+  end
+
+  defp assert_downloaded(url, tmp_dir) do
+    file_name = Hash.md5(url, :hex)
+    output_path = Path.join(tmp_dir, file_name)
+    read_output = File.read!(output_path)
+    expected_output = body(url)
+    assert(read_output == expected_output)
   end
 end

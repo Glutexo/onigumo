@@ -54,4 +54,8 @@ defmodule Onigumo do
   defp http_client() do
     Application.get_env(:onigumo, :http_client)
   end
+
+  def create_file_name(url) do
+    Base.url_encode64(url, padding: false)
+  end
 end
