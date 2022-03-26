@@ -36,7 +36,7 @@ defmodule HashTest do
     }
   ]
 
-  @data "onigumo"
+  @known_hash_data "onigumo"
   @known_hashes [
     {
       :md5,
@@ -59,29 +59,31 @@ defmodule HashTest do
     }
   ]
 
-  for {data, hash_hex, hash_bin} <- @known_md5s do
-    test("MD5 known value #{inspect(data)} in hexadecimal") do
-      hash = Hash.md5(unquote(data), :hex)
-      assert(hash == unquote(hash_hex))
-    end
-
-    test("MD5 known value #{inspect(data)} in binary") do
-      hash = Hash.md5(unquote(data), :bin)
-      assert(hash == unquote(hash_bin))
+  test("hash MD5 known value in hexadecimal") do
+    for {data, hash_hex, _} <- @known_md5s do
+      hash = Hash.md5(data, :hex)
+      assert(hash == hash_hex)
     end
   end
 
-  for {format, hash} <- @formatted_hashes do
-    test("format as #{format}") do
-      formatted = Hash.format(@binary_hash, unquote(format))
-      assert(formatted == unquote(hash))
+  test("hash MD5 known value in binary") do
+    for {data, _, hash_bin} <- @known_md5s do
+      hash = Hash.md5(data, :bin)
+      assert(hash == hash_bin)
+    end
+  end
+
+  test("format a binary hash") do
+    for {format, hash} <- @formatted_hashes do
+      formatted = Hash.format(@binary_hash, format)
+      assert(formatted == hash)
     end
   end
     
-  for {func, hash} <- @known_hashes do
-    test("hash known value with #{func}") do
-      hash = Hash.hash(unquote(func), @data)
-      assert(hash == unquote(hash))
+  test("hash a known value") do
+    for {func, known_hash} <- @known_hashes do
+      computed_hash = Hash.hash(func, @known_hash_data)
+      assert(computed_hash == known_hash)
     end
   end
 end
