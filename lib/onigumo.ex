@@ -19,7 +19,7 @@ defmodule Onigumo do
   end
 
   def download_url(url, root_path) do
-    file_name = Hash.md5(url, :hex)
+    file_name = create_file_name(url)
     file_path = Path.join(root_path, file_name)
 
     url
@@ -56,6 +56,6 @@ defmodule Onigumo do
   end
 
   def create_file_name(url) do
-    Base.url_encode64(url, padding: false)
+    Hash.md5(url, :hex)
   end
 end

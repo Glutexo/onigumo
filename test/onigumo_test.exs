@@ -17,7 +17,7 @@ defmodule OnigumoTest do
     download_result = Onigumo.download_url(input_url, tmp_dir)
     assert(download_result == :ok)
 
-    output_file_name = Hash.md5(input_url, :hex)
+    output_file_name = Onigumo.create_file_name(input_url)
     output_path = Path.join(tmp_dir, output_file_name)
     read_output = File.read!(output_path)
     expected_output = body(input_url)
@@ -94,11 +94,8 @@ defmodule OnigumoTest do
     input_url = "https://onigumo.local/hello.html"
     created_file_name = Onigumo.create_file_name(input_url)
 
-    expected_file_name = Base.url_encode64(input_url, padding: false)
+    expected_file_name = Hash.md5(input_url, :hex)
     assert(created_file_name == expected_file_name)
-
-    unexpected_file_name = Base.url_encode64(input_url, padding: true)
-    assert(created_file_name != unexpected_file_name)
   end
 
   defp prepare_response(url) do
@@ -118,7 +115,7 @@ defmodule OnigumoTest do
   end
 
   defp assert_downloaded(url, tmp_dir) do
-    file_name = Hash.md5(url, :hex)
+    file_name = Onigumo.create_file_name(url)
     output_path = Path.join(tmp_dir, file_name)
     read_output = File.read!(output_path)
     expected_output = body(url)
