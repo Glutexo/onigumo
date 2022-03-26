@@ -66,8 +66,8 @@ defmodule HashTest do
     end
 
     test("MD5 known value #{inspect(data)} in binary") do
-      actual_hash = Hash.md5(unquote(data), :bin)
-      assert(actual_hash == unquote(hash_bin))
+      hash = Hash.md5(unquote(data), :bin)
+      assert(hash == unquote(hash_bin))
     end
   end
 
