@@ -56,6 +56,6 @@ defmodule Onigumo do
   end
 
   def create_file_name(url) do
-    Base.url_encode64(url, padding: false)
+    Hash.md5(url, :hex)
   end
 end
