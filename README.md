@@ -3,12 +3,28 @@
 ## About
 
 Onigumo slouží k procházení webových aplikací či statických webových stránek.
-Obsah a případně další příslušná metatdata konkrétní *url* adresy uloží do
-strukturované podoby dat (např. JSON nebo YAML), které je vhodné
-pro další strojové zpracování. K dosažení tohoto cíle je `Onigumo` rozdělen
+Obsah a případně další příslušná metadata konkrétní *url* adresy uloží do
+strukturované podoby, která je vhodná
+pro další strojové zpracování. K dosažení tohoto cíle je Onigumo rozděleno
 do tří vzájemně propojených logických celků (Operator, Downloader, Parser),
 které tvoří procesní workflow.
 
+## Architecture
+
+Jádrem Oniguma jsou tři základní kameny:
+* Operator
+* Downloader
+* Parser
+
+jejichž vzájemná spolupráce je znázorněna na diagramu níže
+
+```mermaid
+flowchart LR
+    START             -->           operator(OPERATOR)
+    operator    -- urls.txt --->    downloader(DOWNLOADER)
+    downloader  -- *.html --->      parser(PARSER)
+    parser      -- *.json -->  operator
+```
 ## About ##
 
 This is an attempt to build just another web-crawler, also called _Spider_. Its purpose is to get data from a website in a form of a list of objects. This data can be then used to download linked files and place them in a database or a folder structure.
