@@ -42,6 +42,12 @@ nezpracovaných *url* adres. V případě aktivade downloader stáhne metadata
 a obsah webové stránky, jejíž cestu jako vstupní informaci získal
 od operatoru.
 
+### Parser
+
+Po ukončení stažení potřebných informací z dané *url* adresy se na
+stažený obsah spustí parser, který uloží předem definové informace
+z obsahu web stránky do strojově strukturované podoby dat.
+
 ## About ##
 
 This is an attempt to build just another web-crawler, also called _Spider_. Its purpose is to get data from a website in a form of a list of objects. This data can be then used to download linked files and place them in a database or a folder structure.
