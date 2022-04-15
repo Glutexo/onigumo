@@ -2,7 +2,9 @@
 
 ## About
 
-Onigumo slouží k procházení webových aplikací či statických webových stránek.
+Onigumo obecně řídí toky dat, určuje směry toků a v jaké chvíli se aktivuje
+příslušný modul.
+Konrétně slouží k procházení webových aplikací či statických webových stránek.
 Obsah a případně další příslušná metadata uloží do strukturované podoby,
 která je vhodná pro další strojové zpracování. K dosažení tohoto cíle je
 Onigumo rozděleno do tří vzájemně propojených logických celků
@@ -25,10 +27,10 @@ flowchart LR
     parser      -- *.json -->  operator
 ```
 
-## Operator
+### Operator
 Hlavní úkoly operatoru jsou
 
-1. inicializovat práci Oniguma na dané aplikaci na základě vstupních informaíc od
+1. inicializovat práci Oniguma na dané aplikaci na základě vstupních informací od
 uživatele (jméno složky pro stahování informaci a první absolutní *url* adresa ke zpracování)
 2. kontrolovat stav zpracovaných a nezpracovaných *url* adres
 3. aktivovat downloader v případě existence nezpracovaných *url* adres
