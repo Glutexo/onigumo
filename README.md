@@ -2,6 +2,7 @@
 
 ## About
 
+Onigumo je jeden z dalších web-crawlerů, také známých pod pojmem _Spider_.
 Onigumo obecně řídí toky dat, určuje směry toků a v jaké chvíli se aktivuje
 příslušný modul.
 Konrétně slouží k procházení webových aplikací či statických webových stránek.
@@ -46,7 +47,9 @@ od operatoru.
 
 Po ukončení stažení potřebných informací z dané *url* adresy se na
 stažený obsah spustí parser, který uloží předem definové informace
-z obsahu web stránky do strojově strukturované podoby dat.
+z obsahu web stránky do strojově strukturované podoby dat. Strukturovaná
+data jsou uloženy v sobourech na disku. Jména souborů jsou tvořeny jako
+unikítní hashem, které jsou vytvořeny z jejich *url* adresy.
 
 ## About ##
 
