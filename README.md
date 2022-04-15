@@ -35,6 +35,13 @@ uživatele (jméno složky pro stahování informaci a první absolutní *url* a
 2. kontrolovat stav zpracovaných a nezpracovaných *url* adres
 3. aktivovat downloader v případě existence nezpracovaných *url* adres
 
+### Downloader
+
+Činnost downloaderu je aktivována operatorem na základě informace o
+nezpracovaných *url* adres. V případě aktivade downloader stáhne metadata
+a obsah webové stránky, jejíž cestu jako vstupní informaci získal
+od operatoru.
+
 ## About ##
 
 This is an attempt to build just another web-crawler, also called _Spider_. Its purpose is to get data from a website in a form of a list of objects. This data can be then used to download linked files and place them in a database or a folder structure.
