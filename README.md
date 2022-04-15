@@ -3,11 +3,10 @@
 ## About
 
 Onigumo slouží k procházení webových aplikací či statických webových stránek.
-Obsah a případně další příslušná metadata konkrétní *url* adresy uloží do
-strukturované podoby, která je vhodná
-pro další strojové zpracování. K dosažení tohoto cíle je Onigumo rozděleno
-do tří vzájemně propojených logických celků (Operator, Downloader, Parser),
-které tvoří procesní workflow.
+Obsah a případně další příslušná metadata uloží do strukturované podoby,
+která je vhodná pro další strojové zpracování. K dosažení tohoto cíle je
+Onigumo rozděleno do tří vzájemně propojených logických celků
+(Operator, Downloader, Parser), které tvoří procesní workflow.
 
 ## Architecture
 
