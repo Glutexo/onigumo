@@ -24,6 +24,15 @@ flowchart LR
     downloader  -- *.html --->      parser(PARSER)
     parser      -- *.json -->  operator
 ```
+
+## Operator
+Hlavní úkoly operatoru jsou
+
+1. inicializovat práci Oniguma na dané aplikaci na základě vstupních informaíc od
+uživatele (jméno složky pro stahování informaci a první absolutní *url* adresa ke zpracování)
+2. kontrolovat stav zpracovaných a nezpracovaných *url* adres
+3. aktivovat downloader v případě existence nezpracovaných *url* adres
+
 ## About ##
 
 This is an attempt to build just another web-crawler, also called _Spider_. Its purpose is to get data from a website in a form of a list of objects. This data can be then used to download linked files and place them in a database or a folder structure.
