@@ -53,13 +53,16 @@ Downloader stahuje obsah a metadata nezpracovaných *url* adres.
 3. mazat zpracované *url* adresy z fronty
 
 ### Parser
+Parsuje potřebná data ze staženého obsahu a metadat do strukturované podoby.
 
-Po ukončení stažení potřebných informací z dané *url* adresy se na
-stažený obsah spustí parser, který uloží předem definové informace
-z obsahu web stránky do strojově strukturované podoby dat. Strukturovaná
-data jsou uloženy v sobourech na disku. Jména souborů jsou tvořeny jako
-unikítní hashem, které jsou vytvořeny z jejich *url* adresy.
+Činnost `Parseru` se skládá:
 
+1. kontrolovat stav fronty se staženými *url* adresami
+2. parsovat obsah a metadata stažených *url* adres do strukturované podoby dat
+3. strukturovaná data ukládat do json souborů, jejichž jména jsou tvořena
+hashem z jejich *url* adres
+4. aktivace pluginu (pavouků) na strukturovaná data
+5. mazat *url* adresy z fronty stažených *url* adres
 
 
 
