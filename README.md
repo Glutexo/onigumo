@@ -43,11 +43,14 @@ konfigurace
 v jejím obsahu do fronty pro `Downloader`
 
 ### Downloader
+Downloader stahuje obsah a metadata nezpracovaných *url* adres.
 
-Činnost downloaderu je aktivována operatorem na základě informace o
-nezpracovaných *url* adres. V případě aktivade downloader stáhne metadata
-a obsah webové stránky, jejíž cestu jako vstupní informaci získal
-od operatoru.
+Činnost `Downloader` se skládá:
+
+1. kontrolovat stav fronty s *url* adresami ke stažení
+2. stahovat obsah *url* adres a případná metadata
+4. vytváří frontu stažených *url* adres včetně jejich obsahu a metadat
+3. mazat zpracované *url* adresy z fronty
 
 ### Parser
 
