@@ -69,6 +69,7 @@ Scraping starts by inserting the first workflow action on a queue. This action d
 
 ## Credits
 
-© Glutexo 2019
+© Glutexo 2021
+© Nappex 2021
 
 Licenced under the MIT license
