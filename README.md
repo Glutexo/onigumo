@@ -78,7 +78,10 @@ s následujícím API:
 - blabla
 - blabla
 
+# Konfigurace
 
+- jméno složky pro stahování informaci,
+- *url* adresy ke zpracování,
 
 
 ## Usage
