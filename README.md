@@ -25,7 +25,7 @@ flowchart LR
     START             -->           operator(OPERATOR)
     operator    -- urls.txt --->    downloader(DOWNLOADER)
     downloader  -- *.html --->      parser(PARSER)
-    parser      -- *.json -->  operator
+    parser      -- *.json -->       operator
 ```
 
 ### Operator
