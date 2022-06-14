@@ -31,34 +31,34 @@ z počáteční uživatelské konfigurace a zároveň z výstupních dat modulu 
 Činnost `Operatoru` se skládá z:
 1. inicializace práce Oniguma na dané aplikaci na základě uživatelské
 konfigurace
-2. kontroly stavu zpracovaných a nezpracovaných *url* adres z výstupu
+2. kontroly stavu zpracovaných a nezpracovaných URL adres z výstupu
 `Operatoru`, popř. dle zapsaných souborů
-3. načítání nezpracovaných *url* adres ze strukturovaných dat stažené stránky
-4. zařazování nezpracovaných *url* adres do fronty pro `Downloader`
-5. mazání *url* adres z fronty od `Parseru` po předání všech nových stránek
+3. načítání nezpracovaných URL adres ze strukturovaných dat stažené stránky
+4. zařazování nezpracovaných URL adres do fronty pro `Downloader`
+5. mazání URL adres z fronty od `Parseru` po předání všech nových stránek
 v jejím obsahu do fronty pro `Downloader`
 
 ### Downloader ###
-Downloader stahuje obsah a metadata nezpracovaných *url* adres.
+Downloader stahuje obsah a metadata nezpracovaných URL adres.
 
 Činnost `Downloader` se skládá:
 
-1. načítat *url* adresy ke stažení z fronty
-2. stahování obsahu *url* adres a případných metadat
-4. vytváření fronty stažených *url* adres včetně jejich obsahu a metadat
-3. mazání zpracovaných *url* adres z fronty
+1. načítat URL adresy ke stažení z fronty
+2. stahování obsahu URL adres a případných metadat
+4. vytváření fronty stažených URL adres včetně jejich obsahu a metadat
+3. mazání zpracovaných URL adres z fronty
 
 ### Parser ###
 Parsuje potřebná data ze staženého obsahu a metadat do strukturované podoby.
 
 Činnost `Parseru` se skládá:
 
-1. kontrolovat stav fronty se staženými *url* adresami
-2. parsovat obsah a metadata stažených *url* adres do strukturované podoby dat
+1. kontrolovat stav fronty se staženými URL adresami
+2. parsovat obsah a metadata stažených URL adres do strukturované podoby dat
 3. strukturovaná data ukládat do json souborů, jejichž jména jsou tvořena
-hashem z jejich *url* adres
+hashem z jejich URL adres
 4. aktivace pluginu (pavouků) na strukturovaná data
-5. mazat *url* adresy z fronty stažených *url* adres
+5. mazat URL adresy z fronty stažených URL adres
 
 #### Pluginy (Pavouci - spiders)
 Ze strukturované podoby dat uložené v json souborech, vyscrapuje potřebné
