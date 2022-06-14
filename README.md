@@ -9,7 +9,7 @@ Onigumo prochází webové stránky či aplikace. Jejich obsah a případně dal
 
 ## Arhitektura ##
 
-Jádrem Oniguma jsou tři základní moduly:
+Onigumo tvoří tři základní části:
 * Operator
 * Downloader
 * Parser
