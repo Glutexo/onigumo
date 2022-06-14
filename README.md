@@ -1,13 +1,13 @@
 # Onigumo #
 
-## O projektu ##
+## About ##
 
 Onigumo je jeden z dalších web-crawlerů, také známých pod pojmem _Spider_.
 Onigumo obecně řídí toky dat, určuje směry toků a v jaké chvíli se
 aktivuje příslušná operace.
 Onigumo prochází webové stránky či aplikace. Jejich obsah a případně další příslušná metadata uloží do strukturované podoby, která je vhodná pro další strojové zpracování. K dosažení tohoto cíle je Onigumo rozděleno do tří vzájemně propojených logických celků: jeden pro řízení (operator), další pro stahování (downloader) a poslední pro zpracovávání (parser).
 
-## Architektura ##
+## Architekcture ##
 
 Onigumo tvoří tři základní části:
 * Operator
@@ -73,7 +73,6 @@ s následujícím API:
 
 - blabla
 - blabla
-
 
 
 ## Usage ##
