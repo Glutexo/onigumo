@@ -33,9 +33,9 @@ z počáteční uživatelské konfigurace a zároveň z výstupních dat modulu 
 konfigurace
 2. kontroly stavu zpracovaných a nezpracovaných *url* adres z výstupu
 `Operatoru`, popř. dle zapsaných souborů
-3. načítat nezpracované *url* adresy ze strukturovaných dat stažené stránky
-4. zařazovat nezpracované *url* adresy do fronty pro `Downloader`
-5. mazat *url* adresu z fronty od `Parseru` po předání všech nových stránek
+3. načítání nezpracovaných *url* adres ze strukturovaných dat stažené stránky
+4. zařazování nezpracovaných *url* adres do fronty pro `Downloader`
+5. mazání *url* adres z fronty od `Parseru` po předání všech nových stránek
 v jejím obsahu do fronty pro `Downloader`
 
 ### Downloader ###
@@ -43,10 +43,10 @@ Downloader stahuje obsah a metadata nezpracovaných *url* adres.
 
 Činnost `Downloader` se skládá:
 
-1. kontrolovat stav fronty s *url* adresami ke stažení
+1. načítat *url* adresy ke stažení z fronty
 2. stahování obsahu *url* adres a případných metadat
 4. vytváří frontu stažených *url* adres včetně jejich obsahu a metadat
-3. mazat zpracované *url* adresy z fronty
+3. mazání zpracovaných *url* adres z fronty
 
 ### Parser ###
 Parsuje potřebná data ze staženého obsahu a metadat do strukturované podoby.
