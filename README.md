@@ -45,7 +45,7 @@ Downloader stahuje obsah a metadata nezpracovaných *url* adres.
 
 1. načítat *url* adresy ke stažení z fronty
 2. stahování obsahu *url* adres a případných metadat
-4. vytváří frontu stažených *url* adres včetně jejich obsahu a metadat
+4. vytváření fronty stažených *url* adres včetně jejich obsahu a metadat
 3. mazání zpracovaných *url* adres z fronty
 
 ### Parser ###
