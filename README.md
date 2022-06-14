@@ -1,6 +1,6 @@
-# Onigumo
+# Onigumo #
 
-## O projektu
+## O projektu ##
 
 Onigumo je jeden z dalších web-crawlerů, také známých pod pojmem _Spider_.
 Onigumo obecně řídí toky dat, určuje směry toků a v jaké chvíli se
@@ -11,7 +11,7 @@ která je vhodná pro další strojové zpracování. K dosažení tohoto cíle 
 Onigumo rozděleno do tří vzájemně propojených logických celků
 (Operator, Downloader, Parser), které tvoří procesní workflow.
 
-## Arhitektura
+## Arhitektura ##
 
 Jádrem Oniguma jsou tři základní moduly:
 * Operator
@@ -28,7 +28,7 @@ flowchart LR
     parser      -- *.json -->       operator
 ```
 
-### Operator
+### Operator ###
 Operator vytváří frontu url adres pro `Donwloader`. Tato fronta je vytvořena
 z počáteční uživatelské konfigurace a zároveň z výstupních dat modulu `Parser`
 
@@ -42,7 +42,7 @@ konfigurace
 5. mazat *url* adresu z fronty od `Parseru` po předání všech nových stránek
 v jejím obsahu do fronty pro `Downloader`
 
-### Downloader
+### Downloader ###
 Downloader stahuje obsah a metadata nezpracovaných *url* adres.
 
 Činnost `Downloader` se skládá:
@@ -52,7 +52,7 @@ Downloader stahuje obsah a metadata nezpracovaných *url* adres.
 4. vytváří frontu stažených *url* adres včetně jejich obsahu a metadat
 3. mazat zpracované *url* adresy z fronty
 
-### Parser
+### Parser ###
 Parsuje potřebná data ze staženého obsahu a metadat do strukturované podoby.
 
 Činnost `Parseru` se skládá:
@@ -84,9 +84,9 @@ s následujícím API:
 - *url* adresy ke zpracování,
 
 
-## Usage
+## Usage ##
 
-## Credits
+## Credits ##
 
 © Glutexo 2021
 © Nappex 2021
