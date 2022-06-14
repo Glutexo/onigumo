@@ -79,7 +79,6 @@ s následujícím API:
 
 ## Credits ##
 
-© Glutexo 2021
-© Nappex 2021
+© Glutexo 2019
 
 Licenced under the MIT license
