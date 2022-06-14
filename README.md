@@ -25,13 +25,13 @@ flowchart LR
 ```
 
 ### Operator ###
-Operator vytváří frontu url adres pro `Donwloader`. Tato fronta je vytvořena
+Operator vytváří frontu url adres pro `Downloader`. Tato fronta je vytvořena
 z počáteční uživatelské konfigurace a zároveň z výstupních dat modulu `Parser`
 
-Činnost `Operatoru` se skládá:
-1. inicializovat práci Oniguma na dané aplikaci na základě uživatelské
+Činnost `Operatoru` se skládá z:
+1. inicializace práce Oniguma na dané aplikaci na základě uživatelské
 konfigurace
-2. kontrolovat stav zpracovaných a nezpracovaných *url* adres z výstupu
+2. kontroly stavu zpracovaných a nezpracovaných *url* adres z výstupu
 `Operatoru`, popř. dle zapsaných souborů
 3. načítat nezpracované *url* adresy ze strukturovaných dat stažené stránky
 4. zařazovat nezpracované *url* adresy do fronty pro `Downloader`
@@ -44,7 +44,7 @@ Downloader stahuje obsah a metadata nezpracovaných *url* adres.
 Činnost `Downloader` se skládá:
 
 1. kontrolovat stav fronty s *url* adresami ke stažení
-2. stahovat obsah *url* adres a případná metadata
+2. stahování obsahu *url* adres a případných metadat
 4. vytváří frontu stažených *url* adres včetně jejich obsahu a metadat
 3. mazat zpracované *url* adresy z fronty
 
