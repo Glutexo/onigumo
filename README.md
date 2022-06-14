@@ -7,7 +7,7 @@ Onigumo obecně řídí toky dat, určuje směry toků a v jaké chvíli se
 aktivuje příslušná operace.
 Onigumo prochází webové stránky či aplikace. Jejich obsah a případně další příslušná metadata uloží do strukturované podoby, která je vhodná pro další strojové zpracování. K dosažení tohoto cíle je Onigumo rozděleno do tří vzájemně propojených logických celků: jeden pro řízení (operator), další pro stahování (downloader) a poslední pro zpracovávání (parser).
 
-## Architekcture ##
+## Architecture ##
 
 Onigumo tvoří tři základní části:
 * Operator
