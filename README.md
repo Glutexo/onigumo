@@ -20,6 +20,7 @@ flowchart LR
     operator    -- urls.txt --->    downloader(DOWNLOADER)
     downloader  -- *.html --->      parser(PARSER)
     parser      -- *.json -->       operator
+    operator           -->          MATERIALIZATION
 ```
 
 ### Operator ###
