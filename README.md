@@ -9,6 +9,7 @@ Onigumo prochází webové stránky či aplikace. Jejich obsah a případně dal
 ## Architecture ##
 
 Onigumo tvoří tři základní části:
+
 * Operator
 * Downloader
 * Parser
