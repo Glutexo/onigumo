@@ -24,22 +24,22 @@ flowchart LR
 ```
 
 ### Operator ###
-Operator vytváří frontu URL adres určených ke stažení pro `Downloader`. Počáteční fronta je onigumu předaná pluginem (aplikací). Plugin se také stará o doplňování nových URL adress do fronty. Nové URL adresy může plugin získávat například z naparsované podoby dat, která je vytvořena pomocí `Parser`.
+Operator vytváří frontu URL adres určených ke stažení pro _Downloader_. Počáteční fronta je onigumu předaná pluginem (aplikací). Plugin se také stará o doplňování nových URL adress do fronty. Nové URL adresy může plugin získávat například z naparsované podoby dat, která je vytvořena pomocí _Parser_.
 
-Činnost `Operatoru` se skládá z:
+Činnost _Operatoru_ se skládá z:
 1. inicializace práce Oniguma na dané aplikaci na základě uživatelské
 konfigurace
 2. kontroly stavu zpracovaných a nezpracovaných URL adres z výstupu
-`Operatoru`, popř. dle zapsaných souborů
+_Operatoru_, popř. dle zapsaných souborů
 3. načítání nezpracovaných URL adres ze strukturovaných dat stažené stránky
-4. zařazování nezpracovaných URL adres do fronty pro `Downloader`
-5. mazání URL adres z fronty od `Parseru` po předání všech nových stránek
-v jejím obsahu do fronty pro `Downloader`
+4. zařazování nezpracovaných URL adres do fronty pro _Downloader_
+5. mazání URL adres z fronty od _Parseru_ po předání všech nových stránek
+v jejím obsahu do fronty pro _Downloader_
 
 ### Downloader ###
 Downloader stahuje obsah a metadata nezpracovaných URL adres.
 
-Činnost `Downloader` se skládá:
+Činnost _Downloader_ se skládá:
 
 1. načítat URL adresy ke stažení z fronty
 2. stahování obsahu URL adres a případných metadat
@@ -49,7 +49,7 @@ Downloader stahuje obsah a metadata nezpracovaných URL adres.
 ### Parser ###
 Parsuje potřebná data ze staženého obsahu a metadat do strukturované podoby.
 
-Činnost `Parseru` se skládá:
+Činnost _Parseru_ se skládá:
 
 1. kontrolovat stav fronty se staženými URL adresami
 2. parsovat obsah a metadata stažených URL adres do strukturované podoby dat
