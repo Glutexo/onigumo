@@ -44,7 +44,7 @@ Downloader stahuje obsah a metadata nezpracovaných URL adres.
 
 Činnost _Downloader_ se skládá:
 
-1. načítat URL adresy ke stažení z fronty
+1. načítání URL adres ke stažení z fronty
 2. stahování obsahu URL adres a případných metadat
 4. vytváření fronty stažených URL adres včetně jejich obsahu a metadat
 3. mazání zpracovaných URL adres z fronty
