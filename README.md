@@ -72,7 +72,6 @@ Je téměř nemožné vytvořit univerzálního pavouka splňujícího
 všechny požadavky z kombinace obou výše zmíněných.
 Proto je možné si nadefinovat vlastní plugin pro vlastní potřeby.
 
-
 ## Usage ##
 
 ## Credits ##
