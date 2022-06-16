@@ -24,8 +24,7 @@ flowchart LR
 ```
 
 ### Operator ###
-Operator vytváří frontu url adres pro `Downloader`. Tato fronta je vytvořena
-z počáteční uživatelské konfigurace a zároveň z výstupních dat modulu `Parser`
+Operator vytváří frontu URL adres určených ke stažení pro `Downloader`. Počáteční fronta je onigumu předaná pluginem (aplikací). Plugin se také stará o doplňování nových URL adress do fronty. Nové URL adresy může plugin získávat například z naparsované podoby dat, která je vytvořena pomocí `Parser`.
 
 Činnost `Operatoru` se skládá z:
 1. inicializace práce Oniguma na dané aplikaci na základě uživatelské
