@@ -59,7 +59,7 @@ hashem z jejich URL adres
 4. aktivace pluginu (pavouků) na strukturovaná data
 5. mazat URL adresy z fronty stažených URL adres
 
-#### Pluginy (Pavouci - spiders)
+#### Aplikace (neboli pavouci)
 Ze strukturované podoby dat uložené v json souborech, vyscrapuje potřebné
 informace.
 
