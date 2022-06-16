@@ -3,6 +3,7 @@
 ## About ##
 
 Onigumo je jeden z dalších web-crawlerů, také známých pod pojmem _Spider_.
+
 Onigumo prochází webové stránky či aplikace. Jejich obsah a případně další příslušná metadata uloží do strukturované podoby, která je vhodná pro další strojové zpracování. K dosažení tohoto cíle je Onigumo rozděleno do tří vzájemně propojených logických celků: jeden pro řízení (operator), další pro stahování (downloader) a poslední pro zpracovávání (parser).
 
 ## Architecture ##
@@ -63,14 +64,9 @@ hashem z jejich URL adres
 
 #### Aplikace (neboli pavouci) ####
 
-Ze strukturované podoby dat uložené v JSON souborech, vyscrapuje potřebné
-informace.
+Ze strukturované podoby dat uložené v JSON souborech, vyscrapuje potřebné informace.
 
-Charakter výstupních dat či informací je závislý na uživatelských
-potřebách a také podoby internetového obsahu.
-Je téměř nemožné vytvořit univerzálního pavouka splňujícího
-všechny požadavky z kombinace obou výše zmíněných.
-Proto je možné si nadefinovat vlastní plugin pro vlastní potřeby.
+Charakter výstupních dat či informací je závislý na uživatelských potřebách a také podoby internetového obsahu. Je téměř nemožné vytvořit univerzálního pavouka splňujícího všechny požadavky z kombinace obou výše zmíněných. Proto je možné si nadefinovat vlastní plugin pro vlastní potřeby.
 
 ## Usage ##
 
