@@ -19,7 +19,7 @@ flowchart LR
     START             -->           operator(OPERATOR)
     operator    -- urls.txt --->    downloader(DOWNLOADER)
     downloader  -- *.html --->      parser(PARSER)
-    parser      -- *.json -->       operator
+    parser      -- *.JSON -->       operator
     operator           -->          MATERIALIZATION
 ```
 
@@ -53,13 +53,13 @@ Parsuje potřebná data ze staženého obsahu a metadat do strukturované podoby
 
 1. kontrolovat stav fronty se staženými URL adresami
 2. parsovat obsah a metadata stažených URL adres do strukturované podoby dat
-3. strukturovaná data ukládat do json souborů, jejichž jména jsou tvořena
+3. strukturovaná data ukládat do JSON souborů, jejichž jména jsou tvořena
 hashem z jejich URL adres
 4. aktivace pluginu (pavouků) na strukturovaná data
 5. mazat URL adresy z fronty stažených URL adres
 
 #### Aplikace (neboli pavouci) ####
-Ze strukturované podoby dat uložené v json souborech, vyscrapuje potřebné
+Ze strukturované podoby dat uložené v JSON souborech, vyscrapuje potřebné
 informace.
 
 Charakter výstupních dat či informací je závislý na uživatelských
