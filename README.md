@@ -24,6 +24,7 @@ flowchart LR
 ```
 
 ### Operator ###
+
 Operator vytváří frontu URL adres určených ke stažení pro _Downloader_. Počáteční fronta je onigumu předaná pluginem. Plugin se také stará o doplňování nových URL adress do fronty. Nové URL adresy může plugin získávat například z naparsované podoby dat, která je vytvořena pomocí _Parser_.
 
 Činnost _Operatoru_ se skládá z:
@@ -37,6 +38,7 @@ _Operatoru_, popř. dle zapsaných souborů
 v jejím obsahu do fronty pro _Downloader_
 
 ### Downloader ###
+
 Downloader stahuje obsah a metadata nezpracovaných URL adres.
 
 Činnost _Downloader_ se skládá:
@@ -47,6 +49,7 @@ Downloader stahuje obsah a metadata nezpracovaných URL adres.
 3. mazání zpracovaných URL adres z fronty
 
 ### Parser ###
+
 Parsuje potřebná data ze staženého obsahu a metadat do strukturované podoby.
 
 Činnost _Parseru_ se skládá:
@@ -59,6 +62,7 @@ hashem z jejich URL adres
 5. mazat URL adresy z fronty stažených URL adres
 
 #### Aplikace (neboli pavouci) ####
+
 Ze strukturované podoby dat uložené v JSON souborech, vyscrapuje potřebné
 informace.
 
