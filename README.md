@@ -10,9 +10,9 @@ Onigumo prochází webové stránky či aplikace. Jejich obsah a případně dal
 
 Onigumo tvoří tři základní části:
 
-* Operator
-* Downloader
-* Parser
+* operator
+* downloader
+* parser
 
 jejichž vzájemná spolupráce je znázorněna na diagramu níže
 
