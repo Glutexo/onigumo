@@ -59,7 +59,7 @@ Parsuje potřebná data ze staženého obsahu a metadat do strukturované podoby
 2. parsovat obsah a metadata stažených URL adres do strukturované podoby dat
 3. strukturovaná data ukládat do JSON souborů, jejichž jména jsou tvořena
 hashem z jejich URL adres
-4. aktivace pluginu (pavouků) na strukturovaná data
+4. aktivace pluginu na strukturovaná data
 5. mazat URL adresy z fronty stažených URL adres
 
 #### Aplikace (neboli pavouci) ####
