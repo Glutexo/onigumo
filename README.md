@@ -32,8 +32,7 @@ Operator vytváří frontu URL adres určených ke stažení pro _downloader_. Z
 Činnost _operatoru_ se skládá z:
 
 1. inicializace práce Oniguma na dané aplikaci
-2. kontroly stavu zpracovaných a nezpracovaných URL adres z výstupu
-_operatoru_, popř. dle zapsaných souborů
+2. kontroly stavu zpracovaných a nezpracovaných URL adres z výstupu _operatoru_, popř. dle zapsaných souborů
 3. načítání nezpracovaných URL adres ze strukturovaných dat stažené stránky
 4. zařazování nezpracovaných URL adres do fronty pro _downloader_
 5. mazání URL adres z fronty od _parseru_ po předání všech nových stránek
