@@ -44,9 +44,9 @@ Stahuje obsah a metadata nezpracovaných URL adres.
 Činnost _downloaderu_ se skládá z:
 
 1. načítání URL adres ke stažení z fronty,
-2. stahování obsahu URL adres a případných metadat.
-3. vytváření fronty stažených URL adres včetně jejich obsahu a metadat,
-4. mazání zpracovaných URL adres z fronty.
+2. kontroly existence souboru `<hash>.raw`,
+3. stahování obsahu URL adres a případných metadat,
+4. mazání zpracovaných URL adres z fronty "ke stažení".
 
 ### Parser ###
 
