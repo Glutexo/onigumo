@@ -2,17 +2,68 @@
 
 ## About ##
 
-This is an attempt to build just another web-crawler, also called _Spider_. Its purpose is to get data from a website in a form of a list of objects. This data can be then used to download linked files and place them in a database or a folder structure.
+Onigumo je web-crawler.
+
+Onigumo „prolézá“ webové stránky či aplikace. Jejich obsah a případná metadata uloží do strukturované podoby, která je vhodná pro další strojové zpracování.
 
 ## Architecture ##
 
-### Building blocks ###
+Onigumo je rozděleno do tří na sebe vzájemně navazujících částí:
 
-The application uses Spiders (Ruby modules) containing workflow and data-mining methods to get data from a website. A Spider’s public interface consists of workflows how to get all the wanted data from the server. Typically get a page, parse it and possibly get more pages using the parsed data.
+* operator - řízení,
+* downloader - stahování,
+* parser - zpracování.
 
-### Mechanism ###
+Diagram níže znázorňuje vzájemnou součinnost těchto celků:
 
-Scraping starts by inserting the first workflow action on a queue. This action doesn’t take any input an thus doesn’t have to wait for any data to be parsed. Any action can queue another action that uses the data parsed from a download page. Downloading and parsing ends when there is no more actions to be launched.
+```mermaid
+flowchart LR
+    START             -->           operator(OPERATOR)
+    operator    -- <hash>.urls --->    downloader(DOWNLOADER)
+    downloader  -- <hash>.raw --->      parser(PARSER)
+    parser      -- <hash>.json -->       operator
+    operator           -->          MATERIALIZATION
+```
+
+### Operator ###
+
+Určuje URL adresy ke stažení pro _downloader_. Za přidávání URL adres ke zpracování je zodpovědný pavouk. Nové URL adresy pavouk získává z naparsované podoby dat, kterou vytváří _parser_.
+
+Činnost _operatoru_ se skládá z:
+
+1. inicializace pavouka,
+2. kontroly existence seznamu nových URL adres,
+3. načítání nových URL adres ze strukturovaných dat,
+4. zařazování těchto URL adres do fronty pro _downloader_.
+
+### Downloader ###
+
+Stahuje obsah a metadata nezpracovaných URL adres.
+
+Činnost _downloaderu_ se skládá z:
+
+1. načítání URL adres ke stažení,
+2. kontroly již existujících stažených,
+3. stahování obsahu URL adres a případných metadat,
+4. uložení stažených dat.
+
+### Parser ###
+
+Zpracovává data ze staženého obsahu a metadat do strukturované podoby.
+
+Činnost _parseru_ se skládá z:
+
+1. kontroly stažených URL adres ke zpracování,
+2. zpracovávání obsahu a metadat stažených URL adres do strukturované podoby dat,
+3. ukládání strukturovaných dat.
+
+## Aplikace (pavouci) ##
+
+Ze strukturované podoby dat uložené ve formátu JSON, vytáhne potřebné informace.
+
+Podstata výstupních dat či informací je závislá na uživatelských potřebách a také podobě internetového obsahu. Je nemožné vytvořit univerzálního pavouka splňujícího všechny požadavky z kombinace obou výše zmíněných. Z tohoto důvodu je nutné si napsat vlastního pavouka.
+
+### Materializer ###
 
 ## Usage ##
 
