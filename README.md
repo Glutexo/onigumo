@@ -4,15 +4,15 @@
 
 Onigumo je web-crawler.
 
-Onigumo "prolézá" webové stránky či aplikace. Jejich obsah a případná metadata uloží do strukturované podoby, která je vhodná pro další strojové zpracování.
+Onigumo „prolézá“ webové stránky či aplikace. Jejich obsah a případná metadata uloží do strukturované podoby, která je vhodná pro další strojové zpracování.
 
 ## Architecture ##
 
 Onigumo je rozděleno do tří na sebe vzájemně navazujících částí:
 
 * operator - řízení,
-* downloader - stahování dat,
-* parser - zpracování dat.
+* downloader - stahování,
+* parser - zpracování.
 
 Diagram níže znázorňuje vzájemnou součinnost těchto celků:
 
@@ -27,7 +27,7 @@ flowchart LR
 
 ### Operator ###
 
-Určuje URL adresy ke stažení pro _downloader_. Za přidávání URL adres ke zpracování je zodpovědná aplikace. Nové URL adresy aplikace získává z naparsované podoby dat, kterou vytváří _parser_.
+Určuje URL adresy ke stažení pro _downloader_. Za přidávání URL adres ke zpracování je zodpovědný pavouk. Nové URL adresy pavouk získává z naparsované podoby dat, kterou vytváří _parser_.
 
 Činnost _operatoru_ se skládá z:
 
@@ -49,11 +49,11 @@ Stahuje obsah a metadata nezpracovaných URL adres.
 
 ### Parser ###
 
-Zpracovává potřebná data ze staženého obsahu a metadat do strukturované podoby.
+Zpracovává data ze staženého obsahu a metadat do strukturované podoby.
 
 Činnost _parseru_ se skládá z:
 
-1. kontroly stažených URL adres určených ke zpracování,
+1. kontroly stažených URL adres ke zpracování,
 2. zpracovávání obsahu a metadat stažených URL adres do strukturované podoby dat,
 3. ukládání strukturovaných dat.
 
