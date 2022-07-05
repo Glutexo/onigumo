@@ -2,19 +2,19 @@
 
 ## About ##
 
-Onigumo je jeden z dalších web-crawlerů, také známých pod pojmem _spider_.
+Onigumo je web-crawler.
 
-Onigumo prochází webové stránky či aplikace. Jejich obsah a případně další příslušná metadata uloží do strukturované podoby, která je vhodná pro další strojové zpracování. K dosažení tohoto cíle je Onigumo rozděleno do tří vzájemně propojených logických celků: jeden pro řízení (operator), další pro stahování (downloader) a poslední pro zpracovávání (parser).
+Onigumo "prolézá" webové stránky či aplikace. Jejich obsah a případná metadata uloží do strukturované podoby, která je vhodná pro další strojové zpracování.
 
 ## Architecture ##
 
-Onigumo tvoří tři základní části:
+Onigumo je rozděleno do tří na sebe vzájemně navazujících částí:
 
-* operator
-* downloader
-* parser
+* operator - řízení
+* downloader - stahování dat
+* parser - zpracování dat
 
-jejichž vzájemná spolupráce je znázorněna na diagramu níže
+Diagram níže, znázorňuje vzájemnou součinnost těchto celků:
 
 ```mermaid
 flowchart LR
@@ -27,9 +27,10 @@ flowchart LR
 
 ### Operator ###
 
-Operator vytváří frontu URL adres určených ke stažení pro _downloader_. Počáteční fronta je onigumu předaná pluginem. Plugin se také stará o doplňování nových URL adress do fronty. Nové URL adresy může plugin získávat například z naparsované podoby dat, která je vytvořena pomocí _parser_.
+Operator vytváří frontu URL adres určených ke stažení pro _downloader_. Počáteční fronta je Onigumu předaná pluginem. O doplňování nových URL adres se následně už stará plugin. Nové URL adresy plugin získává z naparsované podoby dat, kterou vytváří _parser_.
 
 Činnost _operatoru_ se skládá z:
+
 1. inicializace práce Oniguma na dané aplikaci
 2. kontroly stavu zpracovaných a nezpracovaných URL adres z výstupu
 _operatoru_, popř. dle zapsaných souborů
@@ -42,7 +43,7 @@ v jejím obsahu do fronty pro _downloader_
 
 Downloader stahuje obsah a metadata nezpracovaných URL adres.
 
-Činnost _downloader_ se skládá:
+Činnost _downloaderu_ se skládá z:
 
 1. načítání URL adres ke stažení z fronty
 2. stahování obsahu URL adres a případných metadat
@@ -53,9 +54,9 @@ Downloader stahuje obsah a metadata nezpracovaných URL adres.
 
 Parsuje potřebná data ze staženého obsahu a metadat do strukturované podoby.
 
-Činnost _parseru_ se skládá:
+Činnost _parseru_ se skládá z:
 
-1. kontrolovat stav fronty se staženými URL adresami
+1. kontroly stavu fronty se staženými URL adresami
 2. parsovat obsah a metadata stažených URL adres do strukturované podoby dat
 3. strukturovaná data ukládat do JSON souborů, jejichž jména jsou tvořena
 hashem z jejich URL adres
@@ -64,9 +65,9 @@ hashem z jejich URL adres
 
 #### Aplikace (neboli pavouci) ####
 
-Ze strukturované podoby dat uložené v JSON souborech, vyscrapuje potřebné informace.
+Ze strukturované podoby dat uložené ve formátu JSON, vyscrapuje potřebné informace.
 
-Charakter výstupních dat či informací je závislý na uživatelských potřebách a také podoby internetového obsahu. Je téměř nemožné vytvořit univerzálního pavouka splňujícího všechny požadavky z kombinace obou výše zmíněných. Proto je možné si nadefinovat vlastní plugin pro vlastní potřeby.
+Charakter výstupních dat či informací je závislý na uživatelských potřebách a také podoby internetového obsahu. Je téměř nemožné vytvořit univerzálního pavouka splňujícího všechny požadavky z kombinace obou výše zmíněných. Z tohoto důvodu je možné si nadefinovat vlastní plugin.
 
 ## Usage ##
 
