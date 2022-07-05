@@ -46,8 +46,8 @@ Downloader stahuje obsah a metadata nezpracovaných URL adres.
 
 1. načítání URL adres ke stažení z fronty
 2. stahování obsahu URL adres a případných metadat
-4. vytváření fronty stažených URL adres včetně jejich obsahu a metadat
-3. mazání zpracovaných URL adres z fronty
+3. vytváření fronty stažených URL adres včetně jejich obsahu a metadat
+4. mazání zpracovaných URL adres z fronty
 
 ### Parser ###
 
@@ -57,10 +57,8 @@ Parsuje potřebná data ze staženého obsahu a metadat do strukturované podoby
 
 1. kontroly stavu fronty se staženými URL adresami
 2. parsovat obsah a metadata stažených URL adres do strukturované podoby dat
-3. strukturovaná data ukládat do JSON souborů, jejichž jména jsou tvořena
-hashem z jejich URL adres
-4. aktivace pluginu na strukturovaná data
-5. mazat URL adresy z fronty stažených URL adres
+3. strukturovaná data ukládat do JSON souborů, jejichž jména jsou tvořena hashem z jejich URL adres
+4. mazat URL adresy z fronty stažených URL adres
 
 #### Aplikace (neboli pavouci) ####
 
