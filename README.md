@@ -27,7 +27,7 @@ flowchart LR
 
 ### Operator ###
 
-Operator vytváří frontu URL adres určených ke stažení pro _downloader_. Za přidávání URL adres určených ke zpracování je zodpovědná aplikace. Nové URL adresy aplikace získává z naparsované podoby dat, kterou vytváří _parser_.
+Vytváří frontu URL adres určených ke stažení pro _downloader_. Za přidávání URL adres určených ke zpracování je zodpovědná aplikace. Nové URL adresy aplikace získává z naparsované podoby dat, kterou vytváří _parser_.
 
 Činnost _operatoru_ se skládá z:
 
@@ -39,7 +39,7 @@ Operator vytváří frontu URL adres určených ke stažení pro _downloader_. Z
 
 ### Downloader ###
 
-Downloader stahuje obsah a metadata nezpracovaných URL adres.
+Stahuje obsah a metadata nezpracovaných URL adres.
 
 Činnost _downloaderu_ se skládá z:
 
@@ -50,7 +50,7 @@ Downloader stahuje obsah a metadata nezpracovaných URL adres.
 
 ### Parser ###
 
-Parsuje potřebná data ze staženého obsahu a metadat do strukturované podoby.
+Zpracovává potřebná data ze staženého obsahu a metadat do strukturované podoby.
 
 Činnost _parseru_ se skládá z:
 
