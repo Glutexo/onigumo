@@ -54,16 +54,15 @@ Zpracovává potřebná data ze staženého obsahu a metadat do strukturované p
 
 Činnost _parseru_ se skládá z:
 
-1. kontroly stavu fronty se staženými URL adresami,
-2. parsovat obsah a metadata stažených URL adres do strukturované podoby dat,
-3. strukturovaná data ukládat do JSON souborů, jejichž jména jsou tvořena hashem jejich URL adres,
-4. mazat URL adresy z fronty stažených URL adres.
+1. kontroly stažených URL adres určených ke zpracování,
+2. zpracovávání obsahu a metadat stažených URL adres do strukturované podoby dat,
+3. ukládání strukturovaných dat.
 
-## Aplikace (neboli pavouci) ####
+## Aplikace (pavouci) ##
 
 Ze strukturované podoby dat uložené ve formátu JSON, vytáhne potřebné informace.
 
-Podstata výstupních dat či informací je závislá na uživatelských potřebách a také podobě internetového obsahu. Je nemožné vytvořit univerzálního pavouka splňujícího všechny požadavky z kombinace obou výše zmíněných. Z tohoto důvodu je nutné si nadefinovat vlastního pavouka.
+Podstata výstupních dat či informací je závislá na uživatelských potřebách a také podobě internetového obsahu. Je nemožné vytvořit univerzálního pavouka splňujícího všechny požadavky z kombinace obou výše zmíněných. Z tohoto důvodu je nutné si napsat vlastního pavouka.
 
 ### Materializer ###
 
