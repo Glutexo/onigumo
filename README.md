@@ -63,7 +63,7 @@ Parsuje potřebná data ze staženého obsahu a metadat do strukturované podoby
 
 Ze strukturované podoby dat uložené ve formátu JSON, vytáhne potřebné informace.
 
-Podstata výstupních dat či informací je závislá na uživatelských potřebách a také podoby internetového obsahu. Je téměř nemožné vytvořit univerzálního pavouka splňujícího všechny požadavky z kombinace obou výše zmíněných. Z tohoto důvodu je možné si nadefinovat vlastní plugin.
+Podstata výstupních dat či informací je závislá na uživatelských potřebách a také podobě internetového obsahu. Je nemožné vytvořit univerzálního pavouka splňujícího všechny požadavky z kombinace obou výše zmíněných. Z tohoto důvodu je nutné si nadefinovat vlastního pavouka.
 
 ### Materializer ###
 
