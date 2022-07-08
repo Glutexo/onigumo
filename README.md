@@ -43,7 +43,7 @@ Stahuje obsah a metadata nezpracovaných URL adres.
 Činnost _downloaderu_ se skládá z:
 
 1. načítání URL adres ke stažení,
-2. kontroly již existujících stažených URL adres,
+2. kontroly stažených URL adres,
 3. stahování obsahu URL adres a případných metadat,
 4. uložení stažených dat.
 
