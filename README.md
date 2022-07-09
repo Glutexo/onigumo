@@ -43,7 +43,7 @@ Stahuje obsah a metadata nezpracovaných adres.
 Činnost _downloaderu_ se skládá z:
 
 1. načítání adres ke stažení,
-2. kontroly již existujících stažených,
+2. kontroly stažených adres,
 3. stahování obsahu adres a případných metadat,
 4. uložení stažených dat.
 
@@ -54,12 +54,12 @@ Zpracovává data ze staženého obsahu a metadat do strukturované podoby.
 Činnost _parseru_ se skládá z:
 
 1. kontroly stažených adres ke zpracování,
-2. zpracovávání obsahu a metadat stažených adres do strukturované podoby dat,
+2. zpracovávání obsahu a metadat stažených adres do strukturované podoby,
 3. ukládání strukturovaných dat.
 
 ## Aplikace (pavouci) ##
 
-Ze strukturované podoby dat uložené ve formátu JSON, vytáhne potřebné informace.
+Ze strukturované podoby dat vytáhne potřebné informace.
 
 Podstata výstupních dat či informací je závislá na uživatelských potřebách a také podobě internetového obsahu. Je nemožné vytvořit univerzálního pavouka splňujícího všechny požadavky z kombinace obou výše zmíněných. Z tohoto důvodu je nutné si napsat vlastního pavouka.
 
