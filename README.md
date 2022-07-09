@@ -65,7 +65,7 @@ Podstata výstupních dat či informací je závislá na uživatelských potřeb
 
 ### Materializer ###
 
-## Usage ##
+## Usage ##
 
 ## Credits ##
 
