@@ -27,14 +27,14 @@ flowchart LR
 
 ### Operator ###
 
-Určuje URL adresy ke stažení pro _downloader_. Za přidávání URL adres ke zpracování je zodpovědný pavouk. Nové URL adresy pavouk získává z naparsované podoby dat, kterou vytváří _parser_.
+Určuje URL adresy ke stažení pro _downloader_. Za přidávání URL ke zpracování je zodpovědný pavouk. Nové URL pavouk získává z naparsované podoby dat, kterou vytváří _parser_.
 
 Činnost _operatoru_ se skládá z:
 
 1. inicializace pavouka,
-2. kontroly existence seznamu nových URL adres,
-3. načítání nových URL adres ze strukturovaných dat,
-4. zařazování těchto URL adres do fronty pro _downloader_.
+2. kontroly existence seznamu nových URL,
+3. načítání nových URL ze strukturovaných dat,
+4. zařazování těchto URL do fronty pro _downloader_.
 
 ### Downloader ###
 
@@ -42,9 +42,9 @@ Stahuje obsah a metadata nezpracovaných URL adres.
 
 Činnost _downloaderu_ se skládá z:
 
-1. načítání URL adres ke stažení,
-2. kontroly stažených URL adres,
-3. stahování obsahu URL adres a případných metadat,
+1. načítání URL ke stažení,
+2. kontroly stažených URL,
+3. stahování obsahu URL a případných metadat,
 4. uložení stažených dat.
 
 ### Parser ###
@@ -54,7 +54,7 @@ Zpracovává data ze staženého obsahu a metadat do strukturované podoby.
 Činnost _parseru_ se skládá z:
 
 1. kontroly stažených URL adres ke zpracování,
-2. zpracovávání obsahu a metadat stažených URL adres do strukturované podoby,
+2. zpracovávání obsahu a metadat stažených URL do strukturované podoby,
 3. ukládání strukturovaných dat.
 
 ## Aplikace (pavouci) ##
