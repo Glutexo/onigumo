@@ -32,7 +32,7 @@ Určuje URL adresy ke stažení pro _downloader_. Za přidávání URL ke zpraco
 Činnost _operatoru_ se skládá z:
 
 1. inicializace pavouka,
-2. kontroly existence seznamu nových URB,
+2. kontroly existence seznamu nových URL,
 3. načítání nových URL ze strukturovaných dat,
 4. zařazování těchto URL do fronty pro _downloader_.
 
