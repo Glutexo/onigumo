@@ -69,6 +69,6 @@ Podstata výstupních dat či informací je závislá na uživatelských potřeb
 
 ## Credits ##
 
-© Glutexo 2019
+© Glutexo, nappex 2019
 
 Licenced under the MIT license
