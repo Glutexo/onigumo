@@ -2,7 +2,7 @@
 
 ## About ##
 
-Onigumo is yet another web-crawler.
+Onigumo is a web-crawler.
 
 Onigumo “crawls” websites or webapps, storing its data in a structured form suitable for further machine processing.
 
