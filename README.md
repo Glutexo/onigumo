@@ -2,7 +2,7 @@
 
 ## About ##
 
-Onigumo je web-crawler. „Prolézá“ webové stránky či aplikace. Jejich obsah a případná metadata uloží do strukturované podoby, která je vhodná pro další strojové zpracování.
+Onigumo is a web-crawler. It “crawls” websites or webapps, storing their data in a structured form suitable for further machine processing.
 
 ## Architecture ##
 
