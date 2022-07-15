@@ -2,17 +2,17 @@
 
 ## About ##
 
-Onigumo is a web-crawler. It “crawls” websites or webapps, storing their data in a structured form suitable for further machine processing.
+Onigumo is yet another web-crawler. It “crawls” websites or webapps, storing their data in a structured form suitable for further machine processing.
 
 ## Architecture ##
 
-Onigumo je rozděleno do tří na sebe vzájemně navazujících částí:
+Onigumo is composed of three sequentially interconnected components:
 
-* operator - řízení,
-* downloader - stahování,
-* parser - zpracování.
+* the Operator,
+* the Downloader,
+* the Parser.
 
-Diagram níže znázorňuje tok dat mezi těmito celky:
+The flowchart below illustrates the flow of data between those parts:
 
 ```mermaid
 flowchart LR
