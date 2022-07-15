@@ -16,11 +16,11 @@ The flowchart below illustrates the cooperation of those parts:
 
 ```mermaid
 flowchart LR
-    START             -->           operator(OPERATOR)
-    operator    -- <hash>.urls --->    downloader(DOWNLOADER)
-    downloader  -- <hash>.raw --->      parser(PARSER)
-    parser      -- <hash>.json -->       operator
-    operator           -->          MATERIALIZATION
+    START --> operator(OPERATOR)
+    operator -- <hash>.urls ---> downloader(DOWNLOADER)
+    downloader -- <hash>.raw ---> parser(PARSER)
+    parser -- <hash>.json --> operator
+    operator --> MATERIALIZATION
 ```
 
 ### Operator ###
