@@ -6,13 +6,13 @@ Onigumo is a web-crawler. It “crawls” websites or webapps, storing their dat
 
 ## Architecture ##
 
-Onigumo is composed of three interconnected parts:
+Onigumo is composed of three sequentially interconnected components:
 
 * the Operator,
 * the Downloader,
 * the Parser.
 
-The flowchart below shows their cooperation:
+The flowchart below illustrates the cooperation of those parts:
 
 ```mermaid
 flowchart LR
