@@ -12,7 +12,7 @@ Onigumo je rozděleno do tří na sebe vzájemně navazujících částí:
 * downloader - stahování,
 * parser - zpracování.
 
-Diagram níže znázorňuje vzájemnou součinnost těchto celků:
+Diagram níže znázorňuje tok dat mezi těmito celky:
 
 ```mermaid
 flowchart LR
