@@ -19,7 +19,7 @@ flowchart LR
     START             -->           operator(OPERATOR)
     operator    -- <hash>.urls --->    downloader(DOWNLOADER)
     downloader  -- <hash>.raw --->      parser(PARSER)
-    parser      -- <hash>.json -->       operator
+    parser      -- <hash>.json --->       operator
     operator           -->          MATERIALIZATION
 ```
 
