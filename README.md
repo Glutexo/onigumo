@@ -25,14 +25,14 @@ flowchart LR
 
 ### Operator ###
 
-Determines URL addresses for download for the Downloader. A Spider is responsible for adding the URLs. The Spider gets the new URLs from the parsed form of the data, which the Parser creates.
+The Operator determines URL addresses for the Downloader. A Spider is responsible for adding the URLs, which it gets from the parsed form of the data provided by the Parser.
 
-The Operator’s job is composed of:
+The Operator’s job to:
 
-1. initialization of a Spider,
+1. initialize a Spider,
 2. check for the existence of a new URL list,
-3. extraction of new URLs from structured data,
-4. insertion of those URLs to the Downloader queue.
+3. extract new URLs from structured data,
+4. insert those URLs onto the Downloader queue.
 
 ### Downloader ###
 
