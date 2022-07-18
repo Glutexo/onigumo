@@ -12,7 +12,7 @@ Onigumo is composed of three sequentially interconnected components:
 * the Downloader,
 * the Parser.
 
-The flowchart below illustrates the cooperation of those parts:
+The flowchart below illustrates the flow of data between those parts:
 
 ```mermaid
 flowchart LR
