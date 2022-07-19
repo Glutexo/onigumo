@@ -25,14 +25,14 @@ flowchart LR
 
 ### Operator ###
 
-Určuje URL adresy ke stažení pro _downloader_. Za přidávání URL ke zpracování je zodpovědný pavouk. Nové URL pavouk získává z naparsované podoby dat, kterou vytváří _parser_.
+The Operator determines URL addresses for the Downloader. A Spider is responsible for adding the URLs, which it gets from the parsed form of the data provided by the Parser.
 
-Činnost _operatoru_ se skládá z:
+The Operator’s job is to:
 
-1. inicializace pavouka,
-2. kontroly existence seznamu nových URL,
-3. načítání nových URL ze strukturovaných dat,
-4. zařazování těchto URL do fronty pro _downloader_.
+1. initialize a Spider,
+2. check for the existence of a new URL list,
+3. extract new URLs from structured data,
+4. insert those URLs onto the Downloader queue.
 
 ### Downloader ###
 
