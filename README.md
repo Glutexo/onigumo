@@ -30,9 +30,8 @@ The Operator determines URL addresses for the Downloader. A Spider is responsibl
 The Operator’s job is to:
 
 1. initialize a Spider,
-2. check for the existence of a new URL list,
-3. extract new URLs from structured data,
-4. insert those URLs onto the Downloader queue.
+2. extract new URLs from structured data,
+3. insert those URLs onto the Downloader queue.
 
 ### Downloader ###
 
