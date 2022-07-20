@@ -2,22 +2,70 @@
 
 ## About ##
 
-This is an attempt to build just another web-crawler, also called _Spider_. Its purpose is to get data from a website in a form of a list of objects. This data can be then used to download linked files and place them in a database or a folder structure.
+Onigumo is yet another web-crawler. It “crawls” websites or webapps, storing their data in a structured form suitable for further machine processing.
 
 ## Architecture ##
 
-### Building blocks ###
+Onigumo is composed of three sequentially interconnected components:
 
-The application uses Spiders (Ruby modules) containing workflow and data-mining methods to get data from a website. A Spider’s public interface consists of workflows how to get all the wanted data from the server. Typically get a page, parse it and possibly get more pages using the parsed data.
+* [the Operator](#operator),
+* [the Downloader](#downloader),
+* [the Parser](#parser).
 
-### Mechanism ###
+The flowchart below illustrates the flow of data between those parts:
 
-Scraping starts by inserting the first workflow action on a queue. This action doesn’t take any input an thus doesn’t have to wait for any data to be parsed. Any action can queue another action that uses the data parsed from a download page. Downloading and parsing ends when there is no more actions to be launched.
+```mermaid
+flowchart LR
+    START              -->         operator(OPERATOR)
+    operator   -- <hash>.urls ---> downloader(DOWNLOADER)
+    downloader -- <hash>.raw  ---> parser(PARSER)
+    parser     -- <hash>.json ---> operator
+    operator           -->         MATERIALIZATION
+```
 
-## Usage ##
+### Operator ###
+
+The Operator determines URL addresses for the Downloader. A Spider is responsible for adding the URLs, which it gets from the parsed form of the data provided by the Parser.
+
+The Operator’s job is to:
+
+1. initialize a Spider,
+2. extract new URLs from structured data,
+3. insert those URLs onto the Downloader queue.
+
+### Downloader ###
+
+Stahuje obsah a metadata nezpracovaných URL adres.
+
+Činnost _downloaderu_ se skládá z:
+
+1. načítání URL ke stažení,
+2. kontroly stažených URL,
+3. stahování obsahu URL a případných metadat,
+4. uložení stažených dat.
+
+### Parser ###
+
+Zpracovává data ze staženého obsahu a metadat do strukturované podoby.
+
+Činnost _parseru_ se skládá z:
+
+1. kontroly stažených URL adres ke zpracování,
+2. zpracovávání obsahu a metadat stažených URL do strukturované podoby,
+3. ukládání strukturovaných dat.
+
+## Aplikace (pavouci) ##
+
+Ze strukturované podoby dat vytáhne potřebné informace.
+
+Podstata výstupních dat či informací je závislá na uživatelských potřebách a také podobě internetového obsahu. Je nemožné vytvořit univerzálního pavouka splňujícího všechny požadavky z kombinace obou výše zmíněných. Z tohoto důvodu je nutné si napsat vlastního pavouka.
+
+### Materializer ###
+
+## Usage ##
 
 ## Credits ##
 
-© Glutexo 2019
+© [Glutexo](https://github.com/Glutexo), [nappex](https://github.com/nappex) 2019 – 2022
 
 Licenced under the MIT license
