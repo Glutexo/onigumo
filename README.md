@@ -35,7 +35,7 @@ The Operator’s job is to:
 
 ### Downloader ###
 
-The Downloader fetches and saves the content and metadata from the unprocessed URL addresses.
+The Downloader fetches and saves the contents and metadata from the unprocessed URL addresses.
 
 The Downloader’s job is to:
 
