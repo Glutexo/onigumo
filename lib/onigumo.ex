@@ -5,6 +5,7 @@ defmodule Onigumo do
 
   def main(root_path) do
     http_client().start()
+
     download_urls_from_file(root_path)
     |> Stream.run()
   end
