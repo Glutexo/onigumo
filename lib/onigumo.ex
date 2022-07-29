@@ -3,11 +3,8 @@ defmodule Onigumo do
   Web scraper
   """
 
-  def main() do
+  def main(root_path) do
     http_client().start()
-
-    root_path = File.cwd!()
-
     download_urls_from_file(root_path)
     |> Stream.run()
   end
