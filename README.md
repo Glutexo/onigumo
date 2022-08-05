@@ -16,11 +16,11 @@ The flowchart below illustrates the flow of data between those parts:
 
 ```mermaid
 flowchart LR
-    start([START])         -->            operator(OPERATOR)
+    start([START])         -->         operator(OPERATOR)
     operator       -- <hash>.urls ---> downloader(DOWNLOADER)
     downloader     -- <hash>.raw  ---> parser(PARSER)
     parser         -- <hash>.json ---> operator
-    operator               -->         MATERIALIZATION
+    operator               -->         MATERIALIZER
 ```
 
 ### Operator ###
