@@ -16,11 +16,27 @@ The flowchart below illustrates the flow of data between those parts:
 
 ```mermaid
 flowchart LR
-    start([START])         -->         operator[OPERATOR]
-    operator       -- <hash>.urls ---> downloader[DOWNLOADER]
-    downloader     -- <hash>.raw  ---> parser[PARSER]
-    parser         -- <hash>.json ---> operator
-    operator               -->         MATERIALIZER
+    START                      -->         onigumo_operator[OPERATOR]
+    onigumo_operator   -- <hash>.urls ---> onigumo_downloader[DOWNLOADER]
+    onigumo_downloader -- <hash>.raw  ---> onigumo_parser[PARSER]
+    onigumo_parser     -- <hash>.json ---> onigumo_operator
+	
+	onigumo_operator          <-.->        spider_operator[OPERATOR]
+	onigumo_parser            <-.->        spider_parser[PARSER]
+
+    onigumo_operator           -->         spider_materialization[MATERIALIZER]
+	
+	subgraph Onigumo
+	    onigumo_operator
+		onigumo_downloader
+		onigumo_parser
+	end
+
+    subgraph Spider
+       spider_operator
+       spider_parser
+       spider_materialization
+    end
 ```
 
 ### Operator ###
