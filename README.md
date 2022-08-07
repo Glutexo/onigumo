@@ -16,7 +16,7 @@ The flowchart below illustrates the flow of data between those parts:
 
 ```mermaid
 flowchart LR
-    START                      -->         onigumo_operator[OPERATOR]
+    start(START)               -->         onigumo_operator[OPERATOR]
     onigumo_operator   -- <hash>.urls ---> onigumo_downloader[DOWNLOADER]
     onigumo_downloader -- <hash>.raw  ---> onigumo_parser[PARSER]
     onigumo_parser     -- <hash>.json ---> onigumo_operator
