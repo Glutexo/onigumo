@@ -49,11 +49,11 @@ defmodule Onigumo do
     |> Stream.map(&String.trim_trailing/1)
   end
 
-  defp http_client() do
-    Application.get_env(:onigumo, :http_client)
-  end
-
   def create_file_name(url) do
     Hash.md5(url, :hex)
+  end
+
+  defp http_client() do
+    Application.get_env(:onigumo, :http_client)
   end
 end
