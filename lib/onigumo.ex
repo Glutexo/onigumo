@@ -1,4 +1,4 @@
-defmodule Onigumo do
+defmodule Onigumo.Downloader do
   @moduledoc """
   Web scraper
   """
