@@ -9,7 +9,7 @@ defmodule OnigumoTest do
 
   setup(:verify_on_exit!)
 
-  describe("Onigumo.download_url/2") do
+  describe("Onigumo.Downloader.download_url/2") do
     @tag :tmp_dir
     test("download a URL", %{tmp_dir: tmp_dir}) do
       expect(HTTPoisonMock, :get!, &prepare_response/1)
@@ -26,7 +26,7 @@ defmodule OnigumoTest do
     end
   end
 
-  describe("Onigumo.download_urls_from_file/1") do
+  describe("Onigumo.Downloader.download_urls_from_file/1") do
     @tag :tmp_dir
     test("download URLs from the input file", %{tmp_dir: tmp_dir}) do
       expect(HTTPoisonMock, :get!, length(@urls), &prepare_response/1)
@@ -42,7 +42,7 @@ defmodule OnigumoTest do
     end
   end
 
-  describe("Onigumo.load_urls/1") do
+  describe("Onigumo.Downloader.load_urls/1") do
     @tag :tmp_dir
     test("load a single URL from a file", %{tmp_dir: tmp_dir}) do
       input_urls = Enum.slice(@urls, 0, 1)
@@ -68,7 +68,7 @@ defmodule OnigumoTest do
     end
   end
 
-  describe("Onigumo.get_url/1") do
+  describe("Onigumo.Downloader.get_url/1") do
     test("get response by HTTP request") do
       expect(HTTPoisonMock, :get!, &prepare_response/1)
 
@@ -79,7 +79,7 @@ defmodule OnigumoTest do
     end
   end
 
-  describe("Onigumo.get_body/1") do
+  describe("Onigumo.Downloader.get_body/1") do
     test("extract body from URL response") do
       url = Enum.at(@urls, 0)
       response = prepare_response(url)
@@ -89,7 +89,7 @@ defmodule OnigumoTest do
     end
   end
 
-  describe("Onigumo.write_response/2") do
+  describe("Onigumo.Downloader.write_response/2") do
     @tag :tmp_dir
     test("write response to file", %{tmp_dir: tmp_dir}) do
       response = "Response!"
@@ -102,7 +102,7 @@ defmodule OnigumoTest do
     end
   end
 
-  describe("Onigumo.create_file_name/1") do
+  describe("Onigumo.Downloader.create_file_name/1") do
     test("create file name from URL") do
       input_url = "https://onigumo.local/hello.html"
       created_file_name = Onigumo.Downloader.create_file_name(input_url)
