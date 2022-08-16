@@ -10,6 +10,22 @@ defmodule OnigumoTest do
   setup(:verify_on_exit!)
 
   @tag :tmp_dir
+  test("run the download", %{tmp_dir: tmp_dir}) do
+    expect(HTTPoisonMock, :start, fn -> nil end)
+    expect(HTTPoisonMock, :get!, length(@urls), &prepare_response/1)
+
+    input_path_env = Application.get_env(:onigumo, :input_path)
+    input_path_tmp = Path.join(tmp_dir, input_path_env)
+    input_file_content = prepare_input(@urls)
+    File.write!(input_path_tmp, input_file_content)
+
+    stream_result = Onigumo.Downloader.main(tmp_dir)
+    assert(stream_result == :ok)
+
+    Enum.map(@urls, &assert_downloaded(&1, tmp_dir))
+  end
+
+  @tag :tmp_dir
   test("download a URL", %{tmp_dir: tmp_dir}) do
     expect(HTTPoisonMock, :get!, &prepare_response/1)
 
