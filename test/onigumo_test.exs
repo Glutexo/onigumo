@@ -41,11 +41,12 @@ defmodule OnigumoTest do
 
   @tag :tmp_dir
   test("load URLs from a file", %{tmp_dir: tmp_dir}) do
+    input_path_env = Application.get_env(:onigumo, :input_path)
+    input_path_tmp = Path.join(tmp_dir, input_path_env)
+
     for slice <- @slices do
       input_urls = Enum.slice(@urls, slice)
 
-      input_path_env = Application.get_env(:onigumo, :input_path)
-      input_path_tmp = Path.join(tmp_dir, input_path_env)
       input_file_content = prepare_input(input_urls)
       File.write!(input_path_tmp, input_file_content)
 
