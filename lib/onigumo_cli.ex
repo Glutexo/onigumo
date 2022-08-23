@@ -1,6 +1,7 @@
 defmodule Onigumo.CLI do
-  def main(_args) do
+  def main([component]) do
+    module = Module.safe_concat("Onigumo", component)
     root_path = File.cwd!()
-    Onigumo.Downloader.main(root_path)
+    module.main(root_path)
   end
 end
