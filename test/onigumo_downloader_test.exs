@@ -1,4 +1,4 @@
-defmodule OnigumoTest do
+defmodule OnigumoDownloaderTest do
   use ExUnit.Case
   import Mox
 
@@ -14,10 +14,10 @@ defmodule OnigumoTest do
     expect(HTTPoisonMock, :get!, &prepare_response/1)
 
     input_url = Enum.at(@urls, 0)
-    download_result = Onigumo.download_url(input_url, tmp_dir)
+    download_result = Onigumo.Downloader.download_url(input_url, tmp_dir)
     assert(download_result == :ok)
 
-    output_file_name = Onigumo.create_file_name(input_url)
+    output_file_name = Onigumo.Downloader.create_file_name(input_url)
     output_path = Path.join(tmp_dir, output_file_name)
     read_output = File.read!(output_path)
     expected_output = body(input_url)
@@ -33,7 +33,7 @@ defmodule OnigumoTest do
     input_file_content = prepare_input(@urls)
     File.write!(input_path_tmp, input_file_content)
 
-    Onigumo.download_urls_from_file(tmp_dir) |> Stream.run()
+    Onigumo.Downloader.download_urls_from_file(tmp_dir) |> Stream.run()
 
     Enum.map(@urls, &assert_downloaded(&1, tmp_dir))
   end
@@ -47,7 +47,7 @@ defmodule OnigumoTest do
     input_file_content = prepare_input(input_urls)
     File.write!(input_path_tmp, input_file_content)
 
-    loaded_urls = Onigumo.load_urls(tmp_dir) |> Enum.to_list()
+    loaded_urls = Onigumo.Downloader.load_urls(tmp_dir) |> Enum.to_list()
     assert(loaded_urls == input_urls)
   end
 
@@ -58,7 +58,7 @@ defmodule OnigumoTest do
     input_file_content = prepare_input(@urls)
     File.write!(input_path_tmp, input_file_content)
 
-    loaded_urls = Onigumo.load_urls(tmp_dir) |> Enum.to_list()
+    loaded_urls = Onigumo.Downloader.load_urls(tmp_dir) |> Enum.to_list()
     assert(loaded_urls == @urls)
   end
 
@@ -66,7 +66,7 @@ defmodule OnigumoTest do
     expect(HTTPoisonMock, :get!, &prepare_response/1)
 
     url = Enum.at(@urls, 0)
-    get_response = Onigumo.get_url(url)
+    get_response = Onigumo.Downloader.get_url(url)
     expected_response = prepare_response(url)
     assert(get_response == expected_response)
   end
@@ -74,7 +74,7 @@ defmodule OnigumoTest do
   test("extract body from URL response") do
     url = Enum.at(@urls, 0)
     response = prepare_response(url)
-    get_body = Onigumo.get_body(response)
+    get_body = Onigumo.Downloader.get_body(response)
     expected_body = body(url)
     assert(get_body == expected_body)
   end
@@ -84,7 +84,7 @@ defmodule OnigumoTest do
     response = "Response!"
     output_file_name = "body.html"
     output_path = Path.join(tmp_dir, output_file_name)
-    Onigumo.write_response(response, output_path)
+    Onigumo.Downloader.write_response(response, output_path)
 
     read_output = File.read!(output_path)
     assert(read_output == response)
@@ -92,7 +92,7 @@ defmodule OnigumoTest do
 
   test("create file name from URL") do
     input_url = "https://onigumo.local/hello.html"
-    created_file_name = Onigumo.create_file_name(input_url)
+    created_file_name = Onigumo.Downloader.create_file_name(input_url)
 
     expected_file_name = Hash.md5(input_url, :hex)
     assert(created_file_name == expected_file_name)
@@ -115,7 +115,7 @@ defmodule OnigumoTest do
   end
 
   defp assert_downloaded(url, tmp_dir) do
-    file_name = Onigumo.create_file_name(url)
+    file_name = Onigumo.Downloader.create_file_name(url)
     output_path = Path.join(tmp_dir, file_name)
     read_output = File.read!(output_path)
     expected_output = body(url)
