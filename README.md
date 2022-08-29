@@ -55,7 +55,7 @@ The Downloader fetches and saves the contents and metadata from the unprocessed 
 
 The Downloader’s job is to:
 
-1. read the list of URLs for download,
+1. read URLs for download,
 2. check for the already downloaded URLs,
 3. fetch the URLs contents along with its metadata,
 4. save the downloaded data.
