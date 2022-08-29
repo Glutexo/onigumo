@@ -68,18 +68,27 @@ defmodule OnigumoDownloaderTest do
   end
 
   @tag :tmp_dir
-  test("load urls from a file", %{tmp_dir: tmp_dir}) do
-    for slice <- @slices do
-      input_urls = Enum.slice(@urls, slice)
+  test("load a single URL from a file", %{tmp_dir: tmp_dir}) do
+    input_urls = Enum.slice(@urls, 0, 1)
 
-      input_path_env = Application.get_env(:onigumo, :input_path)
-      input_path_tmp = Path.join(tmp_dir, input_path_env)
-      input_file_content = prepare_input(input_urls)
-      File.write!(input_path_tmp, input_file_content)
+    input_path_env = Application.get_env(:onigumo, :input_path)
+    input_path_tmp = Path.join(tmp_dir, input_path_env)
+    input_file_content = prepare_input(input_urls)
+    File.write!(input_path_tmp, input_file_content)
 
-      loaded_urls = Onigumo.Downloader.load_urls(tmp_dir) |> Enum.to_list()
-      assert(loaded_urls == input_urls)
-    end
+    loaded_urls = Onigumo.Downloader.load_urls(tmp_dir) |> Enum.to_list()
+    assert(loaded_urls == input_urls)
+  end
+
+  @tag :tmp_dir
+  test("load multiple URLs from a file", %{tmp_dir: tmp_dir}) do
+    input_path_env = Application.get_env(:onigumo, :input_path)
+    input_path_tmp = Path.join(tmp_dir, input_path_env)
+    input_file_content = prepare_input(@urls)
+    File.write!(input_path_tmp, input_file_content)
+
+    loaded_urls = Onigumo.Downloader.load_urls(tmp_dir) |> Enum.to_list()
+    assert(loaded_urls == @urls)
   end
 
   test("create file name from URL") do
