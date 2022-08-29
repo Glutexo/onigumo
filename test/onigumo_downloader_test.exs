@@ -1,4 +1,4 @@
-defmodule OnigumoTest do
+defmodule OnigumoDownloaderTest do
   use ExUnit.Case
   import Mox
 
