@@ -51,14 +51,14 @@ The Operator’s job is to:
 
 ### Downloader ###
 
-Stahuje obsah a metadata nezpracovaných URL adres.
+The Downloader fetches and saves the contents and metadata from the unprocessed URL addresses.
 
-Činnost _downloaderu_ se skládá z:
+The Downloader’s job is to:
 
-1. načítání URL ke stažení,
-2. kontroly stažených URL,
-3. stahování obsahu URL a případných metadat,
-4. uložení stažených dat.
+1. read URLs for download,
+2. check for the already downloaded URLs,
+3. fetch the URLs contents along with its metadata,
+4. save the downloaded data.
 
 ### Parser ###
 
