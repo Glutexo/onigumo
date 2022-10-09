@@ -6,7 +6,6 @@ defmodule OnigumoDownloaderTest do
     "http://onigumo.local/hello.html",
     "http://onigumo.local/bye.html"
   ]
-  @slices [0..1, 0..-1]
 
   setup(:verify_on_exit!)
 
