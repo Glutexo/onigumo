@@ -7,13 +7,13 @@ defmodule Onigumo.Downloader do
     http_client().start()
 
     download_urls_from_file(root_path)
-    |> Stream.run()
   end
 
   def download_urls_from_file(root_path) do
     root_path
     |> load_urls()
     |> Stream.map(&download_url(&1, root_path))
+    |> Stream.run()
   end
 
   def download_url(url, root_path) do
