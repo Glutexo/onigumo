@@ -4,7 +4,6 @@ defmodule Onigumo.Downloader do
   """
 
   def main(root_path) do
-    http_client().start()
 
     download_urls_from_file(root_path)
   end
@@ -27,6 +26,7 @@ defmodule Onigumo.Downloader do
   end
 
   def get_url(url) do
+    http_client().start()
     http_client().get!(url)
   end
 
