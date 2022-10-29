@@ -3,14 +3,14 @@ defmodule Onigumo.Downloader do
   Web scraper
   """
 
-  def download_urls_from_file(root_path) do
+  def download(root_path) do
     root_path
     |> load_urls()
-    |> Stream.map(&download_url(&1, root_path))
+    |> Stream.map(&download(&1, root_path))
     |> Stream.run()
   end
 
-  def download_url(url, root_path) do
+  def download(url, root_path) do
     file_name = create_file_name(url)
     file_path = Path.join(root_path, file_name)
 
