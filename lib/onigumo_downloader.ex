@@ -3,11 +3,6 @@ defmodule Onigumo.Downloader do
   Web scraper
   """
 
-  def main(root_path) do
-
-    download_urls_from_file(root_path)
-  end
-
   def download_urls_from_file(root_path) do
     root_path
     |> load_urls()
