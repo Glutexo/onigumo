@@ -26,7 +26,7 @@ defmodule OnigumoDownloaderTest do
     end
   end
 
-  describe("Onigumo.Downloader.download_urls_from_file/1") do
+  describe("Onigumo.Downloader.create_download_stream/1") do
     @tag :tmp_dir
     test("download URLs from the input file", %{tmp_dir: tmp_dir}) do
       expect(HTTPoisonMock, :get!, length(@urls), &prepare_response/1)
@@ -36,7 +36,7 @@ defmodule OnigumoDownloaderTest do
       input_file_content = prepare_input(@urls)
       File.write!(input_path_tmp, input_file_content)
 
-      Onigumo.Downloader.download_urls_from_file(tmp_dir) |> Stream.run()
+      Onigumo.Downloader.create_download_stream(tmp_dir) |> Stream.run()
 
       Enum.map(@urls, &assert_downloaded(&1, tmp_dir))
     end
