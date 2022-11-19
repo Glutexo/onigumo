@@ -31,8 +31,7 @@ defmodule OnigumoDownloaderTest do
       expect(HTTPoisonMock, :get!, &prepare_response/1)
 
       input_url = Enum.at(@urls, 0)
-      download_result = Onigumo.Downloader.download_url(input_url, tmp_dir)
-      assert(download_result == :ok)
+      Onigumo.Downloader.download_url(input_url, tmp_dir)
 
       output_file_name = Onigumo.Downloader.create_file_name(input_url)
       output_path = Path.join(tmp_dir, output_file_name)
