@@ -20,8 +20,7 @@ defmodule OnigumoDownloaderTest do
       input_file_content = prepare_input(@urls)
       File.write!(input_path_tmp, input_file_content)
 
-      stream_result = Onigumo.Downloader.main(tmp_dir)
-      assert(stream_result == :ok)
+      Onigumo.Downloader.main(tmp_dir)
 
       Enum.map(@urls, &assert_downloaded(&1, tmp_dir))
     end
