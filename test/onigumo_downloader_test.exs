@@ -11,7 +11,7 @@ defmodule OnigumoDownloaderTest do
 
   describe("Onigumo.Downloader.main/1") do
     @tag :tmp_dir
-    test("run the download", %{tmp_dir: tmp_dir}) do
+    test("run Downloader", %{tmp_dir: tmp_dir}) do
       expect(HTTPoisonMock, :start, fn -> nil end)
       expect(HTTPoisonMock, :get!, length(@urls), &prepare_response/1)
 
