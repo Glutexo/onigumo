@@ -26,13 +26,13 @@ flowchart LR
 
     onigumo_operator           -->         spider_materialization[MATERIALIZER]
 	
-	subgraph Onigumo
+	subgraph "Onigumo (kernel)"
 	    onigumo_operator
 		onigumo_downloader
 		onigumo_parser
 	end
 
-    subgraph Spider
+    subgraph "Spider (application)"
        spider_operator
        spider_parser
        spider_materialization
