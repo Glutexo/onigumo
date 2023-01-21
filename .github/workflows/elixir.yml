@@ -2,15 +2,15 @@ name: Elixir CI
 
 on:
   push:
-    branches: [ elixir ]
+    branches: [ master ]
   pull_request:
-    branches: [ elixir ]
+    branches: [ master ]
 
 jobs:
   build:
 
     name: Build and test
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-20.04
 
     steps:
     - name: Check out the repository
