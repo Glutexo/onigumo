@@ -5,9 +5,7 @@ defmodule ParseTest do
     "http://onigumo.local/hello.html",
     "http://onigumo.local/bye.html"
   ]
-
-  test("Parsing values of href attributes in html links") do
-    html = ~s("<!doctype html>
+  @html ~s("<!doctype html>
       <html>
       <body>
         <section id="content">
@@ -19,7 +17,8 @@ defmodule ParseTest do
       </body>
       </html>")
 
-    result = Parser.html_links(html)
+  test("Parsing values of href attributes in html links") do
+    result = Parser.html_links(@html)
     assert result == @urls
   end
 end
