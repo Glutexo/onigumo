@@ -12,6 +12,7 @@ defmodule ParseTest do
             <p class="headline">Floki</p>
             <a href="http://onigumo.local/hello.html">Hello</a>
             <a href="http://onigumo.local/bye.html">Bye</a>
+            <a id="b"></a>
             <span data-model="user">onigumo</span>
         </section>
     </body>
