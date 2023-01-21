@@ -19,7 +19,7 @@ defmodule ParseTest do
 </html>)
 
   test("Parsing values of href attributes in html links") do
-    result = Spider.HTML.find_links(@html)
-    assert result == @urls
+    links = Spider.HTML.find_links(@html)
+    assert links == @urls
   end
 end
