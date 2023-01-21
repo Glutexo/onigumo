@@ -7,7 +7,7 @@ defmodule ParseTest do
   ]
 
   test("Parsing values of href attributes in html links") do
-    document = ~s("<!doctype html>
+    html = ~s("<!doctype html>
       <html>
       <body>
         <section id="content">
@@ -19,7 +19,7 @@ defmodule ParseTest do
       </body>
       </html>")
 
-    result = Parser.html_links(document)
+    result = Parser.html_links(html)
     assert result == @urls
   end
 end
