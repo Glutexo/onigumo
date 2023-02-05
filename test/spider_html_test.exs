@@ -19,7 +19,7 @@ defmodule SpiderHtmlTest do
 </html>)
 
   describe("Spider.HTML.find_links/1") do
-    test("Parsing values of href attributes in html links") do
+    test("find links in href attributes of 'a' tags") do
       links = Spider.HTML.find_links(@html)
       assert links == @urls
     end
