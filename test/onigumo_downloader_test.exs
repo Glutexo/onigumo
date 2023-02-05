@@ -28,7 +28,7 @@ defmodule OnigumoDownloaderTest do
 
   describe("Onigumo.Downloader.create_download_stream/1") do
     @tag :tmp_dir
-    test("create a stream to download URLs from the input file", %{tmp_dir: tmp_dir}) do
+    test("download URLs from the input file with a created stream", %{tmp_dir: tmp_dir}) do
       expect(HTTPoisonMock, :get!, length(@urls), &prepare_response/1)
 
       input_path_env = Application.get_env(:onigumo, :input_path)
