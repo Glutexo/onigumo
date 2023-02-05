@@ -7,6 +7,9 @@ defmodule SpiderHtmlTest do
   ]
   @html ~s(<!doctype html>
 <html>
+    <head>
+        <link href="/media/examples/link-element-example.css" rel="stylesheet">
+    </head>
     <body>
         <section id="content">
             <p class="headline">Floki</p>
