@@ -27,7 +27,7 @@ defmodule Onigumo.MixProject do
       {:httpoison, "~> 1.8"},
       {:mox, "~> 1.0", only: :test},
 
-      # Toolbox dependencies
+      # Spider toolbox dependencies
       {:floki, "~> 0.32.0"}
     ]
   end
