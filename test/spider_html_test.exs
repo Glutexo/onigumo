@@ -1,4 +1,4 @@
-defmodule ParseTest do
+defmodule SpiderHtmlTest do
   use ExUnit.Case
 
   @urls [
