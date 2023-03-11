@@ -21,9 +21,9 @@ defmodule SpiderHtmlTest do
     </body>
 </html>)
 
-  describe("Spider.HTML.find_links/1") do
+  describe("Onigumo.Spider.HTML.find_links/1") do
     test("find links in href attributes of 'a' tags") do
-      links = Spider.HTML.find_links(@html)
+      links = Onigumo.Spider.HTML.find_links(@html)
       assert links == @urls
     end
   end
