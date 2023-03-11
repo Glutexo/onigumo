@@ -116,7 +116,7 @@ defmodule OnigumoDownloaderTest do
       input_url = "https://onigumo.local/hello.html"
       created_file_name = Onigumo.Downloader.create_file_name(input_url)
 
-      expected_file_name = Hash.md5(input_url, :hex)
+      expected_file_name = Onigumo.Utilities.Hash.md5(input_url, :hex)
       assert(created_file_name == expected_file_name)
     end
   end
