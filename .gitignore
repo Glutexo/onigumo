@@ -25,4 +25,5 @@ onigumo-*.tar
 # Temporary files, for example, from tests.
 /tmp/
 
-onigumo
+# Ignore onigumo escript file
+/onigumo
