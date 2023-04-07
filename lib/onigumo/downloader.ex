@@ -50,7 +50,7 @@ defmodule Onigumo.Downloader do
   end
 
   def create_file_name(url) do
-    Hash.md5(url, :hex)
+    Onigumo.Utilities.Hash.md5(url, :hex)
   end
 
   defp http_client() do
