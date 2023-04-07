@@ -6,11 +6,11 @@ defmodule Onigumo.Downloader do
   def main(root_path) do
     http_client().start()
 
-    download_urls_from_file(root_path)
+    create_download_stream(root_path)
     |> Stream.run()
   end
 
-  def download_urls_from_file(root_path) do
+  def create_download_stream(root_path) do
     root_path
     |> load_urls()
     |> Stream.map(&download_url(&1, root_path))
@@ -51,7 +51,7 @@ defmodule Onigumo.Downloader do
 
   def create_file_name(url) do
     suffix = Application.get_env(:onigumo, :downloaded_suffix)
-    Hash.md5(url, :hex) <> suffix
+    Onigumo.Utilities.Hash.md5(url, :hex) <> suffix
   end
 
   defp http_client() do
