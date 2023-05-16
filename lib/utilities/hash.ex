@@ -1,4 +1,4 @@
-defmodule Hash do
+defmodule Onigumo.Utilities.Hash do
   def md5(data, fmt) do
     hash(:md5, data)
     |> format(fmt)
