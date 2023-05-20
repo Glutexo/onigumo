@@ -7,7 +7,6 @@ defmodule Onigumo.Parser do
     root_path
     |> File.ls!()
 	|> Enum.filter(fn filename -> Path.extname(filename) == ".raw" end)
-    |> Enum.join("\n")
-    |> IO.puts()
+    |> Enum.map(&IO.puts(&1))
   end
 end
