@@ -117,8 +117,8 @@ defmodule OnigumoDownloaderTest do
       created_file_name = Onigumo.Downloader.create_file_name(input_url)
 
       input_url_hash = Onigumo.Utilities.Hash.md5(input_url, :hex)
-      downloaded_suffix = Application.get_env(:onigumo, :downloaded_suffix)
-      expected_file_name = input_url_hash <> downloaded_suffix
+      suffix = Application.get_env(:onigumo, :downloaded_suffix)
+      expected_file_name = input_url_hash <> suffix
 
       assert(created_file_name == expected_file_name)
     end
