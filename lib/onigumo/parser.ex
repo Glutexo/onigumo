@@ -6,8 +6,7 @@ defmodule Onigumo.Parser do
   def main(root_path) do
     root_path
     |> File.ls!()
-    |> Enum.reject(&File.dir?(&1))
-    |> Enum.reject(&String.contains?(&1, "."))
+	|> Enum.filter(fn filename -> Path.extname(filename) == ".raw" end)
     |> Enum.join("\n")
     |> IO.puts()
   end
