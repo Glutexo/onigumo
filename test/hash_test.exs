@@ -53,28 +53,28 @@ defmodule HashTest do
 
   for {data, hash_hex, _} <- @known_md5s do
     test("hash MD5 #{inspect(data)} in hexadecimal") do
-      hash = Hash.md5(unquote(data), :hex)
+      hash = Onigumo.Utilities.Hash.md5(unquote(data), :hex)
       assert(hash == unquote(hash_hex))
     end
   end
 
   for {data, _, hash_bin} <- @known_md5s do
     test("hash MD5 #{inspect(data)} in binary") do
-      hash = Hash.md5(unquote(data), :bin)
+      hash = Onigumo.Utilities.Hash.md5(unquote(data), :bin)
       assert(hash == unquote(hash_bin))
     end
   end
 
   for {format, hash} <- @formatted_hashes do
     test("format #{inspect(@binary_hash)} in #{inspect(format)}") do
-      formatted = Hash.format(@binary_hash, unquote(format))
+      formatted = Onigumo.Utilities.Hash.format(@binary_hash, unquote(format))
       assert(formatted == unquote(hash))
     end
   end
 
   for {func, known_hash} <- @known_hashes do
     test("hash #{inspect(@known_hash_data)} with #{inspect(func)}") do
-      computed_hash = Hash.hash(unquote(func), @known_hash_data)
+      computed_hash = Onigumo.Utilities.Hash.hash(unquote(func), @known_hash_data)
       assert(computed_hash == unquote(known_hash))
     end
   end
