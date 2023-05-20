@@ -8,7 +8,8 @@ defmodule Onigumo.MixProject do
       elixir: "~> 1.10",
       start_permanent: Mix.env() == :prod,
       deps: deps(),
-      escript: escript()
+      escript: escript(),
+      elixirc_paths: elixirc_paths(Mix.env()),
     ]
   end
 
@@ -37,4 +38,8 @@ defmodule Onigumo.MixProject do
       main_module: Onigumo.CLI
     ]
   end
+
+  defp elixirc_paths(:test), do: ["lib", "test/support"]
+  defp elixirc_paths(_), do: [ "lib" ]
+
 end

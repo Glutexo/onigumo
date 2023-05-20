@@ -14,7 +14,7 @@ defmodule OnigumoDownloaderTest do
     @tag :tmp_dir
     test("run Downloader", %{tmp_dir: tmp_dir}) do
       expect(HTTPoisonMock, :start, fn -> nil end)
-      expect(HTTPoisonMock, :get!, length(@urls), &prepare_response/1)
+      expect(HTTPoisonMock, :get!, length(@urls), &HttpTestUtil.prepare_response/1)
 
       input_path_env = Application.get_env(:onigumo, :input_path)
       input_path_tmp = Path.join(tmp_dir, input_path_env)
@@ -30,7 +30,7 @@ defmodule OnigumoDownloaderTest do
   describe("Onigumo.Downloader.create_download_stream/1") do
     @tag :tmp_dir
     test("download URLs from the input file with a created stream", %{tmp_dir: tmp_dir}) do
-      expect(HTTPoisonMock, :get!, length(@urls), &prepare_response/1)
+      expect(HTTPoisonMock, :get!, length(@urls), &HttpTestUtil.prepare_response/1)
 
       input_path_env = Application.get_env(:onigumo, :input_path)
       input_path_tmp = Path.join(tmp_dir, input_path_env)
@@ -46,7 +46,7 @@ defmodule OnigumoDownloaderTest do
   describe("Onigumo.Downloader.download_url/2") do
     @tag :tmp_dir
     test("download a URL", %{tmp_dir: tmp_dir}) do
-      expect(HTTPoisonMock, :get!, &prepare_response/1)
+      expect(HTTPoisonMock, :get!, &HttpTestUtil.prepare_response/1)
 
       input_url = Enum.at(@urls, 0)
       Onigumo.Downloader.download_url(input_url, tmp_dir)
@@ -54,18 +54,18 @@ defmodule OnigumoDownloaderTest do
       output_file_name = Onigumo.Downloader.create_file_name(input_url)
       output_path = Path.join(tmp_dir, output_file_name)
       read_output = File.read!(output_path)
-      expected_output = body(input_url)
+      expected_output = HttpTestUtil.body(input_url)
       assert(read_output == expected_output)
     end
   end
 
   describe("Onigumo.Downloader.get_url/1") do
     test("get response by HTTP request") do
-      expect(HTTPoisonMock, :get!, &prepare_response/1)
+      expect(HTTPoisonMock, :get!, &HttpTestUtil.prepare_response/1)
 
       url = Enum.at(@urls, 0)
       get_response = Onigumo.Downloader.get_url(url)
-      expected_response = prepare_response(url)
+      expected_response = HttpTestUtil.prepare_response(url)
       assert(get_response == expected_response)
     end
   end
@@ -73,9 +73,9 @@ defmodule OnigumoDownloaderTest do
   describe("Onigumo.Downloader.get_body/1") do
     test("extract body from URL response") do
       url = Enum.at(@urls, 0)
-      response = prepare_response(url)
+      response = HttpTestUtil.prepare_response(url)
       get_body = Onigumo.Downloader.get_body(response)
-      expected_body = body(url)
+      expected_body = HttpTestUtil.body(url)
       assert(get_body == expected_body)
     end
   end
@@ -121,27 +121,16 @@ defmodule OnigumoDownloaderTest do
     end
   end
 
-  defp prepare_response(url) do
-    %HTTPoison.Response{
-      status_code: 200,
-      body: body(url)
-    }
-  end
-
   defp prepare_input(urls) do
     Enum.map(urls, &(&1 <> "\n"))
     |> Enum.join()
-  end
-
-  defp body(url) do
-    "Body from: #{url}\n"
   end
 
   defp assert_downloaded(url, tmp_dir) do
     file_name = Onigumo.Downloader.create_file_name(url)
     output_path = Path.join(tmp_dir, file_name)
     read_output = File.read!(output_path)
-    expected_output = body(url)
+    expected_output = HttpTestUtil.body(url)
     assert(read_output == expected_output)
   end
 end
