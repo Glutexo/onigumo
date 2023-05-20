@@ -1,4 +1,4 @@
-defmodule HttpTestUtil do
+defmodule HttpSupport do
 
   def prepare_response(url) do
     %HTTPoison.Response{
@@ -10,4 +10,5 @@ defmodule HttpTestUtil do
   def body(url) do
     "Body from: #{url}\n"
   end
+
 end
