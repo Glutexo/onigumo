@@ -18,7 +18,7 @@ defmodule OnigumoDownloaderTest do
 
       input_path_env = Application.get_env(:onigumo, :input_path)
       input_path_tmp = Path.join(tmp_dir, input_path_env)
-      input_file_content = prepare_input(@urls)
+      input_file_content = InputSupport.prepare(@urls)
       File.write!(input_path_tmp, input_file_content)
 
       Onigumo.Downloader.main(tmp_dir)
@@ -34,7 +34,7 @@ defmodule OnigumoDownloaderTest do
 
       input_path_env = Application.get_env(:onigumo, :input_path)
       input_path_tmp = Path.join(tmp_dir, input_path_env)
-      input_file_content = prepare_input(@urls)
+      input_file_content = InputSupport.prepare(@urls)
       File.write!(input_path_tmp, input_file_content)
 
       Onigumo.Downloader.create_download_stream(tmp_dir) |> Stream.run()
@@ -101,7 +101,7 @@ defmodule OnigumoDownloaderTest do
 
         input_path_env = Application.get_env(:onigumo, :input_path)
         input_path_tmp = Path.join(tmp_dir, input_path_env)
-        input_file_content = prepare_input(input_urls)
+        input_file_content = InputSupport.prepare(input_urls)
         File.write!(input_path_tmp, input_file_content)
 
         loaded_urls = Onigumo.Downloader.load_urls(tmp_dir) |> Enum.to_list()
@@ -119,11 +119,6 @@ defmodule OnigumoDownloaderTest do
       expected_file_name = Onigumo.Utilities.Hash.md5(input_url, :hex)
       assert(created_file_name == expected_file_name)
     end
-  end
-
-  defp prepare_input(urls) do
-    Enum.map(urls, &(&1 <> "\n"))
-    |> Enum.join()
   end
 
   defp assert_downloaded(url, tmp_dir) do
