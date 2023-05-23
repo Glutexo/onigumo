@@ -21,6 +21,4 @@ defmodule OnigumoCLITest do
       Onigumo.CLI.main(["Downloader"])
     end
   end
-
 end
-
