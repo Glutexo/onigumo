@@ -15,11 +15,11 @@ defmodule Onigumo.CLI do
   end
 
   defp parse_argv(argv) do
-      argv
-      |> OptionParser.parse(
-        aliases: [o: :output],
-        strict: [component: :string, output: :string]
-      )
+    argv
+    |> OptionParser.parse(
+      aliases: [o: :output],
+      strict: [component: :string, output: :string]
+    )
   end
 
   defp safe_concat(component) do
