@@ -14,11 +14,11 @@ defmodule OnigumoDownloaderTest do
     @tag :tmp_dir
     test("run Downloader", %{tmp_dir: tmp_dir}) do
       expect(HTTPoisonMock, :start, fn -> nil end)
-      expect(HTTPoisonMock, :get!, length(@urls), &HttpSupport.prepare_response/1)
+      expect(HTTPoisonMock, :get!, length(@urls), &HttpSupport.response/1)
 
       input_path_env = Application.get_env(:onigumo, :input_path)
       input_path_tmp = Path.join(tmp_dir, input_path_env)
-      input_file_content = InputSupport.prepare(@urls)
+      input_file_content = InputSupport.url_list(@urls)
       File.write!(input_path_tmp, input_file_content)
 
       Onigumo.Downloader.main(tmp_dir)
@@ -30,11 +30,11 @@ defmodule OnigumoDownloaderTest do
   describe("Onigumo.Downloader.create_download_stream/1") do
     @tag :tmp_dir
     test("download URLs from the input file with a created stream", %{tmp_dir: tmp_dir}) do
-      expect(HTTPoisonMock, :get!, length(@urls), &HttpSupport.prepare_response/1)
+      expect(HTTPoisonMock, :get!, length(@urls), &HttpSupport.response/1)
 
       input_path_env = Application.get_env(:onigumo, :input_path)
       input_path_tmp = Path.join(tmp_dir, input_path_env)
-      input_file_content = InputSupport.prepare(@urls)
+      input_file_content = InputSupport.url_list(@urls)
       File.write!(input_path_tmp, input_file_content)
 
       Onigumo.Downloader.create_download_stream(tmp_dir) |> Stream.run()
@@ -46,7 +46,7 @@ defmodule OnigumoDownloaderTest do
   describe("Onigumo.Downloader.download_url/2") do
     @tag :tmp_dir
     test("download a URL", %{tmp_dir: tmp_dir}) do
-      expect(HTTPoisonMock, :get!, &HttpSupport.prepare_response/1)
+      expect(HTTPoisonMock, :get!, &HttpSupport.response/1)
 
       input_url = Enum.at(@urls, 0)
       Onigumo.Downloader.download_url(input_url, tmp_dir)
@@ -61,11 +61,11 @@ defmodule OnigumoDownloaderTest do
 
   describe("Onigumo.Downloader.get_url/1") do
     test("get response by HTTP request") do
-      expect(HTTPoisonMock, :get!, &HttpSupport.prepare_response/1)
+      expect(HTTPoisonMock, :get!, &HttpSupport.response/1)
 
       url = Enum.at(@urls, 0)
       get_response = Onigumo.Downloader.get_url(url)
-      expected_response = HttpSupport.prepare_response(url)
+      expected_response = HttpSupport.response(url)
       assert(get_response == expected_response)
     end
   end
@@ -73,7 +73,7 @@ defmodule OnigumoDownloaderTest do
   describe("Onigumo.Downloader.get_body/1") do
     test("extract body from URL response") do
       url = Enum.at(@urls, 0)
-      response = HttpSupport.prepare_response(url)
+      response = HttpSupport.response(url)
       get_body = Onigumo.Downloader.get_body(response)
       expected_body = HttpSupport.body(url)
       assert(get_body == expected_body)
@@ -101,7 +101,7 @@ defmodule OnigumoDownloaderTest do
 
         input_path_env = Application.get_env(:onigumo, :input_path)
         input_path_tmp = Path.join(tmp_dir, input_path_env)
-        input_file_content = InputSupport.prepare(input_urls)
+        input_file_content = InputSupport.url_list(input_urls)
         File.write!(input_path_tmp, input_file_content)
 
         loaded_urls = Onigumo.Downloader.load_urls(tmp_dir) |> Enum.to_list()
