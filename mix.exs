@@ -44,5 +44,4 @@ defmodule Onigumo.MixProject do
   defp elixirc_paths(_), do: elixirc_paths_default()
 
   defp elixirc_paths_default(), do: Mix.Project.config()[:elixirc_paths]
-
 end
