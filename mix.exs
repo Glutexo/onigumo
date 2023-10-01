@@ -39,6 +39,10 @@ defmodule Onigumo.MixProject do
     ]
   end
 
-  defp elixirc_paths(:test), do: ["lib", "test/support"]
-  defp elixirc_paths(_), do: ["lib"]
+  defp elixirc_paths(:test), do: elixirc_paths_default() ++ ["test/support"]
+
+  defp elixirc_paths(_), do: elixirc_paths_default()
+
+  defp elixirc_paths_default(), do: Mix.Project.config()[:elixirc_paths]
+
 end
