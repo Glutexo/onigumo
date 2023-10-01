@@ -2,14 +2,16 @@ defmodule Onigumo.MixProject do
   use Mix.Project
 
   def project do
+    env = Mix.env()
+
     [
       app: :onigumo,
       version: "0.1.0",
       elixir: "~> 1.10",
-      start_permanent: Mix.env() == :prod,
+      start_permanent: env == :prod,
       deps: deps(),
       escript: escript(),
-      elixirc_paths: elixirc_paths(Mix.env())
+      elixirc_paths: elixirc_paths(env)
     ]
   end
 
