@@ -20,5 +20,17 @@ defmodule OnigumoCLITest do
       File.cd(tmp_dir)
       Onigumo.CLI.main(["Downloader"])
     end
+
+    test("Onigumo CLI with invalid component name") do
+      assert_raise(ArgumentError, fn -> Onigumo.CLI.main(["invalid_name"]) end)
+    end
+
+    test("Onigumo CLI with no component") do
+      assert_raise(FunctionClauseError, fn -> Onigumo.CLI.main([]) end)
+    end
+
+    test("Onigumo CLI with more than one args ") do
+      assert_raise(FunctionClauseError, fn -> Onigumo.CLI.main(["Downloader", "Parser"]) end)
+    end
   end
 end
