@@ -26,11 +26,11 @@ defmodule OnigumoCLITest do
     end
 
     test("run CLI with no arguments") do
-      assert_raise(FunctionClauseError, fn -> Onigumo.CLI.main([]) end)
+      assert_raise(MatchError, fn -> Onigumo.CLI.main([]) end)
     end
 
     test("run CLI with more than one argument") do
-      assert_raise(FunctionClauseError, fn -> Onigumo.CLI.main(["Downloader", "Parser"]) end)
+      assert_raise(MatchError, fn -> Onigumo.CLI.main(["Downloader", "Parser"]) end)
     end
   end
 end
