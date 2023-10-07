@@ -32,5 +32,9 @@ defmodule OnigumoCLITest do
     test("run CLI with more than one argument") do
       assert_raise(MatchError, fn -> Onigumo.CLI.main(["Downloader", "Parser"]) end)
     end
+
+    test("run CLI with invalid switch") do
+      assert_raise(OptionParser.ParseError, fn -> Onigumo.CLI.main(["--help"]) end)
+    end
   end
 end
