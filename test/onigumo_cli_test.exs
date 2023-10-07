@@ -9,7 +9,7 @@ defmodule OnigumoCLITest do
 
   describe("Onigumo.CLI.main/1") do
     @tag :tmp_dir
-    test("run Onigumo.CLI.main", %{tmp_dir: tmp_dir}) do
+    test("run CLI with 'Downloader' argument", %{tmp_dir: tmp_dir}) do
       expect(HTTPoisonMock, :start, fn -> nil end)
       expect(HTTPoisonMock, :get!, length(@urls), &HttpSupport.response/1)
 
@@ -19,6 +19,18 @@ defmodule OnigumoCLITest do
       File.write!(input_path_tmp, input_file_content)
       File.cd(tmp_dir)
       Onigumo.CLI.main(["Downloader"])
+    end
+
+    test("run CLI with unknown argument") do
+      assert_raise(ArgumentError, fn -> Onigumo.CLI.main(["Uploader"]) end)
+    end
+
+    test("run CLI with no arguments") do
+      assert_raise(FunctionClauseError, fn -> Onigumo.CLI.main([]) end)
+    end
+
+    test("run CLI with more than one argument") do
+      assert_raise(FunctionClauseError, fn -> Onigumo.CLI.main(["Downloader", "Parser"]) end)
     end
   end
 end
