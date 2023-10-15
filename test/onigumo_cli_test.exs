@@ -21,7 +21,7 @@ defmodule OnigumoCLITest do
       Onigumo.CLI.main(["Downloader"])
     end
 
-    test("run CLI with unknown argument") do
+    test("run CLI with invalid argument") do
       assert_raise(ArgumentError, fn -> Onigumo.CLI.main(["Uploader"]) end)
     end
 
