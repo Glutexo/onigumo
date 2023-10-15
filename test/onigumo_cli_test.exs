@@ -21,16 +21,20 @@ defmodule OnigumoCLITest do
       Onigumo.CLI.main(["Downloader"])
     end
 
-    test("run CLI with unknown argument") do
+    test("run CLI with invalid argument") do
       assert_raise(ArgumentError, fn -> Onigumo.CLI.main(["Uploader"]) end)
     end
 
     test("run CLI with no arguments") do
-      assert_raise(FunctionClauseError, fn -> Onigumo.CLI.main([]) end)
+      assert_raise(MatchError, fn -> Onigumo.CLI.main([]) end)
     end
 
     test("run CLI with more than one argument") do
-      assert_raise(FunctionClauseError, fn -> Onigumo.CLI.main(["Downloader", "Parser"]) end)
+      assert_raise(MatchError, fn -> Onigumo.CLI.main(["Downloader", "Parser"]) end)
+    end
+
+    test("run CLI with invalid switch") do
+      assert_raise(OptionParser.ParseError, fn -> Onigumo.CLI.main(["--help"]) end)
     end
   end
 end
