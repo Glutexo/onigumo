@@ -1,8 +1,10 @@
 defmodule Onigumo.CLI do
   def main(argv) do
-    {[], [component]} = OptionParser.parse!(argv, strict: [])
+    {parsed_switches, [component]} = OptionParser.parse!(argv, strict: [working_dir: :string])
     module = Module.safe_concat("Onigumo", component)
-    root_path = File.cwd!()
-    module.main(root_path)
+
+    parsed_switches
+    |> Keyword.get(:working_dir, File.cwd!())
+    |> module.main
   end
 end
