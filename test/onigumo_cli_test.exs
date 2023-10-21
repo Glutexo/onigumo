@@ -22,7 +22,7 @@ defmodule OnigumoCLITest do
     end
 
     test("run CLI with invalid argument") do
-      assert_raise(ArgumentError, fn -> Onigumo.CLI.main(["Uploader"]) end)
+      assert_raise(MatchError, fn -> Onigumo.CLI.main(["Uploader"]) end)
     end
 
     test("run CLI with no arguments") do
