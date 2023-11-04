@@ -7,6 +7,11 @@ defmodule OnigumoCLITest do
     "http://onigumo.local/bye.html"
   ]
 
+  @invalid_arguments [
+    "Downloader",
+    "uploader"
+  ]
+
   describe("Onigumo.CLI.main/1") do
     @tag :tmp_dir
     test("run CLI with 'downloader' argument", %{tmp_dir: tmp_dir}) do
@@ -21,8 +26,10 @@ defmodule OnigumoCLITest do
       Onigumo.CLI.main(["downloader"])
     end
 
-    test("run CLI with invalid argument") do
-      assert_raise(MatchError, fn -> Onigumo.CLI.main(["Uploader"]) end)
+    for argument <- @invalid_arguments do
+      test("run CLI with invalid argument #{inspect(argument)}") do
+        assert_raise(MatchError, fn -> Onigumo.CLI.main([unquote(argument)]) end)
+      end
     end
 
     test("run CLI with no arguments") do
