@@ -1,6 +1,6 @@
 defmodule Onigumo.CLI do
   @components %{
-    :Downloader => Onigumo.Downloader
+    :downloader => Onigumo.Downloader
   }
 
   def main(argv) do
