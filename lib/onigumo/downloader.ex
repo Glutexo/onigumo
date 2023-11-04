@@ -4,7 +4,7 @@ defmodule Onigumo.Downloader do
   """
   @behaviour Onigumo.Component
 
-  @impl true
+  @impl Onigumo.Component
   def main(root_path) do
     http_client().start()
 
