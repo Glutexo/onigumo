@@ -2,7 +2,9 @@ defmodule Onigumo.Downloader do
   @moduledoc """
   Web scraper
   """
+  @behaviour Onigumo.Component
 
+  @impl Onigumo.Component
   def main(root_path) do
     http_client().start()
 
