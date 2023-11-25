@@ -4,14 +4,28 @@ defmodule Onigumo.CLI do
   }
 
   def main(argv) do
-    {[], [component]} = OptionParser.parse!(argv, strict: [])
-    {:ok, module} = Map.fetch(@components, String.to_atom(component))
-    root_path = File.cwd!()
-    module.main(root_path)
+    try do
+      {[], [component]} = OptionParser.parse!(argv, strict: [])
+      component
+    rescue
+      _ in [OptionParser.ParseError, MatchError] -> usage_message()
+    else
+      component ->
+        {:ok, module} = Map.fetch(@components, String.to_atom(component))
+        root_path = File.cwd!()
+        module.main(root_path)
+    end
+  end
 
   defp usage_message() do
-    IO.puts("Usage: ./onigumo [COMPONENT]\n")
-    IO.puts("\tSimple program that retrieve http web content in structured data.\n")
-    IO.puts("COMPONENT\tonigumo component to run, availables #{inspect Map.keys(@components)}")
+    components = Enum.join(Map.keys(@components), ", ")
+
+    IO.puts("""
+    Usage: onigumo [COMPONENT]
+
+    Simple program that retrieves HTTP web content as structured data.
+
+    COMPONENT\tOnigumo component to run, available: #{components}
+    """)
   end
 end
