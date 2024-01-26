@@ -1,5 +1,6 @@
 defmodule OnigumoCLITest do
   use ExUnit.Case
+  import ExUnit.CaptureIO
   import Mox
 
   @urls [
@@ -33,15 +34,20 @@ defmodule OnigumoCLITest do
     end
 
     test("run CLI with no arguments") do
-      assert_raise(MatchError, fn -> Onigumo.CLI.main([]) end)
+      assert usage_message_printed?(fn -> Onigumo.CLI.main([]) end)
     end
 
     test("run CLI with more than one argument") do
-      assert_raise(MatchError, fn -> Onigumo.CLI.main(["Downloader", "Parser"]) end)
+      assert usage_message_printed?(fn -> Onigumo.CLI.main(["Downloader", "Parser"]) end)
     end
 
     test("run CLI with invalid switch") do
-      assert_raise(OptionParser.ParseError, fn -> Onigumo.CLI.main(["--help"]) end)
+      assert usage_message_printed?(fn -> Onigumo.CLI.main(["--invalid"]) end)
+    end
+
+    defp usage_message_printed?(function) do
+      output = capture_io(function)
+      String.starts_with?(output, "Usage: onigumo ")
     end
   end
 end
