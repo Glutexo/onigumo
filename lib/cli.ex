@@ -5,15 +5,17 @@ defmodule Onigumo.CLI do
 
   def main(argv) do
     try do
-      {[], [component], []} = OptionParser.parse(argv, strict: [])
-      component
+      {[], argv, []} = OptionParser.parse(argv, strict: [])
+      argv
     rescue
       MatchError -> usage_message()
     else
-      component ->
+      [component] ->
         {:ok, module} = Map.fetch(@components, String.to_atom(component))
         root_path = File.cwd!()
         module.main(root_path)
+      _ ->
+        usage_message()
     end
   end
 
