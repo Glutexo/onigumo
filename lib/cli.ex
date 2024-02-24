@@ -5,10 +5,10 @@ defmodule Onigumo.CLI do
 
   def main(argv) do
     try do
-      {[], [component]} = OptionParser.parse!(argv, strict: [])
+      {[], [component], []} = OptionParser.parse(argv, strict: [])
       component
     rescue
-      _ in [OptionParser.ParseError, MatchError] -> usage_message()
+      MatchError -> usage_message()
     else
       component ->
         {:ok, module} = Map.fetch(@components, String.to_atom(component))
