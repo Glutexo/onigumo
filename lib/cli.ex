@@ -7,8 +7,8 @@ defmodule Onigumo.CLI do
     case OptionParser.parse(argv, strict: [working_dir: :string]) do
       {parsed_switches, [component], []} ->
         {:ok, module} = Map.fetch(@components, String.to_atom(component))
-        root_path = Keyword.get(parsed_switches, :working_dir, File.cwd!())
-        module.main(root_path)
+        working_dir = Keyword.get(parsed_switches, :working_dir, File.cwd!())
+        module.main(working_dir)
 
       _ ->
         usage_message()
