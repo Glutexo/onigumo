@@ -19,11 +19,14 @@ defmodule Onigumo.CLI do
     components = Enum.join(Map.keys(@components), ", ")
 
     IO.puts("""
-    Usage: onigumo [COMPONENT]
+    Usage: onigumo [OPTION]... [COMPONENT]
 
     Simple program that retrieves HTTP web content as structured data.
 
     COMPONENT\tOnigumo component to run, available: #{components}
+
+    OPTIONS:
+    --working-dir=DIR\tChange to <DIR> before processing remaining files
     """)
   end
 end
