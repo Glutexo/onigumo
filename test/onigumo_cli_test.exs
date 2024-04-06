@@ -18,13 +18,15 @@ defmodule OnigumoCLITest do
     test("run CLI with 'downloader' argument", %{tmp_dir: tmp_dir}) do
       expect(HTTPoisonMock, :start, fn -> nil end)
       expect(HTTPoisonMock, :get!, length(@urls), &HttpSupport.response/1)
+      expect(OnigumoDownloaderMock, :main, fn root_path -> root_path end)
 
       input_path_env = Application.get_env(:onigumo, :input_path)
       input_path_tmp = Path.join(tmp_dir, input_path_env)
       input_file_content = InputSupport.url_list(@urls)
       File.write!(input_path_tmp, input_file_content)
       File.cd(tmp_dir)
-      Onigumo.CLI.main(["downloader"])
+
+      assert Onigumo.CLI.main(["downloader"]) == tmp_dir
     end
 
     for argument <- @invalid_arguments do
