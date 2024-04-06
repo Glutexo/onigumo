@@ -1,6 +1,6 @@
 defmodule Onigumo.CLI do
   @components %{
-    :downloader => Onigumo.Downloader
+    :downloader => Application.compile_env(:onigumo, :downloader)
   }
 
   def main(argv) do
