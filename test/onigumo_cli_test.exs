@@ -3,11 +3,6 @@ defmodule OnigumoCLITest do
   import ExUnit.CaptureIO
   import Mox
 
-  @urls [
-    "http://onigumo.local/hello.html",
-    "http://onigumo.local/bye.html"
-  ]
-
   @invalid_arguments [
     "Downloader",
     "uploader"
