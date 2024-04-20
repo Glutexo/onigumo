@@ -57,6 +57,12 @@ defmodule OnigumoCLITest do
       end
     end
 
+    test("run CLI 'downloader' with '--working-dir' without any value") do
+      assert usage_message_printed?(
+        fn -> Onigumo.CLI.main(["downloader", "--working-dir"]) end
+      )
+    end
+
     defp usage_message_printed?(function) do
       output = capture_io(function)
       String.starts_with?(output, "Usage: onigumo ")
