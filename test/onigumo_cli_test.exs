@@ -47,7 +47,6 @@ defmodule OnigumoCLITest do
       assert Onigumo.CLI.main(["downloader"]) == tmp_dir
     end
 
-
     for switch <- @working_dir_switches do
       @tag :tmp_dir
       test("run CLI 'downloader' with #{inspect(switch)} switch", %{tmp_dir: tmp_dir}) do
@@ -58,9 +57,8 @@ defmodule OnigumoCLITest do
     end
 
     test("run CLI 'downloader' with '--working-dir' without any value") do
-      assert usage_message_printed?(
-        fn -> Onigumo.CLI.main(["downloader", "--working-dir"]) end
-      )
+      assert usage_message_printed?(fn -> Onigumo.CLI.main(["downloader", "--working-dir"]) end)
+    end
 
     @tag :tmp_dir
     test("run CLI 'downloader' with '--working-dir' and value '.'", %{tmp_dir: tmp_dir}) do
