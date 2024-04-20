@@ -13,6 +13,11 @@ defmodule OnigumoCLITest do
     "-c"
   ]
 
+  @working_dir_switches [
+    "--working-dir",
+    "-C"
+  ]
+
   describe("Onigumo.CLI.main/1") do
     for argument <- @invalid_arguments do
       test("run CLI with invalid argument #{inspect(argument)}") do
@@ -42,18 +47,14 @@ defmodule OnigumoCLITest do
       assert Onigumo.CLI.main(["downloader"]) == tmp_dir
     end
 
-    @tag :tmp_dir
-    test("run CLI 'downloader' with '--working-dir' switch", %{tmp_dir: tmp_dir}) do
-      expect(OnigumoDownloaderMock, :main, fn root_path -> root_path end)
 
-      assert Onigumo.CLI.main(["downloader", "--working-dir", tmp_dir]) == tmp_dir
-    end
+    for switch <- @working_dir_switches do
+      @tag :tmp_dir
+      test("run CLI 'downloader' with #{inspect(switch)} switch", %{tmp_dir: tmp_dir}) do
+        expect(OnigumoDownloaderMock, :main, fn root_path -> root_path end)
 
-    @tag :tmp_dir
-    test("run CLI 'downloader' with '-C' switch", %{tmp_dir: tmp_dir}) do
-      expect(OnigumoDownloaderMock, :main, fn root_path -> root_path end)
-
-      assert Onigumo.CLI.main(["downloader", "-C", tmp_dir]) == tmp_dir
+        assert Onigumo.CLI.main(["downloader", unquote(switch), tmp_dir]) == tmp_dir
+      end
     end
 
     defp usage_message_printed?(function) do
