@@ -41,7 +41,7 @@ defmodule OnigumoCLITest do
 
     @tag :tmp_dir
     test("run CLI with 'downloader' argument passing cwd", %{tmp_dir: tmp_dir}) do
-      expect(OnigumoDownloaderMock, :main, fn root_path -> root_path end)
+      expect(OnigumoDownloaderMock, :main, fn working_dir -> working_dir end)
 
       File.cd(tmp_dir)
       assert Onigumo.CLI.main(["downloader"]) == tmp_dir
@@ -51,7 +51,7 @@ defmodule OnigumoCLITest do
     for switch <- @working_dir_switches do
       @tag :tmp_dir
       test("run CLI 'downloader' with #{inspect(switch)} switch", %{tmp_dir: tmp_dir}) do
-        expect(OnigumoDownloaderMock, :main, fn root_path -> root_path end)
+        expect(OnigumoDownloaderMock, :main, fn working_dir -> working_dir end)
 
         assert Onigumo.CLI.main(["downloader", unquote(switch), tmp_dir]) == tmp_dir
       end
