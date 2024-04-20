@@ -34,7 +34,7 @@ defmodule OnigumoCLITest do
     end
 
     for switch <- @invalid_switches do
-      test("run CLI with invalid switch #{switch}") do
+      test("run CLI with invalid switch #{inspect(switch)}") do
         assert usage_message_printed?(fn -> Onigumo.CLI.main([unquote(switch)]) end)
       end
     end
