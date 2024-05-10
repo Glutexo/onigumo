@@ -54,18 +54,18 @@ defmodule OnigumoCLITest do
 
         assert Onigumo.CLI.main(["downloader", unquote(switch), tmp_dir]) == tmp_dir
       end
-    end
 
-    test("run CLI 'downloader' with '--working-dir' without any value") do
-      assert usage_message_printed?(fn -> Onigumo.CLI.main(["downloader", "--working-dir"]) end)
-    end
+      test("run CLI 'downloader' with #{inspect(switch)} without any value") do
+        assert usage_message_printed?(fn -> Onigumo.CLI.main(["downloader", unquote(switch)]) end)
+      end
 
-    @tag :tmp_dir
-    test("run CLI 'downloader' with '--working-dir' and value '.'", %{tmp_dir: tmp_dir}) do
-      expect(OnigumoDownloaderMock, :main, fn working_dir -> working_dir end)
+      @tag :tmp_dir
+      test("run CLI 'downloader' with #{inspect(switch)} and value '.'", %{tmp_dir: tmp_dir}) do
+        expect(OnigumoDownloaderMock, :main, fn working_dir -> working_dir end)
 
-      File.cd(tmp_dir)
-      assert Onigumo.CLI.main(["downloader", "--working-dir", "."]) == "."
+        File.cd(tmp_dir)
+        assert Onigumo.CLI.main(["downloader", unquote(switch), "."]) == "."
+      end
     end
 
     defp usage_message_printed?(function) do
