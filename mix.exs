@@ -2,13 +2,16 @@ defmodule Onigumo.MixProject do
   use Mix.Project
 
   def project do
+    env = Mix.env()
+
     [
       app: :onigumo,
       version: "0.1.0",
       elixir: "~> 1.10",
-      start_permanent: Mix.env() == :prod,
+      start_permanent: env == :prod,
       deps: deps(),
-      escript: escript()
+      escript: escript(),
+      elixirc_paths: elixirc_paths(env)
     ]
   end
 
@@ -37,4 +40,10 @@ defmodule Onigumo.MixProject do
       main_module: Onigumo.CLI
     ]
   end
+
+  defp elixirc_paths(:test), do: elixirc_paths_default() ++ ["test/support"]
+
+  defp elixirc_paths(_), do: elixirc_paths_default()
+
+  defp elixirc_paths_default(), do: Mix.Project.config()[:elixirc_paths]
 end
