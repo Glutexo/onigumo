@@ -30,7 +30,7 @@ defmodule Onigumo.CLI do
     COMPONENT\tOnigumo component to run, available: #{components}
 
     OPTIONS:
-    -C, --working-dir <dir>\tChange to <dir> before running
+    -C, --working-dir <dir>\tChange working dir to <dir> before running
     """)
   end
 end
