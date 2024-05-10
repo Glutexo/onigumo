@@ -4,11 +4,15 @@ defmodule Onigumo.CLI do
   }
 
   def main(argv) do
-    case OptionParser.parse(argv, strict: []) do
-      {[], [component], []} ->
+    case OptionParser.parse(
+           argv,
+           aliases: [C: :working_dir],
+           strict: [working_dir: :string]
+         ) do
+      {parsed_switches, [component], []} ->
         {:ok, module} = Map.fetch(@components, String.to_atom(component))
-        root_path = File.cwd!()
-        module.main(root_path)
+        working_dir = Keyword.get(parsed_switches, :working_dir, File.cwd!())
+        module.main(working_dir)
 
       _ ->
         usage_message()
@@ -19,11 +23,14 @@ defmodule Onigumo.CLI do
     components = Enum.join(Map.keys(@components), ", ")
 
     IO.puts("""
-    Usage: onigumo [COMPONENT]
+    Usage: onigumo [OPTION]... [COMPONENT]
 
     Simple program that retrieves HTTP web content as structured data.
 
     COMPONENT\tOnigumo component to run, available: #{components}
+
+    OPTIONS:
+    -C, --working-dir <dir>\tChange working dir to <dir> before running
     """)
   end
 end
