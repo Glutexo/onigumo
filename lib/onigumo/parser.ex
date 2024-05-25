@@ -19,7 +19,7 @@ defmodule Onigumo.Parser do
     |> Enum.filter(&is_downloaded(&1))
   end
 
-  defp is_downloaded(path) do
+  def is_downloaded(path) do
     suffix = Application.get_env(:onigumo, :downloaded_suffix)
     Path.extname(path) == suffix
   end
