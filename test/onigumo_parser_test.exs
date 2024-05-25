@@ -23,6 +23,14 @@ defmodule OnigumoParserTest do
     end
   end
 
+  describe("Onigumo.Parser.list_downloaded/1") do
+    @tag :tmp_dir
+    test("list an empty directory", %{tmp_dir: tmp_dir}) do
+      result = Onigumo.Parser.list_downloaded(tmp_dir)
+      assert(result = [])
+    end
+  end
+
   describe("Onigumo.Parser.is_downloaded/1") do
     test("recognize a downloaded file") do
       suffix = Application.get_env(:onigumo, :downloaded_suffix)

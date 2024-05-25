@@ -13,7 +13,7 @@ defmodule Onigumo.Parser do
     :ok
   end
 
-  defp list_downloaded(path) do
+  def list_downloaded(path) do
     path
     |> File.ls!()
     |> Enum.filter(&is_downloaded(&1))
