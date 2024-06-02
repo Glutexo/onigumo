@@ -7,6 +7,13 @@ defmodule OnigumoParserTest do
     ""
   ]
 
+  @files [
+    {[], []},
+    {["first", "second"], []},
+    {["first"], ["second"]},
+    {[], ["first", "second"]},
+  ]
+
   setup(:verify_on_exit!)
 
   describe("Onigumo.Parser.main/1") do
@@ -24,26 +31,22 @@ defmodule OnigumoParserTest do
   end
 
   describe("Onigumo.Parser.list_downloaded/1") do
-    @tag :tmp_dir
-    test("list an empty directory", %{tmp_dir: tmp_dir}) do
-      result = Onigumo.Parser.list_downloaded(tmp_dir)
-      assert(result == [])
-    end
-
-    for {files, indices} <- @files do      
+    for {expected, unexpected} <- @files do
       @tag :tmp_dir
-      test("list a directory with #{inspect(files)} expecting #{inspect(indices)}", %{tmp_dir: tmp_dir}) do
+      test("list a directory expecting #{inspect(expected)} and not expecting #{inspect(unexpected)}", %{tmp_dir: tmp_dir}) do
         suffix = Application.get_env(:onigumo, :downloaded_suffix)
-        files = MapSet.new(["first#{suffix}", "second#{suffix}"])
-        Enum.map(files, fn file ->
+
+        expected = Enum.map(unquote(expected), fn file ->
+          file <> suffix
+        end)
+
+        Enum.map(expected ++ unquote(unexpected), fn file ->
           path = Path.join(tmp_dir, file)
           File.write!(path, "")
         end)
 
-        result =
-          Onigumo.Parser.list_downloaded(tmp_dir)
-          |> MapSet.new()
-        assert(result == files)
+        result = Onigumo.Parser.list_downloaded(tmp_dir)
+        assert(MapSet.new(result) == MapSet.new(expected))
       end
     end
   end
