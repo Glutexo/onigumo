@@ -30,16 +30,21 @@ defmodule OnigumoParserTest do
       assert(result == [])
     end
 
-    @tag :tmp_dir
-    test("list a non-empty directory", %{tmp_dir: tmp_dir}) do
-      suffix = Application.get_env(:onigumo, :downloaded_suffix)
-      files = ["first#{suffix}", "second#{suffix}"]
-      Enum.map(files, fn file ->
-        path = Path.join(tmp_dir, file)
-        File.write!(path, "")
-      end)
-      result = Onigumo.Parser.list_downloaded(tmp_dir)
-      assert(result == files)
+    for {files, indices} <- @files do      
+      @tag :tmp_dir
+      test("list a directory with #{inspect(files)} expecting #{inspect(indices)}", %{tmp_dir: tmp_dir}) do
+        suffix = Application.get_env(:onigumo, :downloaded_suffix)
+        files = MapSet.new(["first#{suffix}", "second#{suffix}"])
+        Enum.map(files, fn file ->
+          path = Path.join(tmp_dir, file)
+          File.write!(path, "")
+        end)
+
+        result =
+          Onigumo.Parser.list_downloaded(tmp_dir)
+          |> MapSet.new()
+        assert(result == files)
+      end
     end
   end
 
