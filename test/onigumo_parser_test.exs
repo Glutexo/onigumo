@@ -29,6 +29,18 @@ defmodule OnigumoParserTest do
       result = Onigumo.Parser.list_downloaded(tmp_dir)
       assert(result == [])
     end
+
+    @tag :tmp_dir
+    test("list a non-empty directory", %{tmp_dir: tmp_dir}) do
+      suffix = Application.get_env(:onigumo, :downloaded_suffix)
+      files = ["first#{suffix}", "second#{suffix}"]
+      Enum.map(files, fn file ->
+        path = Path.join(tmp_dir, file)
+        File.write!(path, "")
+      end)
+      result = Onigumo.Parser.list_downloaded(tmp_dir)
+      assert(result == files)
+    end
   end
 
   describe("Onigumo.Parser.is_downloaded/1") do
