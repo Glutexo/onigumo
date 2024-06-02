@@ -27,7 +27,7 @@ defmodule OnigumoParserTest do
     @tag :tmp_dir
     test("list an empty directory", %{tmp_dir: tmp_dir}) do
       result = Onigumo.Parser.list_downloaded(tmp_dir)
-      assert(result = [])
+      assert(result == [])
     end
   end
 
