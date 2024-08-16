@@ -23,16 +23,16 @@ flowchart LR
         onigumo_downloader[DOWNLOADER]
     end
 
-    start([START])  --> onigumo_feeder[FEEDER]
-    onigumo_feeder  -- .raw --> Crawling
-    onigumo_feeder  -- .urls --> Crawling
-    onigumo_feeder  -- .json --> Crawling
-    Crawling  --> spider_materializer(🕷️ MATERIALIZER)
+    start([START]) --> onigumo_feeder[FEEDER]
+    onigumo_feeder -- .raw --> Crawling
+    onigumo_feeder -- .urls --> Crawling
+    onigumo_feeder -- .json --> Crawling
+    Crawling --> spider_materializer(🕷️ MATERIALIZER)
     spider_materializer --> done([END])
 
-    spider_operator     -. "<hash>.urls" .-> onigumo_downloader
-    onigumo_downloader -. "<hash>.raw"  .->  spider_parser
-    spider_parser     -. "<hash>.json" .->  spider_operator
+    spider_operator -. "<hash>.urls" .-> onigumo_downloader
+    onigumo_downloader -. "<hash>.raw" .-> spider_parser
+    spider_parser -. "<hash>.json" .-> spider_operator
 ```
 
 ```mermaid
@@ -49,14 +49,14 @@ flowchart LR
         onigumo_downloader[DOWNLOADER]
     end
 
-    onigumo_feeder  -- .json --> spider_operator
+    onigumo_feeder -- .json --> spider_operator
     spider_operator ---> spider_materializer
-    onigumo_feeder  -- .urls --> onigumo_downloader
-    onigumo_feeder  -- .raw --> spider_parser
+    onigumo_feeder -- .urls --> onigumo_downloader
+    onigumo_feeder -- .raw --> spider_parser
 
-    spider_parser     -. "<hash>.json" .->  spider_operator
-    onigumo_downloader -. "<hash>.raw"  .->  spider_parser
-    spider_operator     -. "<hash>.urls" .-> onigumo_downloader
+    spider_parser -. "<hash>.json" .-> spider_operator
+    onigumo_downloader -. "<hash>.raw" .-> spider_parser
+    spider_operator -. "<hash>.urls" .-> onigumo_downloader
 ```
 
 ### Operator ###
