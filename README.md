@@ -24,10 +24,13 @@ flowchart LR
     end
 
     start([START]) --> onigumo_feeder[FEEDER]
+
     onigumo_feeder -- .raw --> Crawling
     onigumo_feeder -- .urls --> Crawling
     onigumo_feeder -- .json --> Crawling
+
     Crawling --> spider_materializer(🕷️ MATERIALIZER)
+
     spider_materializer --> done([END])
 
     spider_operator -. "<hash>.urls" .-> onigumo_downloader
