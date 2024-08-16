@@ -15,9 +15,6 @@ Onigumo is composed of three sequentially interconnected components:
 The flowchart below illustrates the flow of data between those parts:
 
 ```mermaid
----
-title: Onigumo architecture
----
 flowchart LR
     subgraph Crawling
         direction BT
