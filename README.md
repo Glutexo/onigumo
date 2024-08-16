@@ -20,8 +20,9 @@ title: Onigumo architecture
 ---
 flowchart LR
     subgraph Crawling
-        spider_parser(fa:fa-spider PARSER)
-        spider_operator(fa:fa-spider OPERATOR)
+        direction BT
+        spider_parser(🕷️ PARSER)
+        spider_operator(🕷️ OPERATOR)
         onigumo_downloader[DOWNLOADER]
     end
 
@@ -29,7 +30,7 @@ flowchart LR
     onigumo_feeder  -- .raw --> Crawling
     onigumo_feeder  -- .urls --> Crawling
     onigumo_feeder  -- .json --> Crawling
-    Crawling  --> spider_materializer(fa:fa-spider MATERIALIZER)
+    Crawling  --> spider_materializer(🕷️ MATERIALIZER)
     spider_materializer --> done([END])
 
     spider_operator     -. "<hash>.urls" .-> onigumo_downloader
