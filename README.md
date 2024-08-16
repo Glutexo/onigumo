@@ -16,27 +16,51 @@ The flowchart below illustrates the flow of data between those parts:
 
 ```mermaid
 flowchart LR
-    start([START])               -->         onigumo_operator[OPERATOR]
-    onigumo_operator   -- <hash>.urls ---> onigumo_downloader[DOWNLOADER]
-    onigumo_downloader -- <hash>.raw  ---> onigumo_parser[PARSER]
-    onigumo_parser     -- <hash>.json ---> onigumo_operator
-	
-	onigumo_operator          <-.->        spider_operator[OPERATOR]
-	onigumo_parser            <-.->        spider_parser[PARSER]
-
-    onigumo_operator           -->         spider_materialization[MATERIALIZER]
-	
-	subgraph "Onigumo (kernel)"
-	    onigumo_operator
-		onigumo_downloader
-		onigumo_parser
-	end
-
-    subgraph "Spider (application)"
-       spider_operator
-       spider_parser
-       spider_materialization
+    subgraph Crawling
+        direction BT
+        spider_parser(🕷️ PARSER)
+        spider_operator(🕷️ OPERATOR)
+        onigumo_downloader[DOWNLOADER]
     end
+
+    start([START]) --> onigumo_feeder[FEEDER]
+
+    onigumo_feeder -- .raw --> Crawling
+    onigumo_feeder -- .urls --> Crawling
+    onigumo_feeder -- .json --> Crawling
+
+    Crawling --> spider_materializer(🕷️ MATERIALIZER)
+
+    spider_materializer --> done([END])
+
+    spider_operator -. "<hash>.urls" .-> onigumo_downloader
+    onigumo_downloader -. "<hash>.raw" .-> spider_parser
+    spider_parser -. "<hash>.json" .-> spider_operator
+```
+
+```mermaid
+flowchart LR
+    subgraph "🕷️ Spider"
+        direction TB
+        spider_parser(PARSER)
+        spider_operator(OPERATOR)
+        spider_materializer(MATERIALIZER)
+    end
+
+    subgraph Onigumo
+        onigumo_feeder[FEEDER]
+        onigumo_downloader[DOWNLOADER]
+    end
+
+    onigumo_feeder -- .json --> spider_operator
+    onigumo_feeder -- .urls --> onigumo_downloader
+    onigumo_feeder -- .raw --> spider_parser
+
+    spider_parser -. "<hash>.json" .-> spider_operator
+    onigumo_downloader -. "<hash>.raw" .-> spider_parser
+    spider_operator -. "<hash>.urls" .-> onigumo_downloader
+
+    spider_operator ---> spider_materializer
 ```
 
 ### Operator ###
