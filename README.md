@@ -38,6 +38,30 @@ flowchart LR
     spider_parser     -. "<hash>.json" .->  spider_operator
 ```
 
+```mermaid
+flowchart LR
+    subgraph "🕷️ Spider"
+        direction TB
+        spider_parser(PARSER)
+        spider_operator(OPERATOR)
+        spider_materializer(MATERIALIZER)
+    end
+
+    subgraph Onigumo
+        onigumo_feeder[FEEDER]
+        onigumo_downloader[DOWNLOADER]
+    end
+
+    onigumo_feeder  -- .json --> spider_operator
+    spider_operator ---> spider_materializer
+    onigumo_feeder  -- .urls --> onigumo_downloader
+    onigumo_feeder  -- .raw --> spider_parser
+
+    spider_parser     -. "<hash>.json" .->  spider_operator
+    onigumo_downloader -. "<hash>.raw"  .->  spider_parser
+    spider_operator     -. "<hash>.urls" .-> onigumo_downloader
+```
+
 ### Operator ###
 
 The Operator determines URL addresses for the Downloader. A Spider is responsible for adding the URLs, which it gets from the structured form of the data provided by the Parser.
