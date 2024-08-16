@@ -50,13 +50,14 @@ flowchart LR
     end
 
     onigumo_feeder -- .json --> spider_operator
-    spider_operator ---> spider_materializer
     onigumo_feeder -- .urls --> onigumo_downloader
     onigumo_feeder -- .raw --> spider_parser
 
     spider_parser -. "<hash>.json" .-> spider_operator
     onigumo_downloader -. "<hash>.raw" .-> spider_parser
     spider_operator -. "<hash>.urls" .-> onigumo_downloader
+
+    spider_operator ---> spider_materializer
 ```
 
 ### Operator ###
