@@ -15,7 +15,8 @@ defmodule OnigumoCLITest do
 
   @invalid_switch_combinations [
     "--help -C invalid",
-    "-h --invalid"
+    "-h --invalid",
+    "downloader -h"
   ]
 
   @working_dir_switches [
