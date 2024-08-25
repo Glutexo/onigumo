@@ -33,7 +33,7 @@ defmodule Onigumo.CLI do
     COMPONENT\tOnigumo component to run, available: #{components}
 
     OPTIONS:
-    -h, --help\t\tusage help
+    -h, --help\t\tprint this help
     -C, --working-dir <dir>\tChange working dir to <dir> before running
     """)
   end
