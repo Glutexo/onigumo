@@ -37,4 +37,20 @@ defmodule Onigumo.CLI do
     -C, --working-dir <dir>\tChange working dir to <dir> before running
     """)
   end
+
+  defp help_message() do
+    components = Enum.join(Map.keys(@components), ", ")
+
+    IO.puts("""
+    Usage: onigumo [OPTION]... [COMPONENT]
+
+    Simple program that retrieves HTTP web content as structured data.
+
+    COMPONENT\tOnigumo component to run, available: #{components}
+
+    OPTIONS:
+    -h, --help\t\tprint this help
+    -C, --working-dir <dir>\tChange working dir to <dir> before running
+    """)
+  end
 end
