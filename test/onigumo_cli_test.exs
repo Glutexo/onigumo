@@ -60,9 +60,15 @@ defmodule OnigumoCLITest do
       end
     end
 
-    for switch <- ["-h", "--help", "--help -C prdel", "-h --invalid-switch"] do
-      test("run CLI with #{inspect(switch)} switch(es)") do
+    for switch <- ["-h", "--help"] do
+      test("run CLI with a #{inspect(switch)} switch") do
         assert usage_message_printed?(fn -> Onigumo.CLI.main([unquote(switch)]) end)
+      end
+    end
+
+    for switches <- ["--help -C invalid", "-h --invalid"] do
+      test("run invalid combination of swiches #{inspect(switches)} ") do
+        assert usage_message_printed?(fn -> Onigumo.CLI.main([unquote(switches)]) end)
       end
     end
 
