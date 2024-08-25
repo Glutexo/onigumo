@@ -26,15 +26,10 @@ defmodule Onigumo.CLI do
     components = Enum.join(Map.keys(@components), ", ")
 
     IO.puts("""
+    onigumo: invalid usage
     Usage: onigumo [OPTION]... [COMPONENT]
 
-    Simple program that retrieves HTTP web content as structured data.
-
-    COMPONENT\tOnigumo component to run, available: #{components}
-
-    OPTIONS:
-    -h, --help\t\tprint this help
-    -C, --working-dir <dir>\tChange working dir to <dir> before running
+    Try `onigumo --help' for more options.
     """)
   end
 
