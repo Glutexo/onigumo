@@ -72,7 +72,7 @@ defmodule OnigumoCLITest do
     end
 
     for switches <- @invalid_switches_combinations do
-      test("run invalid combination of swiches #{inspect(switches)} ") do
+      test("run invalid combination of switches #{inspect(switches)} ") do
         assert usage_message_printed?(fn -> Onigumo.CLI.main([unquote(switches)]) end)
       end
     end
