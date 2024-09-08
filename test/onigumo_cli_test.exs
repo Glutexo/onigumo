@@ -80,7 +80,12 @@ defmodule OnigumoCLITest do
 
     defp usage_message_printed?(function) do
       output = capture_io(function)
-      String.starts_with?(output, "Usage: onigumo ")
+      String.starts_with?(output, "onigumo: invalid usage")
+    end
+
+    defp help_message_printed?(function) do
+      output = capture_io(function)
+      String.starts_with?(output, "Usage: onigumo [OPTION]... [COMPONENT]")
     end
   end
 end
