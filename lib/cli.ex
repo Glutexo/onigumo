@@ -10,7 +10,7 @@ defmodule Onigumo.CLI do
            strict: [help: :boolean, working_dir: :string]
          ) do
       {[help: true], [], []} ->
-        usage_message()
+        help_message()
 
       {parsed_switches, [component], []} ->
         {:ok, module} = Map.fetch(@components, String.to_atom(component))
