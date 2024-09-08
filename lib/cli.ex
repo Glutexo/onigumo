@@ -23,8 +23,6 @@ defmodule Onigumo.CLI do
   end
 
   defp usage_message() do
-    components = Enum.join(Map.keys(@components), ", ")
-
     IO.puts("""
     onigumo: invalid usage
     Usage: onigumo [OPTION]... [COMPONENT]
