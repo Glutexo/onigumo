@@ -13,6 +13,11 @@ defmodule OnigumoCLITest do
     "-c"
   ]
 
+  @invalid_switches_combinations [
+    "--help -C invalid",
+    "-h --invalid"
+  ]
+
   @working_dir_switches [
     "--working-dir",
     "-C"
@@ -57,6 +62,18 @@ defmodule OnigumoCLITest do
 
       test("run CLI 'downloader' with #{inspect(switch)} without any value") do
         assert usage_message_printed?(fn -> Onigumo.CLI.main(["downloader", unquote(switch)]) end)
+      end
+    end
+
+    for switch <- ["-h", "--help"] do
+      test("run CLI with a #{inspect(switch)} switch") do
+        assert usage_message_printed?(fn -> Onigumo.CLI.main([unquote(switch)]) end)
+      end
+    end
+
+    for switches <- @invalid_switches_combinations do
+      test("run invalid combination of switches #{inspect(switches)} ") do
+        assert usage_message_printed?(fn -> Onigumo.CLI.main([unquote(switches)]) end)
       end
     end
 
