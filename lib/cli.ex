@@ -9,9 +9,9 @@ defmodule Onigumo.CLI do
            aliases: [C: :working_dir],
            strict: [working_dir: :string]
          ) do
-      {parsed_switches, [component], []} ->
+      {switches, [component], []} ->
         {:ok, module} = Map.fetch(@components, String.to_atom(component))
-        working_dir = Keyword.get(parsed_switches, :working_dir, File.cwd!())
+        working_dir = Keyword.get(switches, :working_dir, File.cwd!())
         module.main(working_dir)
 
       _ ->
