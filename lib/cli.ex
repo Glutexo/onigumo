@@ -10,9 +10,12 @@ defmodule Onigumo.CLI do
            strict: [working_dir: :string]
          ) do
       {switches, [component], []} ->
-        {:ok, module} = Map.fetch(@components, String.to_atom(component))
-        working_dir = Keyword.get(switches, :working_dir, File.cwd!())
-        module.main(working_dir)
+        with {:ok, module} <- Map.fetch(@components, String.to_atom(component)) do
+          working_dir = Keyword.get(switches, :working_dir, File.cwd!())
+          module.main(working_dir)
+        else
+          :error -> usage_message()
+        end
 
       _ ->
         usage_message()
