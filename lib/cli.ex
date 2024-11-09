@@ -4,26 +4,24 @@ defmodule Onigumo.CLI do
   }
 
   def main(argv) do
-    case OptionParser.parse(
-           argv,
-           aliases: [h: :help, C: :working_dir],
-           strict: [help: :boolean, working_dir: :string]
-        ) do
-      {parsed_switches, positional_arguments, []} ->
-        if Keyword.has_key?(parsed_switches, :help) do
+    parsed =
+      OptionParser.parse(argv, aliases: [h: :help, C: :working_dir], strict: [help: :boolean, working_dir: :string])
+
+    with {switches, arguments, []} <- parsed do
+        if Keyword.has_key?(switches, :help) do
           usage_message()
         else
-          case positional_arguments do
+          case arguments do
             [component] ->
               {:ok, module} = Map.fetch(@components, String.to_atom(component))
-              working_dir = Keyword.get(parsed_switches, :working_dir, File.cwd!())
+              working_dir = Keyword.get(switches, :working_dir, File.cwd!())
               module.main(working_dir)
             _ ->
               usage_message()
           end
         end
-      _ ->
-        usage_message()
+    else
+      _ -> usage_message()
     end
   end
 
