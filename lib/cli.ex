@@ -12,7 +12,8 @@ defmodule Onigumo.CLI do
       module.main(working_dir)
     else
       :error -> usage_message()
-      {_, _ , [_ | _]} -> usage_message()
+      {_, _, invalid_switches} when length(invalid_switches) -> usage_message()
+      {_, argv, _} when length(argv) != 1 -> usage_message()
       _ -> usage_message()
     end
   end
