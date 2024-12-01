@@ -11,9 +11,9 @@ defmodule Onigumo.CLI do
       working_dir = Keyword.get(switches, :working_dir, File.cwd!())
       module.main(working_dir)
     else
-      :error -> usage_message()
       {_, _, [_ | _]} -> usage_message()
       {_, argv, _} when length(argv) != 1 -> usage_message()
+      :error -> usage_message()
       _ -> usage_message()
     end
   end
