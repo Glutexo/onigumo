@@ -14,7 +14,6 @@ defmodule Onigumo.CLI do
       {_, _, [_ | _]} -> usage_message()
       {_, argv, _} when length(argv) != 1 -> usage_message()
       :error -> usage_message()
-      _ -> usage_message()
     end
   end
 
