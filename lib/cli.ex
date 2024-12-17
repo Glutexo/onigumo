@@ -4,16 +4,26 @@ defmodule Onigumo.CLI do
   }
 
   def main(argv) do
-    parsed = OptionParser.parse(argv, aliases: [C: :working_dir], strict: [working_dir: :string])
+    parsed =
+      OptionParser.parse(
+        argv,
+        aliases: [h: :help, C: :working_dir],
+        strict: [help: :boolean, working_dir: :string]
+      )
 
-    with {switches, [component], []} <- parsed,
-         {:ok, module} <- Map.fetch(@components, String.to_atom(component)) do
-      working_dir = Keyword.get(switches, :working_dir, File.cwd!())
-      module.main(working_dir)
+    with {[help: true], [], []} <- parsed do
+      usage_message()
     else
-      {_, _, [_ | _]} -> usage_message()
-      {_, argv, _} when length(argv) != 1 -> usage_message()
-      :error -> usage_message()
+      _ ->
+        with {switches, [component], []} <- parsed,
+             {:ok, module} <- Map.fetch(@components, String.to_atom(component)) do
+          working_dir = Keyword.get(switches, :working_dir, File.cwd!())
+          module.main(working_dir)
+        else
+          {_, _, [_ | _]} -> usage_message()
+          {_, argv, _} when length(argv) != 1 -> usage_message()
+          :error -> usage_message()
+        end
     end
   end
 
@@ -28,6 +38,7 @@ defmodule Onigumo.CLI do
     COMPONENT\tOnigumo component to run, available: #{components}
 
     OPTIONS:
+    -h, --help\t\tPrint this help
     -C, --working-dir <dir>\tChange working dir to <dir> before running
     """)
   end
