@@ -27,7 +27,7 @@ defmodule OnigumoCLITest do
   describe("Onigumo.CLI.main/1") do
     for argument <- @invalid_arguments do
       test("run CLI with invalid argument #{inspect(argument)}") do
-        assert_raise(MatchError, fn -> Onigumo.CLI.main([unquote(argument)]) end)
+        assert usage_message_printed?(fn -> Onigumo.CLI.main([unquote(argument)]) end)
       end
     end
 
