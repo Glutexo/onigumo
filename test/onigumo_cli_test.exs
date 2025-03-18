@@ -51,7 +51,7 @@ defmodule OnigumoCLITest do
     end
 
     for combination <- @invalid_combinations do
-      test("run invalid combinations #{inspect(combination)} ") do
+      test("run CLI with invalid combinations #{inspect(combination)} ") do
         assert usage_message_printed?(fn -> Onigumo.CLI.main([unquote(combination)]) end)
       end
     end
