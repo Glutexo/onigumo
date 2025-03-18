@@ -13,7 +13,7 @@ defmodule OnigumoCLITest do
     "-c"
   ]
 
-  @invalid_switch_combinations [
+  @invalid_combinations [
     "--help -C invalid",
     "-h --invalid",
     "downloader -h"
@@ -45,9 +45,9 @@ defmodule OnigumoCLITest do
       end
     end
 
-    for switches <- @invalid_switch_combinations do
-      test("run invalid combination of switches #{inspect(switches)} ") do
-        assert usage_message_printed?(fn -> Onigumo.CLI.main([unquote(switches)]) end)
+    for combination <- @invalid_combinations do
+      test("run invalid combinations #{inspect(combination)} ") do
+        assert usage_message_printed?(fn -> Onigumo.CLI.main([unquote(combination)]) end)
       end
     end
 
