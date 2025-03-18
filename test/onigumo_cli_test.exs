@@ -78,7 +78,7 @@ defmodule OnigumoCLITest do
     end
 
     for switch <- @help_switches do
-      test("run CLI with a #{inspect(switch)} switch") do
+      test("run CLI with #{inspect(switch)} switch") do
         assert usage_message_printed?(fn -> Onigumo.CLI.main([unquote(switch)]) end)
       end
     end
