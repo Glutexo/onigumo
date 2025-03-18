@@ -14,9 +14,9 @@ defmodule OnigumoCLITest do
   ]
 
   @invalid_combinations [
-    "--help -C invalid",
-    "-h --invalid",
-    "downloader -h"
+    ["--help", "-C", "invalid"],
+    ["-h", "--invalid"],
+    ["downloader", "-h"]
   ]
 
   @working_dir_switches [
@@ -52,7 +52,7 @@ defmodule OnigumoCLITest do
 
     for combination <- @invalid_combinations do
       test("run CLI with invalid combinations #{inspect(combination)} ") do
-        assert usage_message_printed?(fn -> Onigumo.CLI.main([unquote(combination)]) end)
+        assert usage_message_printed?(fn -> Onigumo.CLI.main(unquote(combination)) end)
       end
     end
 
