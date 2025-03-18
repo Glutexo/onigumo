@@ -24,6 +24,11 @@ defmodule OnigumoCLITest do
     "-C"
   ]
 
+  @help_switches [
+    "-h",
+    "--help"
+  ]
+
   describe("Onigumo.CLI.main/1") do
     for argument <- @invalid_arguments do
       test("run CLI with invalid argument #{inspect(argument)}") do
@@ -72,7 +77,7 @@ defmodule OnigumoCLITest do
       end
     end
 
-    for switch <- ["-h", "--help"] do
+    for switch <- @help_switches do
       test("run CLI with a #{inspect(switch)} switch") do
         assert usage_message_printed?(fn -> Onigumo.CLI.main([unquote(switch)]) end)
       end
