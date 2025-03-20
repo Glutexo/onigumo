@@ -18,6 +18,11 @@ defmodule OnigumoCLITest do
     "-C"
   ]
 
+  @invalid_combinations [
+    ["--help", "downloader"],
+    ["downloader", "-h"]
+  ]
+
   describe("Onigumo.CLI.main/1") do
     for argument <- @invalid_arguments do
       test("run CLI with invalid argument #{inspect(argument)}") do
@@ -36,6 +41,12 @@ defmodule OnigumoCLITest do
     for switch <- @invalid_switches do
       test("run CLI with invalid switch #{inspect(switch)}") do
         assert usage_message_printed?(fn -> Onigumo.CLI.main([unquote(switch)]) end)
+      end
+    end
+
+    for combination <- @invalid_combinations do
+      test("run CLI with invalid combinations #{inspect(combination)} ") do
+        assert usage_message_printed?(fn -> Onigumo.CLI.main(unquote(combination)) end)
       end
     end
 

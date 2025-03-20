@@ -4,7 +4,11 @@ defmodule Onigumo.CLI do
   }
 
   def main(argv) do
-    parsed = OptionParser.parse(argv, aliases: [C: :working_dir], strict: [working_dir: :string])
+    parsed =
+      OptionParser.parse(argv,
+        aliases: [h: :help, C: :working_dir],
+        strict: [help: :boolean, working_dir: :string]
+      )
 
     case parsed do
       {switches, [component], []} ->
