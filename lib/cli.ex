@@ -16,6 +16,7 @@ defmodule Onigumo.CLI do
               [] -> module.main(working_dir)
               _ -> usage_message()
             end
+
           :error ->
             usage_message()
         end
