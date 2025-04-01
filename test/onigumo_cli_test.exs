@@ -16,7 +16,8 @@ defmodule OnigumoCLITest do
   @invalid_combinations [
     ["--help", "-C", "invalid"],
     ["-h", "--invalid"],
-    ["downloader", "-h"]
+    ["downloader", "-h"],
+    ["downloader", "--help"]
   ]
 
   @working_dir_switches [
