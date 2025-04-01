@@ -18,8 +18,12 @@ defmodule Onigumo.CLI do
       {switches, [component], []} ->
         case Map.fetch(@components, String.to_atom(component)) do
           {:ok, module} ->
-            working_dir = Keyword.get(switches, :working_dir, File.cwd!())
-            module.main(working_dir)
+            {working_dir, switches} = Keyword.pop(switches, :working_dir, File.cwd!())
+
+            case switches do
+              [] -> module.main(working_dir)
+              _ -> usage_message()
+            end
 
           :error ->
             usage_message()
