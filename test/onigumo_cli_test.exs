@@ -13,10 +13,10 @@ defmodule OnigumoCLITest do
     "-c"
   ]
 
-  @invalid_switch_combinations [
-    "--help -C invalid",
-    "-h --invalid",
-    "downloader -h"
+  @invalid_combinations [
+    ["--help", "-C", ".", "downloader"],
+    ["downloader", "-h"],
+    ["downloader", "--help"]
   ]
 
   @working_dir_switches [
@@ -24,10 +24,15 @@ defmodule OnigumoCLITest do
     "-C"
   ]
 
+  @help_switches [
+    "-h",
+    "--help"
+  ]
+
   describe("Onigumo.CLI.main/1") do
     for argument <- @invalid_arguments do
       test("run CLI with invalid argument #{inspect(argument)}") do
-        assert_raise(MatchError, fn -> Onigumo.CLI.main([unquote(argument)]) end)
+        assert usage_message_printed?(fn -> Onigumo.CLI.main([unquote(argument)]) end)
       end
     end
 
@@ -45,9 +50,9 @@ defmodule OnigumoCLITest do
       end
     end
 
-    for switches <- @invalid_switch_combinations do
-      test("run invalid combination of switches #{inspect(switches)} ") do
-        assert usage_message_printed?(fn -> Onigumo.CLI.main([unquote(switches)]) end)
+    for combination <- @invalid_combinations do
+      test("run CLI with invalid combination #{inspect(combination)}") do
+        assert usage_message_printed?(fn -> Onigumo.CLI.main(unquote(combination)) end)
       end
     end
 
@@ -72,8 +77,8 @@ defmodule OnigumoCLITest do
       end
     end
 
-    for switch <- ["-h", "--help"] do
-      test("run CLI with a #{inspect(switch)} switch") do
+    for switch <- @help_switches do
+      test("run CLI with #{inspect(switch)} switch") do
         assert help_message_printed?(fn -> Onigumo.CLI.main([unquote(switch)]) end)
       end
     end
