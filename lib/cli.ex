@@ -13,7 +13,7 @@ defmodule Onigumo.CLI do
 
     case parsed do
       {[help: true], [], []} ->
-        usage_message()
+        help_message()
 
       {switches, [component], []} ->
         case Map.fetch(@components, String.to_atom(component)) do
@@ -38,6 +38,15 @@ defmodule Onigumo.CLI do
   end
 
   defp usage_message() do
+    IO.puts("""
+    onigumo: invalid usage
+    Usage: onigumo [OPTION]... [COMPONENT]
+
+    Try `onigumo --help' for more options.
+    """)
+  end
+
+  defp help_message() do
     components = Enum.join(Map.keys(@components), ", ")
 
     IO.puts("""
