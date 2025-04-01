@@ -13,9 +13,20 @@ defmodule OnigumoCLITest do
     "-c"
   ]
 
+  @invalid_combinations [
+    ["--help", "-C", ".", "downloader"],
+    ["downloader", "-h"],
+    ["downloader", "--help"]
+  ]
+
   @working_dir_switches [
     "--working-dir",
     "-C"
+  ]
+
+  @help_switches [
+    "-h",
+    "--help"
   ]
 
   describe("Onigumo.CLI.main/1") do
@@ -39,6 +50,12 @@ defmodule OnigumoCLITest do
       end
     end
 
+    for combination <- @invalid_combinations do
+      test("run CLI with invalid combination #{inspect(combination)}") do
+        assert usage_message_printed?(fn -> Onigumo.CLI.main(unquote(combination)) end)
+      end
+    end
+
     @tag :tmp_dir
     test("run CLI with 'downloader' argument passing cwd", %{tmp_dir: tmp_dir}) do
       expect(OnigumoDownloaderMock, :main, fn working_dir -> working_dir end)
@@ -57,6 +74,12 @@ defmodule OnigumoCLITest do
 
       test("run CLI 'downloader' with #{inspect(switch)} without any value") do
         assert usage_message_printed?(fn -> Onigumo.CLI.main(["downloader", unquote(switch)]) end)
+      end
+    end
+
+    for switch <- @help_switches do
+      test("run CLI with #{inspect(switch)} switch") do
+        assert usage_message_printed?(fn -> Onigumo.CLI.main([unquote(switch)]) end)
       end
     end
 

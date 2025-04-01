@@ -4,14 +4,26 @@ defmodule Onigumo.CLI do
   }
 
   def main(argv) do
-    parsed = OptionParser.parse(argv, aliases: [C: :working_dir], strict: [working_dir: :string])
+    parsed =
+      OptionParser.parse(
+        argv,
+        aliases: [h: :help, C: :working_dir],
+        strict: [help: :boolean, working_dir: :string]
+      )
 
     case parsed do
+      {[help: true], [], []} ->
+        usage_message()
+
       {switches, [component], []} ->
         case Map.fetch(@components, String.to_atom(component)) do
           {:ok, module} ->
-            working_dir = Keyword.get(switches, :working_dir, File.cwd!())
-            module.main(working_dir)
+            {working_dir, switches} = Keyword.pop(switches, :working_dir, File.cwd!())
+
+            case switches do
+              [] -> module.main(working_dir)
+              _ -> usage_message()
+            end
 
           :error ->
             usage_message()
@@ -36,6 +48,7 @@ defmodule Onigumo.CLI do
     COMPONENT\tOnigumo component to run, available: #{components}
 
     OPTIONS:
+    -h, --help\tPrint this help
     -C, --working-dir <dir>\tChange working dir to <dir> before running
     """)
   end
