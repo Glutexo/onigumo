@@ -38,7 +38,7 @@ defmodule Onigumo.CLI do
   end
 
   defp usage_message() do
-    IO.puts("""
+    IO.write("""
     onigumo: invalid usage
     Usage: onigumo [OPTION]... [COMPONENT]
 
@@ -49,7 +49,7 @@ defmodule Onigumo.CLI do
   defp help_message() do
     components = Enum.join(Map.keys(@components), ", ")
 
-    IO.puts("""
+    IO.write("""
     Usage: onigumo [OPTION]... [COMPONENT]
 
     Simple program that retrieves HTTP web content as structured data.
