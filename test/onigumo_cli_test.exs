@@ -83,6 +83,16 @@ defmodule OnigumoCLITest do
       end
     end
 
+      test("Usage message ends with one newline") do
+        output = capture_io(fn -> Onigumo.CLI.main([]) end)
+        assert not String.ends_with?(output, "\n\n")
+      end
+
+      test("Help message ends with one newline") do
+        output = capture_io(fn -> Onigumo.CLI.main(["-h"]) end)
+        assert not String.ends_with?(output, "\n\n")
+      end
+
     defp usage_message_printed?(function) do
       output = capture_io(function)
       String.starts_with?(output, "onigumo: invalid usage")
