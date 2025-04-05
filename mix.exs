@@ -7,7 +7,7 @@ defmodule Onigumo.MixProject do
     [
       app: :onigumo,
       version: "0.1.0",
-      elixir: "~> 1.10",
+      elixir: "~> 1.0",
       start_permanent: env == :prod,
       deps: deps(),
       escript: escript(),
