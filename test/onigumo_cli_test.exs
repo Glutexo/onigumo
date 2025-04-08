@@ -84,13 +84,16 @@ defmodule OnigumoCLITest do
     end
 
     test("Usage message ends with exactly one newline") do
-      output = capture_io(fn -> Onigumo.CLI.main([]) end)
-      assert String.match?(output, ~r/\N\n\z/)
+      assert ends_with_exactly_one_newline?(fn -> Onigumo.CLI.main([]) end)
     end
 
     test("Help message ends with exactly one newline") do
-      output = capture_io(fn -> Onigumo.CLI.main(["-h"]) end)
-      assert String.match?(output, ~r/\N\n\z/)
+      assert ends_with_exactly_one_newline?(fn -> Onigumo.CLI.main(["-h"]) end)
+    end
+
+    defp ends_with_exactly_one_newline?(function) do
+      output = capture_io(function)
+      String.match?(output, ~r/\N\n\z/)
     end
 
     defp usage_message_printed?(function) do
