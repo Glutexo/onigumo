@@ -22,29 +22,35 @@ defmodule Onigumo.CLI do
 
             case switches do
               [] -> module.main(working_dir)
-              _ -> usage_message()
+              _ -> usage_message("too many options")
             end
 
           :error ->
-            usage_message()
+            usage_message("missing value for working directory")
         end
 
       {_, _, [_ | _]} ->
-        usage_message()
+        usage_message("unknown options")
 
       {_, argv, _} when length(argv) != 1 ->
-        usage_message()
+        usage_message("exact one positional argument must be used")
     end
   end
 
-  defp usage_message() do
+  defp usage_message(reason \\ nil) do
     IO.write("""
-    onigumo: invalid usage
+    onigumo: invalid usage#{reason_message(reason)}
     Usage: onigumo [OPTION]... [COMPONENT]
 
     Try `onigumo --help' for more options.
     """)
   end
+
+  defp reason_message(reason) when is_nil(reason) or byte_size(reason) == 0 do
+    ""
+  end
+
+  defp reason_message(reason), do: ", #{reason}"
 
   defp help_message() do
     components = Enum.join(Map.keys(@components), ", ")
