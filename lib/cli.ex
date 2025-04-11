@@ -22,18 +22,18 @@ defmodule Onigumo.CLI do
 
             case switches do
               [] -> module.main(working_dir)
-              _ -> usage_message()
+              _ -> usage_message("unknown options")
             end
 
           :error ->
-            usage_message()
+            usage_message("unknown positional argument")
         end
 
       {_, _, [_ | _]} ->
         usage_message()
 
       {_, argv, _} when length(argv) != 1 ->
-        usage_message()
+        usage_message("exact one positional argument must be used")
     end
   end
 
