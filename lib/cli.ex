@@ -37,19 +37,16 @@ defmodule Onigumo.CLI do
     end
   end
 
-  defp usage_message(reason \\ nil) do
+  defp usage_message(reason \\ "") do
     IO.write("""
-    onigumo: invalid usage#{reason_message(reason)}
+    onigumo: invalid usage#{reason_message(String.trim(reason))}
     Usage: onigumo [OPTION]... [COMPONENT]
 
     Try `onigumo --help' for more options.
     """)
   end
 
-  defp reason_message(reason) when is_nil(reason) or byte_size(reason) == 0 do
-    ""
-  end
-
+  defp reason_message(reason) when byte_size(reason) == 0, do: reason
   defp reason_message(reason), do: ", #{reason}"
 
   defp help_message() do
