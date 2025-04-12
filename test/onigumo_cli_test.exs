@@ -32,16 +32,25 @@ defmodule OnigumoCLITest do
   describe("Onigumo.CLI.main/1") do
     for argument <- @invalid_arguments do
       test("run CLI with invalid argument #{inspect(argument)}") do
-        assert usage_message_printed?(fn -> Onigumo.CLI.main([unquote(argument)]) end)
+        assert usage_message_printed?(
+                 fn -> Onigumo.CLI.main([unquote(argument)]) end,
+                 ", unknown positional argument"
+               )
       end
     end
 
     test("run CLI with no arguments") do
-      assert usage_message_printed?(fn -> Onigumo.CLI.main([]) end)
+      assert usage_message_printed?(
+               fn -> Onigumo.CLI.main([]) end,
+               ", exact one positional argument must be used"
+             )
     end
 
     test("run CLI with more than one argument") do
-      assert usage_message_printed?(fn -> Onigumo.CLI.main(["Downloader", "Parser"]) end)
+      assert usage_message_printed?(
+               fn -> Onigumo.CLI.main(["Downloader", "Parser"]) end,
+               ", exact one positional argument must be used"
+             )
     end
 
     for switch <- @invalid_switches do
@@ -52,7 +61,10 @@ defmodule OnigumoCLITest do
 
     for combination <- @invalid_combinations do
       test("run CLI with invalid combination #{inspect(combination)}") do
-        assert usage_message_printed?(fn -> Onigumo.CLI.main(unquote(combination)) end)
+        assert usage_message_printed?(
+                 fn -> Onigumo.CLI.main(unquote(combination)) end,
+                 ", unknown options"
+               )
       end
     end
 
@@ -96,9 +108,9 @@ defmodule OnigumoCLITest do
       String.match?(output, ~r/\N\n\z/)
     end
 
-    defp usage_message_printed?(function) do
+    defp usage_message_printed?(function, reason \\ "") do
       output = capture_io(function)
-      String.starts_with?(output, "onigumo: invalid usage")
+      String.starts_with?(output, "onigumo: invalid usage#{reason}")
     end
 
     defp help_message_printed?(function) do
