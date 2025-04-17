@@ -13,10 +13,10 @@ jobs:
     runs-on: ubuntu-24.04
 
     steps:
+    - name: Configure Git
+      run: git config core.eol lf
     - name: Check out the repository
       uses: actions/checkout@v3
-      with:
-        config: core.eol=lf
     - name: Set up Elixir
       uses: erlef/setup-beam@v1
       with:
