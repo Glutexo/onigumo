@@ -34,7 +34,7 @@ defmodule OnigumoCLITest do
       test("run CLI with invalid argument #{inspect(argument)}") do
         assert usage_message_printed?(
                  fn -> Onigumo.CLI.main([unquote(argument)]) end,
-                 ", unknown positional argument"
+                 "invalid COMPONENT"
                )
       end
     end
@@ -42,20 +42,23 @@ defmodule OnigumoCLITest do
     test("run CLI with no arguments") do
       assert usage_message_printed?(
                fn -> Onigumo.CLI.main([]) end,
-               ", exact one positional argument must be used"
+               "exactly one COMPONENT must be provided"
              )
     end
 
     test("run CLI with more than one argument") do
       assert usage_message_printed?(
                fn -> Onigumo.CLI.main(["Downloader", "Parser"]) end,
-               ", exact one positional argument must be used"
+               "exactly one COMPONENT must be provided"
              )
     end
 
     for switch <- @invalid_switches do
       test("run CLI with invalid switch #{inspect(switch)}") do
-        assert usage_message_printed?(fn -> Onigumo.CLI.main([unquote(switch)]) end)
+        assert usage_message_printed?(
+                 fn -> Onigumo.CLI.main([unquote(switch)]) end,
+                 ""
+               )
       end
     end
 
@@ -63,7 +66,7 @@ defmodule OnigumoCLITest do
       test("run CLI with invalid combination #{inspect(combination)}") do
         assert usage_message_printed?(
                  fn -> Onigumo.CLI.main(unquote(combination)) end,
-                 ", unknown options"
+                 "invalid OPTIONS"
                )
       end
     end
@@ -85,7 +88,10 @@ defmodule OnigumoCLITest do
       end
 
       test("run CLI 'downloader' with #{inspect(switch)} without any value") do
-        assert usage_message_printed?(fn -> Onigumo.CLI.main(["downloader", unquote(switch)]) end)
+        assert usage_message_printed?(
+                 fn -> Onigumo.CLI.main(["downloader", unquote(switch)]) end,
+                 ""
+               )
       end
     end
 
@@ -108,9 +114,9 @@ defmodule OnigumoCLITest do
       String.match?(output, ~r/\N\n\z/)
     end
 
-    defp usage_message_printed?(function, reason \\ "") do
+    defp usage_message_printed?(function, reason) do
       output = capture_io(function)
-      String.starts_with?(output, "onigumo: invalid usage#{reason}")
+      String.starts_with?(output, "onigumo: invalid usage – #{reason}")
     end
 
     defp help_message_printed?(function) do

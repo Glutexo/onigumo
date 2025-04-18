@@ -22,32 +22,29 @@ defmodule Onigumo.CLI do
 
             case switches do
               [] -> module.main(working_dir)
-              _ -> usage_message("unknown options")
+              _ -> usage_message("invalid OPTIONS")
             end
 
           :error ->
-            usage_message("unknown positional argument")
+            usage_message("invalid COMPONENT")
         end
 
       {_, _, [_ | _]} ->
-        usage_message()
+        usage_message("")
 
       {_, argv, _} when length(argv) != 1 ->
-        usage_message("exact one positional argument must be used")
+        usage_message("exactly one COMPONENT must be provided")
     end
   end
 
-  defp usage_message(reason \\ "") do
+  defp usage_message(reason) do
     IO.write("""
-    onigumo: invalid usage#{reason_message(String.trim(reason))}
+    onigumo: invalid usage – #{reason}
     Usage: onigumo [OPTION]... [COMPONENT]
 
     Try `onigumo --help' for more options.
     """)
   end
-
-  defp reason_message(reason) when byte_size(reason) == 0, do: reason
-  defp reason_message(reason), do: ", #{reason}"
 
   defp help_message() do
     components = Enum.join(Map.keys(@components), ", ")
