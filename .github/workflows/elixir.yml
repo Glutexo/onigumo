@@ -13,6 +13,10 @@ jobs:
     runs-on: ubuntu-24.04
 
     steps:
+    - name: Configure Git
+      run: -
+        # Make line endings on Windows compatible with mix format
+        git config --global core.autocrlf false
     - name: Check out the repository
       uses: actions/checkout@v3
     - name: Set up Elixir
