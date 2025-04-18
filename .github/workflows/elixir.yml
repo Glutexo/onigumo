@@ -17,9 +17,8 @@ jobs:
 
     steps:
     - name: Configure Git
-      run: -
-        # Make line endings on Windows compatible with mix format
-        git config --global core.autocrlf false
+      # Make line endings on Windows compatible with mix format
+      run: git config --global core.autocrlf false
     - name: Check out the repository
       uses: actions/checkout@v3
     - name: Set up Elixir
