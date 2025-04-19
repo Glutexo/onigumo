@@ -22,15 +22,17 @@ defmodule Onigumo.CLI do
 
             case switches do
               [] -> module.main(working_dir)
-              _ -> usage_message("invalid OPTIONS")
+              _ -> usage_message("invalid OPTIONS #{inspect(OptionParser.to_argv(switches))}")
             end
 
           :error ->
-            usage_message("invalid COMPONENT")
+            usage_message("invalid COMPONENT #{inspect(component)}")
         end
 
-      {_, _, [_ | _]} ->
-        usage_message("")
+      {_, _, invalid} when invalid != [] ->
+        Enum.map(invalid, fn {k, _} -> k end)
+        |> then(&"invalid OPTIONS #{inspect(&1)}")
+        |> usage_message()
 
       {_, argv, _} when length(argv) != 1 ->
         usage_message("exactly one COMPONENT must be provided")

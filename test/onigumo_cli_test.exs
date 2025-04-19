@@ -9,8 +9,8 @@ defmodule OnigumoCLITest do
   ]
 
   @invalid_switches [
-    "--invalid",
-    "-c"
+    ["--invalid"],
+    ["-c"]
   ]
 
   @invalid_combinations [
@@ -34,7 +34,7 @@ defmodule OnigumoCLITest do
       test("run CLI with invalid argument #{inspect(argument)}") do
         assert usage_message_printed?(
                  fn -> Onigumo.CLI.main([unquote(argument)]) end,
-                 "invalid COMPONENT"
+                 "invalid COMPONENT #{inspect(unquote(argument))}"
                )
       end
     end
@@ -56,8 +56,8 @@ defmodule OnigumoCLITest do
     for switch <- @invalid_switches do
       test("run CLI with invalid switch #{inspect(switch)}") do
         assert usage_message_printed?(
-                 fn -> Onigumo.CLI.main([unquote(switch)]) end,
-                 ""
+                 fn -> Onigumo.CLI.main(unquote(switch)) end,
+                 "invalid OPTIONS #{inspect(unquote(switch))}"
                )
       end
     end
@@ -66,7 +66,8 @@ defmodule OnigumoCLITest do
       test("run CLI with invalid combination #{inspect(combination)}") do
         assert usage_message_printed?(
                  fn -> Onigumo.CLI.main(unquote(combination)) end,
-                 "invalid OPTIONS"
+                 # there is no easy way to do it dynamically
+                 "invalid OPTIONS [\"--help\"]"
                )
       end
     end
@@ -90,7 +91,7 @@ defmodule OnigumoCLITest do
       test("run CLI 'downloader' with #{inspect(switch)} without any value") do
         assert usage_message_printed?(
                  fn -> Onigumo.CLI.main(["downloader", unquote(switch)]) end,
-                 ""
+                 "invalid OPTIONS [#{inspect(unquote(switch))}]"
                )
       end
     end
