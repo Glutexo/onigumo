@@ -34,7 +34,7 @@ defmodule Onigumo.CLI do
             usage_message("invalid COMPONENT #{component}")
         end
 
-      {_, _, invalid} when invalid != [] ->
+      {_, _, invalid = [_ | _]} ->
         Enum.map(invalid, fn {k, _} -> k end)
         |> then(&"invalid OPTIONS #{Enum.join(&1, ", ")}")
         |> usage_message()
