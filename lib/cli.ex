@@ -35,7 +35,7 @@ defmodule Onigumo.CLI do
         end
 
       {_, _, invalid = [_ | _]} ->
-        Enum.map(invalid, fn {k, _} -> k end)
+        Enum.map(invalid, &elem(&1, 0))
         |> then(&"invalid OPTIONS #{Enum.join(&1, ", ")}")
         |> usage_message()
 
