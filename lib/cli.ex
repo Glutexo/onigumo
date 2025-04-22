@@ -25,9 +25,9 @@ defmodule Onigumo.CLI do
                 module.main(working_dir)
 
               _ ->
-                usage_message(
-                  "invalid OPTIONS #{Enum.join(OptionParser.to_argv(switches), ", ")}"
-                )
+                OptionParser.to_argv(switches)
+                |> then(&"invalid OPTIONS #{Enum.join(&1, ", ")}")
+                |> usage_message()
             end
 
           :error ->
