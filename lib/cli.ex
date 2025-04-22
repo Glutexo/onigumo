@@ -21,8 +21,13 @@ defmodule Onigumo.CLI do
             {working_dir, switches} = Keyword.pop(switches, :working_dir, File.cwd!())
 
             case switches do
-              [] -> module.main(working_dir)
-              _ -> usage_message("invalid OPTIONS #{Enum.join(OptionParser.to_argv(switches), ", ")}")
+              [] ->
+                module.main(working_dir)
+
+              _ ->
+                usage_message(
+                  "invalid OPTIONS #{Enum.join(OptionParser.to_argv(switches), ", ")}"
+                )
             end
 
           :error ->
