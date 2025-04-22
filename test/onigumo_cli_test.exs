@@ -68,7 +68,7 @@ defmodule OnigumoCLITest do
         assert usage_message_printed?(
                  fn -> Onigumo.CLI.main(unquote(combination)) end,
                  # there is no easy way to do it dynamically
-                 "invalid OPTIONS --help"
+                 "incompatible OPTIONS --help"
                )
       end
     end
