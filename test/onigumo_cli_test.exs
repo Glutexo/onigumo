@@ -67,7 +67,6 @@ defmodule OnigumoCLITest do
       test("run CLI with invalid combination #{inspect(combination)}") do
         assert usage_message_printed?(
                  fn -> Onigumo.CLI.main(unquote(combination)) end,
-                 # there is no easy way to do it dynamically
                  "incompatible OPTIONS --help"
                )
       end
