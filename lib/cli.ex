@@ -26,7 +26,8 @@ defmodule Onigumo.CLI do
 
               _ ->
                 OptionParser.to_argv(switches)
-                |> then(&"incompatible OPTIONS #{Enum.join(&1, ", ")}")
+                |> Enum.join(", ")
+                |> then(&"incompatible OPTIONS #{&1}")
                 |> usage_message()
             end
 
@@ -36,7 +37,8 @@ defmodule Onigumo.CLI do
 
       {_, _, invalid = [_ | _]} ->
         Enum.map(invalid, &elem(&1, 0))
-        |> then(&"invalid OPTIONS #{Enum.join(&1, ", ")}")
+        |> Enum.join(", ")
+        |> then(&"invalid OPTIONS #{&1}")
         |> usage_message()
 
       {_, argv, _} when length(argv) != 1 ->
