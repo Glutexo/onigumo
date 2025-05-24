@@ -11,7 +11,7 @@ defmodule OnigumoCLITest do
   @invalid_switches [
     ["--invalid"],
     ["-c"],
-    ["-a", "-b"]
+    ["--invalid", "-c"]
   ]
 
   @invalid_combinations [
@@ -54,11 +54,11 @@ defmodule OnigumoCLITest do
              )
     end
 
-    for switch <- @invalid_switches do
-      test("run CLI with invalid switch #{inspect(switch)}") do
+    for switches <- @invalid_switches do
+      test("run CLI with invalid switches #{inspect(switches)}") do
         assert usage_message_printed?(
-                 fn -> Onigumo.CLI.main(unquote(switch)) end,
-                 "invalid OPTIONS #{Enum.join(unquote(switch), ", ")}"
+                 fn -> Onigumo.CLI.main(unquote(switches)) end,
+                 "invalid OPTIONS #{Enum.join(unquote(switches), ", ")}"
                )
       end
     end
