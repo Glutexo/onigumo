@@ -41,7 +41,7 @@ defmodule Onigumo.CLI do
         |> then(&"invalid OPTIONS #{&1}")
         |> usage_message()
 
-      {_, argv, _} when length(argv) != 1 ->
+      {_, _, _} ->
         usage_message("exactly one COMPONENT must be provided")
     end
   end
