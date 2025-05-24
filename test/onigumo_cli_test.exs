@@ -10,7 +10,8 @@ defmodule OnigumoCLITest do
 
   @invalid_switches [
     ["--invalid"],
-    ["-c"]
+    ["-c"],
+    ["--invalid", "-c"]
   ]
 
   @invalid_combinations [
