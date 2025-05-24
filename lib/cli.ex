@@ -21,25 +21,34 @@ defmodule Onigumo.CLI do
             {working_dir, switches} = Keyword.pop(switches, :working_dir, File.cwd!())
 
             case switches do
-              [] -> module.main(working_dir)
-              _ -> usage_message()
+              [] ->
+                module.main(working_dir)
+
+              _ ->
+                OptionParser.to_argv(switches)
+                |> Enum.join(", ")
+                |> then(&"incompatible OPTIONS #{&1}")
+                |> usage_message()
             end
 
           :error ->
-            usage_message()
+            usage_message("invalid COMPONENT #{component}")
         end
 
-      {_, _, [_ | _]} ->
-        usage_message()
+      {_, _, invalid = [_ | _]} ->
+        Enum.map(invalid, &elem(&1, 0))
+        |> Enum.join(", ")
+        |> then(&"invalid OPTIONS #{&1}")
+        |> usage_message()
 
       {_, argv, _} when length(argv) != 1 ->
-        usage_message()
+        usage_message("exactly one COMPONENT must be provided")
     end
   end
 
-  defp usage_message() do
+  defp usage_message(reason) do
     IO.write("""
-    onigumo: invalid usage
+    onigumo: invalid usage – #{reason}
     Usage: onigumo [OPTION]... [COMPONENT]
 
     Try `onigumo --help' for more options.

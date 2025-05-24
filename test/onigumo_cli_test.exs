@@ -33,27 +33,42 @@ defmodule OnigumoCLITest do
   describe("Onigumo.CLI.main/1") do
     for argument <- @invalid_arguments do
       test("run CLI with invalid argument #{inspect(argument)}") do
-        assert usage_message_printed?(fn -> Onigumo.CLI.main([unquote(argument)]) end)
+        assert usage_message_printed?(
+                 fn -> Onigumo.CLI.main([unquote(argument)]) end,
+                 "invalid COMPONENT #{unquote(argument)}"
+               )
       end
     end
 
     test("run CLI with no arguments") do
-      assert usage_message_printed?(fn -> Onigumo.CLI.main([]) end)
+      assert usage_message_printed?(
+               fn -> Onigumo.CLI.main([]) end,
+               "exactly one COMPONENT must be provided"
+             )
     end
 
     test("run CLI with more than one argument") do
-      assert usage_message_printed?(fn -> Onigumo.CLI.main(["Downloader", "Parser"]) end)
+      assert usage_message_printed?(
+               fn -> Onigumo.CLI.main(["Downloader", "Parser"]) end,
+               "exactly one COMPONENT must be provided"
+             )
     end
 
     for switches <- @invalid_switches do
       test("run CLI with invalid switches #{inspect(switches)}") do
-        assert usage_message_printed?(fn -> Onigumo.CLI.main(unquote(switches)) end)
+        assert usage_message_printed?(
+                 fn -> Onigumo.CLI.main(unquote(switches)) end,
+                 "invalid OPTIONS #{Enum.join(unquote(switches), ", ")}"
+               )
       end
     end
 
     for combination <- @invalid_combinations do
       test("run CLI with invalid combination #{inspect(combination)}") do
-        assert usage_message_printed?(fn -> Onigumo.CLI.main(unquote(combination)) end)
+        assert usage_message_printed?(
+                 fn -> Onigumo.CLI.main(unquote(combination)) end,
+                 "incompatible OPTIONS --help"
+               )
       end
     end
 
@@ -74,7 +89,10 @@ defmodule OnigumoCLITest do
       end
 
       test("run CLI 'downloader' with #{inspect(switch)} without any value") do
-        assert usage_message_printed?(fn -> Onigumo.CLI.main(["downloader", unquote(switch)]) end)
+        assert usage_message_printed?(
+                 fn -> Onigumo.CLI.main(["downloader", unquote(switch)]) end,
+                 "invalid OPTIONS #{unquote(switch)}"
+               )
       end
     end
 
@@ -97,9 +115,9 @@ defmodule OnigumoCLITest do
       String.match?(output, ~r/\N\n\z/)
     end
 
-    defp usage_message_printed?(function) do
+    defp usage_message_printed?(function, reason) do
       output = capture_io(function)
-      String.starts_with?(output, "onigumo: invalid usage")
+      String.starts_with?(output, "onigumo: invalid usage – #{reason}")
     end
 
     defp help_message_printed?(function) do
